@@ -108,6 +108,31 @@
       <div class="marquee-container">
         <div class="scrolling">{{ copyright }}</div>
       </div>
+
+      <!-- 返回最上方按鈕 -->
+      <div
+        class="back-to-top"
+        :class="{ visible: showBackToTop }"
+        @click="scrollToTop"
+      >
+        <svg class="progress-ring" viewBox="0 0 50 50">
+          <circle
+            cx="25"
+            cy="25"
+            r="22"
+            :style="{ strokeDashoffset: 138 - (scrollProgress * 138) }"
+          />
+        </svg>
+        <svg
+          class="arrow-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+      </div>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

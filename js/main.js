@@ -4,6 +4,8 @@ const app = createApp({
   data() {
     return {
       siteTitle: "YEN-LING",
+      showBackToTop: false,
+      scrollProgress: 0,
       isMenuOpen: false,
       navActive: false,
       navItems: [
@@ -109,6 +111,23 @@ const app = createApp({
       this.navActive = !this.navActive;
       this.isMenuOpen = !this.isMenuOpen;
     },
+    handleScroll() {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - windowHeight;
+
+      this.scrollProgress =
+        docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0;
+
+      this.showBackToTop = scrollTop > 300;
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
   },
   mounted() {
     const observeFadeIn = (selector) => {
@@ -124,10 +143,14 @@ const app = createApp({
         { threshold: 0.2 }
       );
       elements.forEach((el) => observer.observe(el));
+      window.addEventListener("scroll", this.handleScroll);
     };
 
     observeFadeIn(".year");
     observeFadeIn(".word");
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
 });
 
