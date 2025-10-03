@@ -1,10 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p>this is my web</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YEN-LING</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&family=Sigmar&family=Sixtyfour+Convergence&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/favicon.png" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/info.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- 導覽列 -->
+      <nav>
+        <div
+          class="hamburger-toggle"
+          :class="{ active: isMenuOpen }"
+          @click="toggleMenu"
+        >
+          <span class="bar-1"></span>
+          <span class="bar-2"></span>
+          <span class="bar-3"></span>
+        </div>
+        <a href="yenling.html" class="logo">{{ siteTitle }}</a>
+        <ul class="nav-menu" :class="{ active: navActive }">
+          <li v-for="(item, index) in navItems" :key="index">
+            <a :href="item.link">{{ item.label }}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 內容 -->
+      <div class="content">
+        <div class="timeline">
+          <div
+            class="event"
+            v-for="(section, index) in sections"
+            :key="index"
+            data-aos="fade-up"
+          >
+            <div class="year">
+              <h2>
+                <span class="part1">{{ section.title }}</span>
+                <span class="part2">|{{ section.subtitle }}</span>
+              </h2>
+              <img
+                v-if="section.image"
+                :src="section.image"
+                alt="Section Image"
+              />
+            </div>
+            <div class="word">
+              <div v-if="section.header">
+                <div class="typewriter">
+                  <div>
+                    <h2><a href="yenling.html">{{ siteTitle }}</a></h2>
+                  </div>
+                </div>
+              </div>
+              <p
+                v-for="(para, pIndex) in section.content"
+                :key="pIndex"
+                v-html="para"
+              ></p>
+              <div v-if="section.resumeLink">
+                <a :href="section.resumeLink" target="_blank">查看詳細履歷</a>
+              </div>
+              <div v-if="section.skills" class="grid">
+                <div
+                  class="grid-item"
+                  v-for="(skill, sIndex) in section.skills"
+                  :key="sIndex"
+                >
+                  <h3>{{ skill.category }}</h3>
+                  <p v-for="(tool, tIndex) in skill.items" :key="tIndex">
+                    {{ tool }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 頁尾 -->
+      <div class="footer_info">
+        <div
+          class="footer_info-item"
+          v-for="(footer, fIndex) in footerInfo"
+          :key="fIndex"
+        >
+          <h3>{{ footer.title }}</h3>
+          <p
+            v-for="(line, lIndex) in footer.items"
+            :key="lIndex"
+            v-html="line"
+          ></p>
+        </div>
+      </div>
+
+      <div class="marquee-container">
+        <div class="scrolling">{{ copyright }}</div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>
