@@ -12,9 +12,33 @@ const app = createApp({
       isMenuOpen: false,
       navActive: false,
       navItems: [
-        { label: "PROJECTS", link: "project.html" },
-        { label: "INFO", link: "info.html" },
-        { label: "CONTACT", link: "contact.html" },
+        {
+          title: "PROJECTS",
+          link: "project.html",
+          subItems: [
+            { text: "WEBSITE", link: "#" },
+            { text: "GRAPHIC", link: "#" },
+          ],
+        },
+        {
+          title: "INFO",
+          link: "info.html",
+          image: "https://via.placeholder.com/150",
+          subItems: [
+            { text: "EXPERIENCE", link: "#" },
+            { text: "EXPERTISE", link: "#" },
+          ],
+        },
+        {
+          title: "CONTACT",
+          link: "contact.html",
+          subItems: [
+            { text: "Github", link: "#" },
+            { text: "Instagram", link: "#" },
+            { text: "Gmail", link: "mailto:yenling061@gmail.com" },
+            { text: "HaveFun", link: "#" },
+          ],
+        },
       ],
       sections: [
         {
