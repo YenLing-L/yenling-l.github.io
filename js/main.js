@@ -3,6 +3,9 @@ const { createApp } = Vue;
 const app = createApp({
   data() {
     return {
+      isMenuActive: false,
+      mouseX: -200,
+      mouseY: -200,
       siteTitle: "YEN-LING",
       showBackToTop: false,
       scrollProgress: 0,
@@ -106,10 +109,38 @@ const app = createApp({
       copyright: "copyright © 2025 YEN-LING　All Rights Reserved.",
     };
   },
+  computed: {
+    spotlightStyle() {
+      return {
+        clipPath: `circle(80px at ${this.mouseX}px ${this.mouseY}px)`,
+        backgroundColor: "#fff",
+      };
+    },
+    cursorStyle() {
+      return {
+        transform: `translate(${this.mouseX}px, ${this.mouseY}px)`,
+      };
+    },
+  },
   methods: {
+    openMenu() {
+      this.isMenuActive = true;
+    },
+    closeMenu() {
+      this.isMenuActive = false;
+    },
+    updateSpotlight(event) {
+      this.mouseX = event.clientX;
+      this.mouseY = event.clientY;
+    },
+    resetSpotlight() {
+      this.mouseX = -200;
+      this.mouseY = -200;
+    },
     toggleMenu() {
       this.navActive = !this.navActive;
       this.isMenuOpen = !this.isMenuOpen;
+      this.isMenuActive = !this.isMenuActive;
     },
     handleScroll() {
       const scrollTop =

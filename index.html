@@ -17,6 +17,58 @@
   </head>
   <body>
     <div id="app">
+      <div
+        class="menu-overlay"
+        :class="{ 'is-active': isMenuActive }"
+        @mousemove="updateSpotlight"
+        @mouseleave="resetSpotlight"
+      >
+        <div class="liquid-wrapper">
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+        </div>
+
+        <div class="menu-content-spotlight" :style="spotlightStyle">
+          <div class="menu-content">
+            <ul class="menu-nav" :class="{ active: navActive }">
+              <li v-for="(item, index) in navItems" :key="index">
+                <a :href="item.link">{{ item.label }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="menu-content">
+          <button class="menu-close-button" @click="closeMenu">
+            <svg viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <ul class="menu-nav" :class="{ active: navActive }">
+            <li v-for="(item, index) in navItems" :key="index">
+              <a :href="item.link">{{ item.label }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <svg class="svg-filters">
+        <filter id="wave-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"
+            result="wave"
+          />
+          <feBlend in="SourceGraphic" in2="wave" />
+        </filter>
+      </svg>
       <!-- 導覽列 -->
       <nav>
         <div
@@ -28,12 +80,7 @@
           <span class="bar-2"></span>
           <span class="bar-3"></span>
         </div>
-        <a href="yenling.html" class="logo">{{ siteTitle }}</a>
-        <ul class="nav-menu" :class="{ active: navActive }">
-          <li v-for="(item, index) in navItems" :key="index">
-            <a :href="item.link">{{ item.label }}</a>
-          </li>
-        </ul>
+        <a class="logo" @click="openMenu">{{ siteTitle }}</a>
       </nav>
 
       <!-- 內容 -->
