@@ -455,7 +455,6 @@ p {
   color: #333;
 }
 
-/* --- 原有 Liquid Wave Menu CSS (部分微調) --- */
 .page-content {
   display: flex;
   justify-content: center;
@@ -575,29 +574,117 @@ p {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease 1.1s, transform 0.6s ease 1.1s;
+  width: 100%;
 }
 .menu-overlay.is-active .menu-content {
   opacity: 1;
   transform: translateY(0);
 }
-.menu-nav ul {
+
+.menu-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 80%; 
   list-style: none;
+  padding: 0;
   text-align: center;
+  align-items: start;
 }
-.menu-nav li {
-  margin: 18px 0;
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.menu-nav a {
-  font-size: 3.5rem;
+
+.menu-title,
+.menu-title a {
+  font-size: 2.5rem;
   font-weight: bold;
   color: #fff;
   text-decoration: none;
   transition: all 0.3s ease;
   letter-spacing: 2px;
 }
-.menu-nav a:hover {
+.menu-title a:hover {
   color: #ccc;
 }
+
+/* 探照燈效果下的標題顏色 */
+.menu-content-spotlight .menu-title a {
+  color: #1a1a1a;
+}
+.menu-content-spotlight .menu-title a:hover {
+  color: #555;
+}
+
+.menu-info-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.menu-sub-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu-sub-items a {
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.menu-sub-items a:hover {
+  color: #ccc;
+}
+
+.menu-content-spotlight .menu-sub-items a {
+  color: #1a1a1a;
+}
+.menu-content-spotlight .menu-sub-items a:hover {
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .menu-nav {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    width: 90%;
+  }
+
+  .menu-title,
+  .menu-title a {
+    font-size: 2rem;
+  }
+
+  .menu-info-header {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .menu-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .menu-sub-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 15px;
+  }
+}
+
 .menu-close-button {
   position: absolute;
   top: 30px;
@@ -630,11 +717,7 @@ p {
   height: 0;
   pointer-events: none;
 }
-@media (max-width: 1024px) {
-  .menu-nav a {
-    font-size: 2.8rem;
-  }
-}
+
 @media (min-width: 768px) and (max-width: 1366px) {
   .liquid-wrapper {
     height: 100dvh;
@@ -714,10 +797,7 @@ p {
     font-size: 1rem;
     padding: 12px 28px;
   }
-  .menu-nav a {
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-  }
+
   .menu-nav li {
     margin: 15px 0;
   }
@@ -784,7 +864,6 @@ p {
   }
 }
 
-/* 探照燈效果的上層容器 */
 .menu-content-spotlight {
   position: absolute;
   top: 0;
@@ -796,10 +875,4 @@ p {
   transform: translateY(0);
   transition: none;
   pointer-events: none;
-}
-.menu-content-spotlight .menu-nav a {
-  color: #1a1a1a;
-}
-.menu-content-spotlight .menu-nav a:hover {
-  color: #555;
 }
