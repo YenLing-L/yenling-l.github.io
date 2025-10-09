@@ -94,7 +94,7 @@ nav {
 }
 
 .logo {
-  margin-top:20px;
+  margin-top: 20px;
   text-decoration: none;
   color: #333;
   position: absolute;
@@ -582,7 +582,7 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  width: 80%; 
+  width: 80%;
   list-style: none;
   padding: 0;
   text-align: center;
@@ -873,4 +873,35 @@ p {
   transform: translateY(0);
   transition: none;
   pointer-events: none;
+}
+
+.menu-logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  z-index: 11;
+  transition: color 0.3s ease;
+}
+
+.menu-logo:hover {
+  color: #ccc;
+}
+
+.menu-content-spotlight .menu-logo {
+  color: #1a1a1a;
+}
+
+.menu-content-spotlight .menu-logo:hover {
+  color: #555;
+}
+
+@media (max-width: 767px) {
+  .menu-logo {
+    top: 20px;
+    left: 20px;
+  }
 }
