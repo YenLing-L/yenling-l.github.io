@@ -23,7 +23,8 @@ const app = createApp({
         {
           title: "INFO",
           link: "info.html",
-          image: "https://via.placeholder.com/150",
+          image:
+            "https://notion-avatar.app/api/svg/eyJmYWNlIjo4LCJub3NlIjozLCJtb3V0aCI6MTIsImV5ZXMiOjMsImV5ZWJyb3dzIjo3LCJnbGFzc2VzIjowLCJoYWlyIjo1MCwiYWNjZXNzb3JpZXMiOjgsImRldGFpbHMiOjEsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InRyYW5zcGFyZW50Iiwic2hhcGUiOiJjaXJjbGUifQ==",
           subItems: [
             { text: "EXPERIENCE", link: "#" },
             { text: "EXPERTISE", link: "#" },
@@ -33,7 +34,10 @@ const app = createApp({
           title: "CONTACT",
           link: "contact.html",
           subItems: [
-            { text: "Github", link: "#" },
+            {
+              text: "Github",
+              link: "https://github.com/YenLing-L?tab=overview&from",
+            },
             { text: "Instagram", link: "#" },
             { text: "Gmail", link: "mailto:yenling061@gmail.com" },
             { text: "HaveFun", link: "#" },
@@ -107,6 +111,78 @@ const app = createApp({
                 "Google Analytics",
                 "Google Ads",
                 "Poly Analyst",
+              ],
+            },
+          ],
+        },
+      ],
+      portfolioSections: [
+        {
+          title: {
+            part1: "Website & Design",
+            part2: "| 網站與設計",
+          },
+          projects: [
+            {
+              link: "muyifang.html",
+              items: [
+                { dataText: "木藝坊", imgSrc: "img/muyifang_logo.png" },
+                { dataText: "Vue.js", imgSrc: "img/muyifang01.png" },
+                { dataText: "家具設計", imgSrc: "img/muyifang02.png" },
+                { dataText: "流程介紹", imgSrc: "img/muyifang03.png" },
+              ],
+            },
+            {
+              link: "RandomStation.html",
+              items: [
+                { dataText: "測試網站", imgSrc: "img/RS01.png" },
+                { dataText: "Vue.js", imgSrc: "img/RS02.png" },
+                { dataText: "隨機車站", imgSrc: "img/RS03.png" },
+                { dataText: "相關介紹", imgSrc: "img/RS04.png" },
+              ],
+            },
+            {
+              link: "inews.html",
+              items: [
+                { dataText: "映時新聞", imgSrc: "img/b5_logo.png" },
+                { dataText: "Bootstrap", imgSrc: "img/bs5_web2.png" },
+                { dataText: "Vue.js", imgSrc: "img/雜誌.png" },
+                { dataText: "即時搜尋", imgSrc: "img/Scene.gif" },
+              ],
+            },
+            {
+              link: "green.html",
+              items: [
+                { dataText: "Green Energy", imgSrc: "img/green_logo.png" },
+                { dataText: "Tailwind", imgSrc: "img/green_bg.jpg" },
+                { dataText: "綠能顧問公司", imgSrc: "img/green3.png" },
+                { dataText: "表單內容", imgSrc: "img/green2.png" },
+              ],
+            },
+            {
+              link: "game.html",
+              items: [
+                { dataText: "時光裂隙", imgSrc: "img/logo.png" },
+                { dataText: "HTML", imgSrc: "img/game2.png" },
+                { dataText: "Javascript", imgSrc: "img/game3.png" },
+                { dataText: "遊戲", imgSrc: "img/game4.png" },
+              ],
+            },
+          ],
+        },
+        {
+          title: {
+            part1: "Graphic Design",
+            part2: "| 平面設計",
+          },
+          projects: [
+            {
+              link: "#",
+              items: [
+                { dataText: "The echo of Time", imgSrc: "img/35.png" },
+                { dataText: "No offense", imgSrc: "img/34.png" },
+                { dataText: "INHOUR", imgSrc: "img/YEN LING.png" },
+                { dataText: "雜誌封面", imgSrc: "img/雜誌2.png" },
               ],
             },
           ],

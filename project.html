@@ -14,6 +14,7 @@
     <link rel="icon" href="/favicon.png" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/css/info.css" />
+    <link rel="stylesheet" href="/css/project.css" />
   </head>
   <body>
     <div id="app">
@@ -40,7 +41,6 @@
                 v-for="(item, index) in navItems"
                 :key="index"
               >
-                <a class="logo" @click="openMenu">{{ siteTitle }}</a>
                 <div v-if="item.image" class="menu-info-header">
                   <div class="menu-title">
                     <a :href="item.link">{{ item.title }}</a>
@@ -126,53 +126,31 @@
         <a class="logo" @click="openMenu">{{ siteTitle }}</a>
       </nav>
 
-      <div class="content">
-        <div class="timeline">
+      <div
+        v-for="(section, sectionIndex) in portfolioSections"
+        :key="sectionIndex"
+        class="content"
+      >
+        <h2>
+          <span class="part1">{{ section.title.part1 }}</span>
+          <span class="part2">{{ section.title.part2 }}</span>
+        </h2>
+
+        <div class="container">
           <div
-            class="event"
-            v-for="(section, index) in sections"
-            :key="index"
-            data-aos="fade-up"
+            v-for="(project, projectIndex) in section.projects"
+            :key="projectIndex"
+            class="grid_two"
           >
-            <div class="year">
-              <h2>
-                <span class="part1">{{ section.title }}</span>
-                <span class="part2">|{{ section.subtitle }}</span>
-              </h2>
-              <img
-                v-if="section.image"
-                :src="section.image"
-                alt="Section Image"
-              />
-            </div>
-            <div class="word">
-              <div v-if="section.header">
-                <div class="typewriter">
-                  <div>
-                    <h2><a href="yenling.html">{{ siteTitle }}</a></h2>
-                  </div>
-                </div>
-              </div>
-              <p
-                v-for="(para, pIndex) in section.content"
-                :key="pIndex"
-                v-html="para"
-              ></p>
-              <div v-if="section.resumeLink">
-                <a :href="section.resumeLink" target="_blank">查看詳細履歷</a>
-              </div>
-              <div v-if="section.skills" class="grid">
-                <div
-                  class="grid-item"
-                  v-for="(skill, sIndex) in section.skills"
-                  :key="sIndex"
-                >
-                  <h3>{{ skill.category }}</h3>
-                  <p v-for="(tool, tIndex) in skill.items" :key="tIndex">
-                    {{ tool }}
-                  </p>
-                </div>
-              </div>
+            <div
+              v-for="(item, itemIndex) in project.items"
+              :key="itemIndex"
+              class="grid_two-item"
+              :data-text="item.dataText"
+            >
+              <a :href="project.link" target="_blank">
+                <img :src="item.imgSrc" :alt="item.dataText" />
+              </a>
             </div>
           </div>
         </div>
