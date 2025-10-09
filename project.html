@@ -35,6 +35,7 @@
 
         <div class="menu-content-spotlight" :style="spotlightStyle">
           <div class="menu-content">
+            <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
             <div class="menu-nav">
               <div
                 class="menu-column"
@@ -72,6 +73,7 @@
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
+          <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
           <div class="menu-nav">
             <div
               class="menu-column"
@@ -123,7 +125,9 @@
           <span class="bar-2"></span>
           <span class="bar-3"></span>
         </div>
-        <a class="logo" @click="openMenu">{{ siteTitle }}</a>
+        <a class="logo" v-if="!isMenuActive" @click="openMenu"
+          >{{ siteTitle }}</a
+        >
       </nav>
 
       <div
