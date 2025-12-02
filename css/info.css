@@ -101,7 +101,7 @@ nav {
   font-weight: 600;
   font-style: normal;
   z-index: 10;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.1vw, 1.5rem);
 }
 
 .content {
@@ -139,7 +139,7 @@ a {
 }
 
 .year {
-  width: 10vw;
+  width: 100%;
   font-weight: bold;
   color: #555;
   padding-right: 0;
@@ -150,7 +150,7 @@ a {
 .year h2 {
   text-align: left;
   pointer-events: auto;
-  font-size: 20px;
+  font-size: clamp(1.4rem, 1.5vw, 1.6rem);
   color: #333;
   margin-bottom: 20px;
   display: flex;
@@ -159,20 +159,47 @@ a {
 
 /* 手機樣式 */
 @media (max-width: 768px) {
+  .year {
+    order: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "area-p1 area-img"
+      "area-p2 area-img";
+    align-items: center;
+    gap: 0 15px;
+  }
+
   .year h2 {
     display: contents;
-    /* 取消 Flexbox 佈局 */
   }
 
-  .year h2 .part1,
-  .year h2 .part2 {
+  .year h2 .part1 {
+    grid-area: area-p1;
     display: block;
-    /* 強制換行 */
+    align-self: end;
+    line-height: 1.2;
   }
 
   .year h2 .part2 {
-    margin-top: 5px;
-    /* 增加間距 */
+    grid-area: area-p2;
+    display: block;
+    align-self: start;
+    margin-top: 0;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .event img {
+    grid-area: area-img;
+    opacity: 1 !important;
+    width: 120px !important;
+    height: 120px !important;
+    min-width: 140px !important;
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 0;
   }
 }
 
@@ -189,7 +216,7 @@ a {
 }
 
 .word p {
-  font-size: 14px;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   pointer-events: auto;
 }
 
@@ -234,7 +261,7 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  margin-top: 50px;
+  margin-top: 5px;
   margin-bottom: 10px;
   padding: 100px;
   position: absolute;
@@ -245,19 +272,19 @@ p {
 }
 
 .footer_info-item h3 {
-  font-size: 12px;
+  font-size: clamp(1.4rem, 1.2vw, 2rem);
   text-decoration: none;
   color: #333;
 }
 
 .footer_info-item p {
-  font-size: 12px;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   text-decoration: none;
   color: #333;
 }
 
 .footer_info-item a {
-  font-size: 12px;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   text-decoration: none;
   color: #333;
 }
@@ -372,7 +399,7 @@ p {
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-size: 12px;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   text-decoration: none;
   color: #333;
 }
@@ -461,7 +488,7 @@ p {
 }
 .menu-open-button {
   padding: 15px 35px;
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   font-weight: bold;
   color: #1a1a1a;
   background: transparent;
@@ -597,7 +624,7 @@ p {
 
 .menu-title,
 .menu-title a {
-  font-size: 4rem;
+  font-size: clamp(2rem, 4vw, 4rem);
   font-weight: bold;
   color: #fff;
   text-decoration: none;
@@ -638,7 +665,7 @@ p {
 }
 
 .menu-sub-items a {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 2vw, 2rem);
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -663,7 +690,7 @@ p {
 
   .menu-title,
   .menu-title a {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 2vw, 2rem);
   }
 
   .menu-info-header {
@@ -792,7 +819,7 @@ p {
 }
 @media (max-width: 767px) {
   .menu-open-button {
-    font-size: 1rem;
+    font-size: clamp(0.8rem, 1vw, 1rem);
     padding: 12px 28px;
   }
 
@@ -879,7 +906,7 @@ p {
   position: absolute;
   top: 30px;
   left: 30px;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.1vw, 1.5rem);
   font-weight: 600;
   color: #fff;
   text-decoration: none;

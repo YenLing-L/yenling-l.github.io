@@ -156,11 +156,13 @@
                   </div>
                 </div>
               </div>
+              <br />
               <p
                 v-for="(para, pIndex) in section.content"
                 :key="pIndex"
                 v-html="para"
               ></p>
+              <br />
               <div v-if="section.resumeLink">
                 <a :href="section.resumeLink" target="_blank">查看詳細履歷</a>
               </div>
