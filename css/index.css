@@ -510,7 +510,7 @@ p {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease 1.5s;
-  z-index: 8;
+  z-index: 50;
 }
 .menu-overlay.is-active {
   opacity: 1;

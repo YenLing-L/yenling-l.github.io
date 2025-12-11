@@ -34,12 +34,12 @@ const app = createApp({
           title: "CONTACT",
           link: "contact.html",
           subItems: [
+            { text: "Gmail", link: "mailto:yenling061@gmail.com" },
             {
               text: "Github",
               link: "https://github.com/YenLing-L?tab=overview&from",
             },
             { text: "Instagram", link: "#" },
-            { text: "Gmail", link: "mailto:yenling061@gmail.com" },
             { text: "HaveFun", link: "#" },
           ],
         },
