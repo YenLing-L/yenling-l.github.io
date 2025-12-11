@@ -64,6 +64,7 @@ const app = createApp({
             "朝陽科技大學　學士　2022<br>Chaoyang University of Technology, Bachelor",
             "德國雷根斯堡大學　交換生　2022<br>University of Regensburg, Exchange student",
             "創價心工程顧問公司　專案管理師　2023-2024<br>Chuang jia xin Engineering Consultants, Project manager",
+            "天鎏科技企業有限公司　網頁前端工程師　2025-至今<br>Tyan Liu Technology Co., Ltd., Frontend Engineer",
           ],
           resumeLink: "https://yen061.notion.site/",
         },
