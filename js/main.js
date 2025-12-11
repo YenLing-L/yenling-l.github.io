@@ -16,18 +16,18 @@ const app = createApp({
           title: "PROJECTS",
           link: "project.html",
           subItems: [
-            { text: "WEBSITE", link: "#" },
-            { text: "GRAPHIC", link: "#" },
+            { text: "網站　WEBSITE", link: "#" },
+            { text: "平面　GRAPHIC", link: "#" },
           ],
         },
         {
           title: "INFO",
-          link: "info.html",
+          link: "index.html",
           image:
             "https://notion-avatar.app/api/svg/eyJmYWNlIjo4LCJub3NlIjozLCJtb3V0aCI6MTIsImV5ZXMiOjMsImV5ZWJyb3dzIjo3LCJnbGFzc2VzIjowLCJoYWlyIjo1MCwiYWNjZXNzb3JpZXMiOjgsImRldGFpbHMiOjEsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InRyYW5zcGFyZW50Iiwic2hhcGUiOiJjaXJjbGUifQ==",
           subItems: [
-            { text: "EXPERIENCE", link: "#" },
-            { text: "EXPERTISE", link: "#" },
+            { text: "經歷　EXPERIENCE", link: "index.html" },
+            { text: "專長　EXPERTISE", link: "index.html" },
           ],
         },
         {
