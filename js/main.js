@@ -125,20 +125,46 @@ const app = createApp({
           },
           projects: [
             {
+              link: "Lumos.html",
+              items: [
+                { dataText: "Lumos", imgSrc: "img/LM01.png" },
+                { dataText: "Vue.js", imgSrc: "img/LM02.png" },
+                { dataText: "燈具商店", imgSrc: "img/LM03.png" },
+                { dataText: "案例分享", imgSrc: "img/LM04.png" },
+              ],
+            },
+            {
+              link: "CMS.html",
+              items: [
+                { dataText: "CMS管理系統", imgSrc: "img/CM01.png" },
+                { dataText: "Vue.js", imgSrc: "img/CM02.png" },
+                { dataText: "學生收費項目", imgSrc: "img/CM03.png" },
+                { dataText: "管理平台", imgSrc: "img/CM04.png" },
+              ],
+            },
+            {
               link: "muyifang.html",
               items: [
                 { dataText: "木藝坊", imgSrc: "img/muyifang_logo.png" },
-                { dataText: "Vue.js", imgSrc: "img/muyifang01.png" },
-                { dataText: "家具設計", imgSrc: "img/muyifang02.png" },
-                { dataText: "流程介紹", imgSrc: "img/muyifang03.png" },
+                {
+                  dataText: "Vue.js",
+                  imgSrc:
+                    "https://images.unsplash.com/photo-1617384104622-5f04202ca46b?q=80&w=2705&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                },
+                {
+                  dataText: "家具設計",
+                  imgSrc:
+                    "https://plus.unsplash.com/premium_photo-1704686580555-6f31384f756a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29vZCUyMGNoYWlyc3xlbnwwfHwwfHx8MA%3D%3D",
+                },
+                { dataText: "流程介紹", imgSrc: "img/muyifang01.png" },
               ],
             },
             {
               link: "RandomStation.html",
               items: [
-                { dataText: "測試網站", imgSrc: "img/RS01.png" },
+                { dataText: "隨機車站", imgSrc: "img/RS01.gif" },
                 { dataText: "Vue.js", imgSrc: "img/RS02.png" },
-                { dataText: "隨機車站", imgSrc: "img/RS03.png" },
+                { dataText: "隨機旅行", imgSrc: "img/RS03.png" },
                 { dataText: "相關介紹", imgSrc: "img/RS04.png" },
               ],
             },
@@ -165,7 +191,7 @@ const app = createApp({
               items: [
                 { dataText: "時光裂隙", imgSrc: "img/logo.png" },
                 { dataText: "HTML", imgSrc: "img/game2.png" },
-                { dataText: "Javascript", imgSrc: "img/game3.png" },
+                { dataText: "Javascript", imgSrc: "img/game3.gif" },
                 { dataText: "遊戲", imgSrc: "img/game4.png" },
               ],
             },

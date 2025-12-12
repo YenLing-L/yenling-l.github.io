@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>木藝坊 | 原創家具設計工作室</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Arial', sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      background-color: #f9f5f0;
+    }
+
+    .main-page {
+      font-family: 'Noto Sans TC', 'Arial', sans-serif;
+      color: #333;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 20px;
+      z-index: 1000;
+      background-color: rgba(249, 245, 240, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+
+    .header.scrolled {
+      padding: 10px 20px;
+      background-color: rgba(249, 245, 240, 0.98);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #5c4d3c;
+      display: flex;
+      align-items: center;
+      z-index: 1002;
+    }
+
+    .logo i {
+      margin-right: 10px;
+      font-size: 22px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #5c4d3c;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #8b7355;
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #8b7355;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1002;
+      position: relative;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background-color: #5c4d3c;
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    .menu-btn.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-btn.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #f9f5f0;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform: translateY(-20px);
+    }
+
+    .mobile-nav.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .mobile-nav-links li {
+      margin: 30px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .mobile-nav.open .mobile-nav-links li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-nav-links li:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .mobile-nav-links li:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .mobile-nav-links li:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .mobile-nav-links li:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .mobile-nav-links li:nth-child(5) {
+      transition-delay: 0.5s;
+    }
+
+    .mobile-nav-links li:nth-child(6) {
+      transition-delay: 0.6s;
+    }
+
+    .mobile-nav-links a {
+      text-decoration: none;
+      color: #5c4d3c;
+      font-size: 1.5rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 10px 20px;
+      display: inline-block;
+    }
+
+    .mobile-nav-links a:hover {
+      color: #8b7355;
+      background-color: rgba(139, 115, 85, 0.1);
+      border-radius: 5px;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1585128833500-ec98262cb4f5?q=80&w=2279&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+      color: white;
+      position: relative;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-button {
+      padding: 12px 30px;
+      background-color: #8b7355;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .cta-button:hover {
+      background-color: #5c4d3c;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      cursor: pointer;
+    }
+
+    .scroll-indicator span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-bottom: 2px solid white;
+      border-right: 2px solid white;
+      transform: rotate(45deg);
+      animation: scrollAnimation 2s infinite;
+    }
+
+    @keyframes scrollAnimation {
+      0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-10px, -10px);
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(10px, 10px);
+      }
+    }
+
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 60px;
+      color: #5c4d3c;
+      position: relative;
+    }
+
+    .contact-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 60px;
+      color: #5c4d3c;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: #8b7355;
+    }
+
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #5c4d3c;
+    }
+
+    .about-text p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .about-image {
+      flex: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      text-align: center;
+      border: 1px solid #e8e1d7;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      border-color: #d4c9b8;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #8b7355;
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #5c4d3c;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      aspect-ratio: 4/3;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      transform: translateY(0);
+    }
+
+    .portfolio-overlay h3 {
+      margin-bottom: 10px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .team-member {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .team-info {
+      padding: 20px;
+    }
+
+    .team-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      color: #5c4d3c;
+    }
+
+    .team-info p {
+      color: #8b7355;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: #5c4d3c;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #8b7355;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 50px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .contact-icon {
+      font-size: 1.2rem;
+      color: #8b7355;
+      margin-top: 3px;
+    }
+
+    .contact-text h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #5c4d3c;
+    }
+
+    .contact-form {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #5c4d3c;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e8e1d7;
+      border-radius: 5px;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #8b7355;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #5c4d3c;
+      color: #e8e1d7;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: left;
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #d4c9b8;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .social-links-footer {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links-footer a {
+      color: #d4c9b8;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .social-links-footer a:hover {
+      color: white;
+    }
+
+    .copyright {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 992px) {
+      .about-content {
+        flex-direction: column;
+      }
+
+      .about-image {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .section {
+        padding: 70px 20px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 分頁內容切換效果 */
+    .page-enter-active,
+    .page-leave-active {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .page-enter-from,
+    .page-leave-to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .section {
+        padding: 70px 20px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* 確保移動菜單打開時頁面不滾動 */
+      body.menu-open {
+        overflow: hidden;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+
+<body :class="{ 'menu-open': mobileMenuOpen }">
+  <div id="app">
+    <header class="header" :class="{ scrolled: isScrolled }">
+      <nav class="navbar">
+        <div class="logo">
+          <i class="fas fa-chair"></i>
+          木藝坊
+        </div>
+        <ul class="nav-links">
+          <li><a href="#" @click.prevent="changePage('home')" :class="{ active: currentPage === 'home' }">首頁</a></li>
+          <li><a href="#" @click.prevent="changePage('about')" :class="{ active: currentPage === 'about' }">關於我們</a>
+          </li>
+          <li><a href="#" @click.prevent="changePage('services')"
+              :class="{ active: currentPage === 'services' }">服務項目</a></li>
+          <li><a href="#" @click.prevent="changePage('portfolio')"
+              :class="{ active: currentPage === 'portfolio' }">相關作品</a></li>
+          <li><a href="#" @click.prevent="changePage('team')" :class="{ active: currentPage === 'team' }">設計團隊</a></li>
+          <li><a href="#" @click.prevent="changePage('contact')" :class="{ active: currentPage === 'contact' }">聯絡我們</a>
+          </li>
+        </ul>
+        <button class="menu-btn" :class="{ open: mobileMenuOpen }" @click="toggleMobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </header>
+
+    <div class="mobile-nav" :class="{ open: mobileMenuOpen }" @click.self="closeMobileMenu">
+      <ul class="mobile-nav-links">
+        <li><a href="#" @click.prevent="changePage('home')">首頁</a></li>
+        <li><a href="#" @click.prevent="changePage('about')">關於我們</a></li>
+        <li><a href="#" @click.prevent="changePage('services')">服務項目</a></li>
+        <li><a href="#" @click.prevent="changePage('portfolio')">作品集</a></li>
+        <li><a href="#" @click.prevent="changePage('team')">設計團隊</a></li>
+        <li><a href="#" @click.prevent="changePage('contact')">聯絡我們</a></li>
+      </ul>
+    </div>
+
+    <transition name="page" mode="out-in">
+      <!-- 首頁 -->
+      <div v-if="currentPage === 'home'" key="home">
+        <section class="hero">
+          <div class="hero-content">
+            <h1 ref="heroTitle">匠心獨運的家具設計</h1>
+            <p ref="heroText">融合傳統工藝與現代美學，打造獨一無二的家具作品</p>
+            <button ref="heroBtn" class="cta-button" @click="changePage('contact')">預約諮詢</button>
+          </div>
+          <div class="scroll-indicator" @click="scrollToNextSection">
+            <span></span>
+          </div>
+        </section>
+
+        <section ref="aboutSection" class="section">
+          <h2 class="section-title">關於木藝坊</h2>
+          <div class="about-content">
+            <div class="about-text">
+              <h3>我們的故事</h3>
+              <p>木藝坊成立於2010年，由一群熱愛木工藝的設計師共同創立。我們相信家具不僅是日常用品，更是承載情感與記憶的藝術品。</p>
+              <p>每一件作品都經過精心設計與手工打造，選用優質木材，結合傳統榫卯工藝與現代設計理念，創造出兼具美感與實用性的家具。</p>
+              <button class="cta-button" @click="changePage('about')">了解更多</button>
+            </div>
+            <div class="about-image">
+              <img
+                src="https://images.unsplash.com/photo-1617575521317-d2974f3b56d2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3Rvcnl8ZW58MHx8MHx8fDA%3D"
+                alt="工作室照片">
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background-color: #f5f1eb;">
+          <h2 class="section-title">我們的服務</h2>
+          <div class="services-grid">
+            <div class="service-card" v-for="(service, index) in homeServices" :key="index">
+              <div class="service-icon">
+                <i :class="service.icon"></i>
+              </div>
+              <h3>{{ service.title }}</h3>
+              <p>{{ service.description }}</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 關於我們 -->
+      <div v-else-if="currentPage === 'about'" key="about">
+        <section class="hero"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+          <div class="hero-content">
+            <h1>關於木藝坊</h1>
+            <p>十年匠心，打造永恆家具</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="about-content">
+            <div class="about-image">
+              <img
+                src="https://images.unsplash.com/photo-1463082459669-fd1ca1692fea?q=80&w=2669&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="工作室環境">
+            </div>
+            <div class="about-text">
+              <h3>我們的理念</h3>
+              <p>在快速消費的時代，我們堅持慢工出細活。每一件家具都經過數十道工序，由資深工匠親手打造，確保品質與細節。</p>
+              <p>我們重視環保與永續發展，所有木材均來自可持續林場，並採用環保塗料，讓您的家具不僅美觀耐用，也對地球友善。</p>
+              <h3 style="margin-top: 30px;">工藝傳承</h3>
+              <p>我們的團隊成員均接受過傳統木工訓練，並不斷創新設計語言。我們定期舉辦工作坊，推廣木工藝文化，讓更多人了解並喜愛這門古老技藝。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background-color: #f5f1eb;">
+          <h2 class="section-title">我們的優勢</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-tree"></i>
+              </div>
+              <h3>優質木材</h3>
+              <p>嚴選北美胡桃木、歐洲橡木等高級木材，每塊木料都經過嚴格篩選</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-hammer"></i>
+              </div>
+              <h3>傳統工藝</h3>
+              <p>堅持傳統榫卯結構，不使用釘子與膠水，確保家具經久耐用</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-pencil-ruler"></i>
+              </div>
+              <h3>個性化設計</h3>
+              <p>根據客戶需求與空間特點，提供量身定制的設計方案</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 服務項目 -->
+      <div v-else-if="currentPage === 'services'" key="services">
+        <section class="hero"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1617384104622-5f04202ca46b?q=80&w=2705&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+          <div class="hero-content">
+            <h1>服務項目</h1>
+            <p>從概念到成品，我們提供全方位的家具解決方案</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">我們的服務</h2>
+          <div class="services-grid">
+            <div class="service-card" v-for="(service, index) in services" :key="index">
+              <div class="service-icon">
+                <i :class="service.icon"></i>
+              </div>
+              <h3>{{ service.title }}</h3>
+              <p>{{ service.description }}</p>
+              <p style="margin-top: 15px; color: #8b7355; font-weight: 500;">{{ service.price }}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="background-color: #f5f1eb;">
+          <h2 class="section-title">服務流程</h2>
+          <div style="max-width: 800px; margin: 0 auto;">
+            <div style="display: flex; flex-direction: column; gap: 30px; position: relative;">
+              <div style="position: absolute; left: 30px; top: 0; bottom: 0; width: 2px; background-color: #d4c9b8;">
+              </div>
+
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <div
+                  style="background-color: #8b7355; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; z-index: 1;">
+                  1</div>
+                <div>
+                  <h3 style="color: #5c4d3c; margin-bottom: 10px;">需求溝通</h3>
+                  <p>我們會與您詳細溝通需求，了解您的喜好、空間尺寸、預算等，並提供專業建議。</p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <div
+                  style="background-color: #8b7355; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; z-index: 1;">
+                  2</div>
+                <div>
+                  <h3 style="color: #5c4d3c; margin-bottom: 10px;">設計提案</h3>
+                  <p>根據溝通結果，我們將提供3D設計圖與材料樣本，供您選擇與調整。</p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <div
+                  style="background-color: #8b7355; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; z-index: 1;">
+                  3</div>
+                <div>
+                  <h3 style="color: #5c4d3c; margin-bottom: 10px;">簽約確認</h3>
+                  <p>確定設計方案後，簽訂正式合同，支付50%定金，我們即開始製作。</p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <div
+                  style="background-color: #8b7355; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; z-index: 1;">
+                  4</div>
+                <div>
+                  <h3 style="color: #5c4d3c; margin-bottom: 10px;">製作過程</h3>
+                  <p>我們會定期向您匯報製作進度，並邀請您來工作室參觀製作過程。</p>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <div
+                  style="background-color: #8b7355; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0; z-index: 1;">
+                  5</div>
+                <div>
+                  <h3 style="color: #5c4d3c; margin-bottom: 10px;">交付安裝</h3>
+                  <p>作品完成後，我們會安排專業團隊送貨上門並安裝，確保完美呈現。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 相關作品 -->
+      <div v-else-if="currentPage === 'portfolio'" key="portfolio">
+        <section class="hero"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1590635022668-81cc8696a19d?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+          <div class="hero-content">
+            <h1>相關作品</h1>
+            <p>探索我們過往的設計作品</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">我們的精選作品</h2>
+          <div class="portfolio-grid">
+            <div class="portfolio-item" v-for="(item, index) in portfolioItems" :key="index">
+              <img :src="item.image" :alt="item.title">
+              <div class="portfolio-overlay">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.category }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 設計團隊 -->
+      <div v-else-if="currentPage === 'team'" key="team">
+        <section class="hero"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1740672446691-1acca4aef927?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+          <div class="hero-content">
+            <h1>設計團隊</h1>
+            <p>認識我們才華橫溢的設計師與工匠</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">我們的團隊</h2>
+          <div class="team-grid">
+            <div class="team-member" v-for="(member, index) in teamMembers" :key="index">
+              <img :src="member.image" :alt="member.name">
+              <div class="team-info">
+                <h3>{{ member.name }}</h3>
+                <p>{{ member.position }}</p>
+                <p style="font-style: normal; color: #666; font-size: 0.9rem;">{{ member.bio }}</p>
+                <div class="social-links">
+                  <a href="#"><i class="fab fa-instagram"></i></a>
+                  <a href="#"><i class="fab fa-behance"></i></a>
+                  <a href="#"><i class="far fa-envelope"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 聯絡我們 -->
+      <div v-else-if="currentPage === 'contact'" key="contact">
+        <section class="hero"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+          <div class="hero-content">
+            <h1>聯絡我們</h1>
+            <p>隨時為您提供專業諮詢與服務</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="contact-container">
+            <div class="contact-info">
+              <h2 class="contact-title" style="text-align: left; margin-bottom: 30px;">聯絡資訊</h2>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>工作室地址</h3>
+                  <p>台北市大安區安和路一段123456號789樓</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>聯絡電話</h3>
+                  <p>02-1234-5678</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="far fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>電子郵件</h3>
+                  <p>contact@muyifang.com</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="far fa-clock"></i>
+                </div>
+                <div class="contact-text">
+                  <h3>營業時間</h3>
+                  <p>週一至週五: 10:00 - 18:00<br>週六: 11:00 - 16:00<br>週日公休</p>
+                </div>
+              </div>
+
+              <div style="margin-top: 30px;">
+                <h3 style="color: #5c4d3c; margin-bottom: 15px;">追蹤我們</h3>
+                <div class="social-links" style="justify-content: flex-start; gap: 20px;">
+                  <a href="#" style="font-size: 1.5rem;"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" style="font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                  <a href="#" style="font-size: 1.5rem;"><i class="fab fa-youtube"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form">
+              <h2 class="contact-title" style="text-align: left; margin-bottom: 30px;">預約諮詢</h2>
+              <form @submit.prevent="submitForm">
+                <div class="form-group">
+                  <label for="name">姓名</label>
+                  <input type="text" id="name" v-model="form.name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">電子郵件</label>
+                  <input type="email" id="email" v-model="form.email" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">電話</label>
+                  <input type="tel" id="phone" v-model="form.phone" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="service">感興趣的服務</label>
+                  <select id="service" v-model="form.service"
+                    style="width: 100%; padding: 12px 15px; border: 1px solid #e8e1d7; border-radius: 5px; font-family: inherit; background-color: white;">
+                    <option value="">請選擇服務項目</option>
+                    <option value="custom-furniture">客製化家具</option>
+                    <option value="interior-design">室內設計</option>
+                    <option value="restoration">家具修復</option>
+                    <option value="consultation">設計諮詢</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">訊息內容</label>
+                  <textarea id="message" v-model="form.message" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button" style="width: 100%;">送出訊息</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <div style="width: 100%; height: 400px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.703428574213!2d121.55031431500648!3d25.033972983966967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abcf9a1b7721%3A0x1d0d6e9d6a6b8e1f!2z5Y-w5YyX5biC5aSn5a6J5Y2A5a6J5ZKM5LiA6Lev5Y2X5LqM5q61MTIz6Jmf!5e0!3m2!1szh-TW!2stw!4v1620000000000!5m2!1szh-TW!2stw"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </transition>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>木藝坊</h3>
+          <p style="color: #d4c9b8; line-height: 1.6; margin-top: 15px;">融合傳統工藝與現代設計，打造獨一無二的家具作品。</p>
+          <div class="social-links-footer">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>快速連結</h3>
+          <ul class="footer-links">
+            <li><a href="#" @click.prevent="changePage('home')">首頁</a></li>
+            <li><a href="#" @click.prevent="changePage('about')">關於我們</a></li>
+            <li><a href="#" @click.prevent="changePage('services')">服務項目</a></li>
+            <li><a href="#" @click.prevent="changePage('portfolio')">相關作品</a></li>
+            <li><a href="#" @click.prevent="changePage('contact')">聯絡我們</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>聯絡資訊</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> 台北市大安區安和路一段123456號789樓</li>
+            <li><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> 02-1234-5678</li>
+            <li><i class="far fa-envelope" style="margin-right: 10px;"></i> contact@muyifang.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2025 木藝坊家具設計工作室. 版權所有</p>
+      </div>
+    </footer>
+  </div>
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        // 狀態管理
+        const currentPage = ref('home');
+        const isScrolled = ref(false);
+        const mobileMenuOpen = ref(false);
+
+        // 資料部分
+        const homeServices = ref([
+          { icon: 'fas fa-couch', title: '客製化家具', description: '根據您的需求與空間，量身打造獨一無二的家具作品' },
+          { icon: 'fas fa-home', title: '室內設計', description: '提供整體空間規劃與家具配置方案' },
+          { icon: 'fas fa-tools', title: '家具修復', description: '專業修復古董家具，延續珍貴記憶' }
+        ]);
+
+        const services = ref([
+          { icon: 'fas fa-couch', title: '客製化家具', description: '根據您的需求與空間，量身打造獨一無二的家具作品', price: '價格視設計與材料而定' },
+          { icon: 'fas fa-home', title: '室內設計', description: '提供整體空間規劃與家具配置方案', price: 'NT$8,000/坪起' },
+          { icon: 'fas fa-tools', title: '家具修復', description: '專業修復古董家具，延續珍貴記憶', price: 'NT$3,000起' },
+          { icon: 'fas fa-pencil-ruler', title: '設計諮詢', description: '提供專業家具設計與空間配置建議', price: 'NT$2,000/小時' },
+          { icon: 'fas fa-graduation-cap', title: '木工課程', description: '開設各級木工課程，傳承傳統工藝', price: 'NT$3,500/堂起' },
+          { icon: 'fas fa-box-open', title: '禮品訂製', description: '特別場合的獨特木製禮品', price: 'NT$1,500起' }
+        ]);
+
+        const portfolioItems = ref([
+          { image: 'https://images.unsplash.com/photo-1617364852223-75f57e78dc96?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTl8fHdvb2R5JTIwZnVybml0dXJlfGVufDB8fDB8fHww', title: '北歐風客廳組', category: '客製化家具' },
+          { image: 'https://images.unsplash.com/photo-1487015307662-6ce6210680f1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHdvb2R5JTIwZnVybml0dXJlfGVufDB8fDB8fHww', title: '工業風書桌', category: '客製化家具' },
+          { image: 'https://images.unsplash.com/photo-1705320678447-78c5fe2615a7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', title: '現代簡約臥室', category: '室內設計' },
+          { image: 'https://plus.unsplash.com/premium_photo-1704686580555-6f31384f756a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29vZCUyMGNoYWlyc3xlbnwwfHwwfHx8MA%3D%3D', title: '古董櫃修復', category: '家具修復' },
+          { image: 'https://plus.unsplash.com/premium_photo-1668245539958-3e6e6259c00b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njl8fHdvb2R5JTIwZnVybml0dXJlfGVufDB8fDB8fHww', title: '日式茶桌組', category: '客製化家具' },
+          { image: 'https://plus.unsplash.com/premium_photo-1705479742794-5cd85f349bd5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fHdvb2R5JTIwY2hhaXJ8ZW58MHx8MHx8fDA%3D', title: '咖啡廳空間設計', category: '室內設計' }
+        ]);
+
+        const teamMembers = ref([
+          { image: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjgzfHxwZXJzb258ZW58MHx8MHx8fDA%3D', name: '張文豪', position: '創辦人/首席設計師', bio: '擁有20年家具設計經驗，擅長將傳統工藝與現代美學結合。' },
+          { image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2561&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', name: '林雅婷', position: '資深設計師', bio: '專注於空間規劃與家具配置，創造和諧的居住環境。' },
+          { image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODN8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D', name: '王建國', position: '首席工匠', bio: '三代木匠世家，精通傳統榫卯工藝與現代加工技術。' },
+          { image: 'https://plus.unsplash.com/premium_photo-1740113056517-8dd46f0ab1e5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wxfHx8ZW58MHx8fHx8', name: '陳美玲', position: '客戶經理', bio: '協助客戶將需求轉化為具體設計方案，確保完美執行。' }
+        ]);
+
+        const form = ref({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+
+        // 方法部分
+        const changePage = (page) => {
+          currentPage.value = page;
+          closeMobileMenu();
+          window.scrollTo(0, 0);
+        };
+
+        const toggleMobileMenu = () => {
+          mobileMenuOpen.value = !mobileMenuOpen.value;
+          updateBodyOverflow();
+        };
+
+        const closeMobileMenu = () => {
+          mobileMenuOpen.value = false;
+          updateBodyOverflow();
+        };
+
+        const updateBodyOverflow = () => {
+          document.body.style.overflow = mobileMenuOpen.value ? 'hidden' : 'auto';
+        };
+
+        const scrollToNextSection = () => {
+          const section = document.querySelector('.section');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        };
+
+        const submitForm = () => {
+          if (!form.value.name) {
+            alert('請填寫您的姓名');
+            return;
+          }
+          alert(`感謝您的訊息，${form.value.name}！我們會盡快與您聯繫。`);
+          form.value = {
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            message: ''
+          };
+        };
+
+        // 生命週期鉤子
+        onMounted(() => {
+          // 滾動監聽
+          window.addEventListener('scroll', () => {
+            isScrolled.value = window.scrollY > 50;
+          });
+
+          // 初始化動畫
+          gsap.utils.toArray('.section').forEach(section => {
+            gsap.from(section, {
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+              },
+              y: 50,
+              opacity: 0,
+              duration: 1
+            });
+          });
+
+          // 點擊移動菜單外部關閉菜單
+          document.addEventListener('click', (e) => {
+            const mobileNav = document.querySelector('.mobile-nav');
+            const menuBtn = document.querySelector('.menu-btn');
+
+            if (mobileMenuOpen.value &&
+              !mobileNav.contains(e.target) &&
+              !menuBtn.contains(e.target)) {
+              closeMobileMenu();
+            }
+          });
+        });
+
+        // 暴露給模板的屬性和方法
+        return {
+          currentPage,
+          isScrolled,
+          mobileMenuOpen,
+          homeServices,
+          services,
+          portfolioItems,
+          teamMembers,
+          form,
+          changePage,
+          toggleMobileMenu,
+          closeMobileMenu,
+          scrollToNextSection,
+          submitForm
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+
+</html>
