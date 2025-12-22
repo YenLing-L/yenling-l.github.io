@@ -3,6 +3,7 @@ const { createApp } = Vue;
 const app = createApp({
   data() {
     return {
+      selectedProject: null,
       isMenuActive: false,
       mouseX: -200,
       mouseY: -200,
@@ -78,6 +79,8 @@ const app = createApp({
                 "HTML",
                 "CSS",
                 "JavaScript",
+                "Vue.js",
+                "Three.js",
                 "jQuery",
                 "Bootstrap",
                 "Python",
@@ -120,8 +123,8 @@ const app = createApp({
       portfolioSections: [
         {
           title: {
-            part1: "Website & Design",
-            part2: "| 網站與設計",
+            part1: "Website  Design",
+            part2: "| 網站設計",
           },
           projects: [
             {
@@ -250,6 +253,15 @@ const app = createApp({
     },
   },
   methods: {
+    openProjectDetails(project) {
+      console.log("點擊專案:", project);
+      this.selectedProject = project;
+      document.body.style.overflow = "hidden";
+    },
+    closeProjectDetails() {
+      this.selectedProject = null;
+      document.body.style.overflow = "auto";
+    },
     openMenu() {
       this.isMenuActive = true;
     },
