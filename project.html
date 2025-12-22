@@ -141,22 +141,51 @@
         </h2>
 
         <div class="container">
-          <div
-            v-for="(project, projectIndex) in section.projects"
-            :key="projectIndex"
-            class="grid_two"
-          >
+          <div class="project-list">
             <div
-              v-for="(item, itemIndex) in project.items"
-              :key="itemIndex"
-              class="grid_two-item"
-              :data-text="item.dataText"
+              v-for="(project, projectIndex) in section.projects"
+              :key="projectIndex"
+              class="project-row"
+              @click="openProjectDetails(project, $event)"
             >
-              <a :href="project.link" target="_blank">
-                <img :src="item.imgSrc" :alt="item.dataText" />
-              </a>
+              <div class="project-info">
+                <span class="project-name"
+                  >{{ project.items[0].dataText }}</span
+                >
+                <span class="project-lang"
+                  >{{ project.items[1].dataText }}</span
+                >
+              </div>
+
+              <div class="hover-preview">
+                <img :src="project.items[0].imgSrc" />
+              </div>
             </div>
           </div>
+
+          <transition name="expand">
+            <div v-if="selectedProject" class="project-detail-overlay">
+              <button class="close-detail" @click="closeProjectDetails">
+                ✕
+              </button>
+
+              <div class="detail-content">
+                <div class="video-wrapper">
+                  <iframe
+                    :src="'https://www.youtube.com/embed/'"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <div class="description-text">
+                  <h2>{{ selectedProject.items[0].dataText }}</h2>
+                  <p>這裡可以放置專案的詳細介紹文字...</p>
+                </div>
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
 
