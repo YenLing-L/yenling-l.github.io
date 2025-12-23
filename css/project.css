@@ -296,22 +296,52 @@ iframe {
   cursor: pointer;
 }
 
+@keyframes project-lift {
+  0%,
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+    transform: translateY(0);
+    border-color: #eee;
+    z-index: 1;
+  }
+  50% {
+    background-color: #ffffff;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: transparent;
+    transform: translateY(-5px);
+    z-index: 20;
+    border-radius: 12px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0;
   }
 
   .project-row {
-    padding: 25px 0;
+    padding: 25px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px 0;
+    border-bottom: 1px solid #eee;
+    transition: transform 0.3s ease;
+    view-timeline-name: --project-focus;
+    view-timeline-axis: block;
+    animation-name: project-lift;
+    animation-fill-mode: both;
+    animation-timeline: --project-focus;
+    animation-range: entry 15% contain 50% exit 85%;
   }
 
   .project-info {
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
+    z-index: 2;
   }
 
   .project-name {
@@ -321,6 +351,11 @@ iframe {
   .project-lang {
     text-align: left;
     margin-left: 0;
+  }
+
+  .project-name,
+  .project-lang {
+    transition: color 0.3s ease;
   }
 
   .hover-preview {
