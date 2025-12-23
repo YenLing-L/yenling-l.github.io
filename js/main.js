@@ -3,6 +3,8 @@ const { createApp } = Vue;
 const app = createApp({
   data() {
     return {
+      isDetailOpen: false,
+      clickPosition: null,
       selectedProject: null,
       isMenuActive: false,
       mouseX: -200,
@@ -253,15 +255,112 @@ const app = createApp({
     },
   },
   methods: {
-    openProjectDetails(project) {
-      console.log("點擊專案:", project);
-      this.selectedProject = project;
-      document.body.style.overflow = "hidden";
+    openProjectDetails(project, event) {
+      if (event) {
+        event.preventDefault();
+
+        const clickedRow = event.currentTarget;
+        const rect = clickedRow.getBoundingClientRect();
+
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        clickedRow.classList.add("expanding");
+
+        this.clickPosition = {
+          x: centerX,
+          y: centerY,
+          width: rect.width,
+          height: rect.height,
+        };
+        this.selectedProject = project;
+
+        document.body.style.overflow = "hidden";
+        document.body.classList.add("overlay-open");
+
+        setTimeout(() => {
+          this.isDetailOpen = true;
+
+          this.$nextTick(() => {
+            const overlay = document.querySelector(".project-detail-overlay");
+            if (overlay) {
+              overlay.style.clipPath = `circle(0% at ${centerX}px ${centerY}px)`;
+              overlay.style.transformOrigin = `${centerX}px ${centerY}px`;
+
+              overlay.style.visibility = "visible";
+              overlay.style.opacity = "0";
+
+              overlay.offsetHeight;
+
+              overlay.classList.add("active");
+
+              setTimeout(() => {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                const distanceToTopLeft = Math.sqrt(
+                  centerX ** 2 + centerY ** 2
+                );
+                const distanceToTopRight = Math.sqrt(
+                  (viewportWidth - centerX) ** 2 + centerY ** 2
+                );
+                const distanceToBottomLeft = Math.sqrt(
+                  centerX ** 2 + (viewportHeight - centerY) ** 2
+                );
+                const distanceToBottomRight = Math.sqrt(
+                  (viewportWidth - centerX) ** 2 +
+                    (viewportHeight - centerY) ** 2
+                );
+
+                const maxRadius = Math.max(
+                  distanceToTopLeft,
+                  distanceToTopRight,
+                  distanceToBottomLeft,
+                  distanceToBottomRight
+                );
+
+                overlay.style.clipPath = `circle(${
+                  maxRadius + 100
+                }px at ${centerX}px ${centerY}px)`;
+                overlay.style.opacity = "1";
+              }, 10);
+            }
+          });
+        }, 400);
+      }
     },
+
     closeProjectDetails() {
-      this.selectedProject = null;
-      document.body.style.overflow = "auto";
+      // 立即移除浮出效果
+      document.querySelectorAll(".project-row.expanding").forEach((el) => {
+        el.classList.remove("expanding");
+      });
+
+      const overlay = document.querySelector(".project-detail-overlay");
+
+      if (overlay) {
+        // 立即移除active類別
+        overlay.classList.remove("active");
+
+        // 使用較短的等待時間
+        setTimeout(() => {
+          this.selectedProject = null;
+          this.isDetailOpen = false;
+          document.body.style.overflow = "auto";
+          document.body.classList.remove("overlay-open");
+
+          // 重置樣式
+          overlay.style.clipPath = "";
+          overlay.style.transformOrigin = "";
+        }, 300); // 與CSS的0.3s對應
+      } else {
+        this.selectedProject = null;
+        this.isDetailOpen = false;
+        document.body.style.overflow = "auto";
+        document.body.classList.remove("overlay-open");
+      }
     },
+
     openMenu() {
       this.isMenuActive = true;
     },
