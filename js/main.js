@@ -12,6 +12,8 @@ const app = createApp({
       siteTitle: "YEN-LING",
       showBackToTop: false,
       scrollProgress: 0,
+      showDetailBackToTop: false,
+      detailScrollProgress: 0,
       isMenuOpen: false,
       navActive: false,
       navItems: [
@@ -370,6 +372,8 @@ const app = createApp({
         setTimeout(() => {
           this.selectedProject = null;
           this.isDetailOpen = false;
+          this.showDetailBackToTop = false;
+          this.detailScrollProgress = 0;
           document.body.style.overflow = "auto";
           document.body.classList.remove("overlay-open");
 
@@ -379,6 +383,8 @@ const app = createApp({
       } else {
         this.selectedProject = null;
         this.isDetailOpen = false;
+        this.showDetailBackToTop = false;
+        this.detailScrollProgress = 0;
         document.body.style.overflow = "auto";
         document.body.classList.remove("overlay-open");
       }
@@ -419,6 +425,35 @@ const app = createApp({
         top: 0,
         behavior: "smooth",
       });
+    },
+    scrollDetailToTop() {
+      // Handle ref as array (due to v-for creating multiple instances)
+      const overlays = this.$refs.detailOverlay;
+      if (Array.isArray(overlays)) {
+        overlays.forEach(el => {
+          if (el) {
+            el.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }
+        });
+      } else if (overlays) {
+        overlays.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    },
+    handleDetailScroll(event) {
+      const overlay = event.target;
+      const scrollTop = overlay.scrollTop;
+      const scrollHeight = overlay.scrollHeight - overlay.clientHeight;
+
+      this.detailScrollProgress =
+        scrollHeight > 0 ? Math.min(1, scrollTop / scrollHeight) : 0;
+
+      this.showDetailBackToTop = scrollTop > 200;
     },
   },
   mounted() {
