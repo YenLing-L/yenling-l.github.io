@@ -535,6 +535,7 @@ iframe {
 }
 
 .detail-content {
+  margin-top: 600px;
   width: 100%;
   max-width: 1200px;
   opacity: 0;
@@ -580,8 +581,7 @@ iframe {
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+  padding-bottom: 50%;
   margin-bottom: 40px;
   background: #f5f5f5;
   border-radius: 16px;
