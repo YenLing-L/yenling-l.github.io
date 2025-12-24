@@ -395,6 +395,7 @@ const app = createApp({
     },
     closeMenu() {
       this.isMenuActive = false;
+      this.isMenuOpen = false;
     },
     updateSpotlight(event) {
       this.mouseX = event.clientX;
