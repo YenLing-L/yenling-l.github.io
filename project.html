@@ -36,6 +36,10 @@
 
         <div class="menu-content-spotlight" :style="spotlightStyle">
           <div class="menu-content">
+            <button class="menu-close-button" @click="closeMenu">
+              <span class="close-bar-1"></span>
+              <span class="close-bar-2"></span>
+            </button>
             <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
             <div class="menu-nav">
               <div

@@ -34,6 +34,10 @@
 
         <div class="menu-content-spotlight" :style="spotlightStyle">
           <div class="menu-content">
+            <button class="menu-close-button" @click="closeMenu">
+              <span class="close-bar-1"></span>
+              <span class="close-bar-2"></span>
+            </button>
             <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
             <div class="menu-nav">
               <div
@@ -119,7 +123,6 @@
           @click="toggleMenu"
         >
           <span class="bar-1"></span>
-          <span class="bar-2"></span>
           <span class="bar-3"></span>
         </div>
         <a class="logo" v-if="!isMenuActive" @click="openMenu"
