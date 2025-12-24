@@ -331,7 +331,6 @@ const app = createApp({
     },
 
     closeProjectDetails() {
-      // 立即移除浮出效果
       document.querySelectorAll(".project-row.expanding").forEach((el) => {
         el.classList.remove("expanding");
       });
@@ -339,20 +338,17 @@ const app = createApp({
       const overlay = document.querySelector(".project-detail-overlay");
 
       if (overlay) {
-        // 立即移除active類別
         overlay.classList.remove("active");
 
-        // 使用較短的等待時間
         setTimeout(() => {
           this.selectedProject = null;
           this.isDetailOpen = false;
           document.body.style.overflow = "auto";
           document.body.classList.remove("overlay-open");
 
-          // 重置樣式
           overlay.style.clipPath = "";
           overlay.style.transformOrigin = "";
-        }, 300); // 與CSS的0.3s對應
+        }, 300);
       } else {
         this.selectedProject = null;
         this.isDetailOpen = false;
