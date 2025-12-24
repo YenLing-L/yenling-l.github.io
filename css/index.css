@@ -755,6 +755,14 @@ p {
 .menu-close-button:hover span {
   background-color: #ccc;
 }
+
+/* 探照燈效果下的關閉按鈕顏色 */
+.menu-content-spotlight .menu-close-button span {
+  background-color: #1a1a1a;
+}
+.menu-content-spotlight .menu-close-button:hover span {
+  background-color: #555;
+}
 .svg-filters {
   position: absolute;
   width: 0;
