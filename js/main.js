@@ -427,21 +427,20 @@ const app = createApp({
       });
     },
     scrollDetailToTop() {
-      // Handle ref as array (due to v-for creating multiple instances)
       const overlays = this.$refs.detailOverlay;
       if (Array.isArray(overlays)) {
-        overlays.forEach(el => {
+        overlays.forEach((el) => {
           if (el) {
             el.scrollTo({
               top: 0,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
           }
         });
       } else if (overlays) {
         overlays.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     },
@@ -475,6 +474,7 @@ const app = createApp({
 
     observeFadeIn(".year");
     observeFadeIn(".word");
+    observeFadeIn(".project-row");
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);

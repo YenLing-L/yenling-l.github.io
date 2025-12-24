@@ -36,6 +36,25 @@
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.project-row.fade-in-up {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .project-row:hover {
