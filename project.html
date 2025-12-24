@@ -209,10 +209,7 @@
                       <h3>程式語言</h3>
                       <p>{{ selectedProject.items[1].dataText }}</p>
                     </div>
-                    <div class="info-item">
-                      <h3>項目類型</h3>
-                      <p>{{ selectedProject.items[3].dataText }}</p>
-                    </div>
+
                     <div class="info-item" v-if="selectedProject.link">
                       <h3>查看專案</h3>
                       <p>
@@ -221,9 +218,14 @@
                           target="_blank"
                           style="color: #333; text-decoration: underline"
                         >
-                          前往專案頁面 →
+                          前往專案 →
                         </a>
                       </p>
+                    </div>
+
+                    <div class="info-item">
+                      <h3>項目介紹</h3>
+                      <p>{{ selectedProject.items[3].dataText }}</p>
                     </div>
                   </div>
                 </div>
