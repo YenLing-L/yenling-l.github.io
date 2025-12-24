@@ -237,7 +237,12 @@ const app = createApp({
             },
             {
               link: "#",
-              items: [{ dataText: "雜誌封面", imgSrc: "img/雜誌2.png" }],
+              items: [
+                { dataText: "雜誌封面", imgSrc: "img/雜誌2.png" },
+                { dataText: "平面設計", imgSrc: "img/雜誌2.png" },
+                { dataText: "雜誌封面設計", imgSrc: "img/雜誌2.png" },
+                { dataText: "排版與視覺設計", imgSrc: "img/雜誌2.png" },
+              ],
             },
           ],
         },
