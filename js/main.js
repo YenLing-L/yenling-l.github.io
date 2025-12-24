@@ -212,10 +212,32 @@ const app = createApp({
               link: "#",
               items: [
                 { dataText: "The echo of Time", imgSrc: "img/35.png" },
-                { dataText: "No offense", imgSrc: "img/34.png" },
-                { dataText: "INHOUR", imgSrc: "img/YEN LING.png" },
-                { dataText: "雜誌封面", imgSrc: "img/雜誌2.png" },
+                { dataText: "平面設計", imgSrc: "img/35.png" },
+                { dataText: "時間的回聲", imgSrc: "img/35.png" },
+                { dataText: "海報設計作品", imgSrc: "img/35.png" },
               ],
+            },
+            {
+              link: "#",
+              items: [
+                { dataText: "No offense", imgSrc: "img/34.png" },
+                { dataText: "平面設計", imgSrc: "img/34.png" },
+                { dataText: "無冒犯之意", imgSrc: "img/34.png" },
+                { dataText: "視覺設計作品", imgSrc: "img/34.png" },
+              ],
+            },
+            {
+              link: "#",
+              items: [
+                { dataText: "INHOUR", imgSrc: "img/YEN LING.png" },
+                { dataText: "平面設計", imgSrc: "img/YEN LING.png" },
+                { dataText: "品牌形象設計", imgSrc: "img/YEN LING.png" },
+                { dataText: "視覺識別系統", imgSrc: "img/YEN LING.png" },
+              ],
+            },
+            {
+              link: "#",
+              items: [{ dataText: "雜誌封面", imgSrc: "img/雜誌2.png" }],
             },
           ],
         },
