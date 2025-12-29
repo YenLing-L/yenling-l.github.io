@@ -1,0 +1,343 @@
+/* 404 Page Styles - Cyberpunk Theme */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #333;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.error-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 70% 50%,
+    rgba(30, 28, 25, 0.3) 0%,
+    rgba(26, 24, 21, 0.9) 70%
+  );
+  pointer-events: none;
+}
+
+.error-text {
+  position: relative;
+  z-index: 10;
+  padding-left: 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.error-text h1 {
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 900;
+  color: #ff4a1c;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px rgba(255, 74, 28, 0.3), 0 0 40px rgba(255, 74, 28, 0.2);
+  animation: glitch 3s infinite;
+}
+
+.error-text h1:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.error-text h1:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.error-text h1:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes glitch {
+  0%,
+  95%,
+  100% {
+    transform: translateX(0);
+  }
+  96% {
+    transform: translateX(-2px);
+  }
+  97% {
+    transform: translateX(2px);
+  }
+  98% {
+    transform: translateX(-1px);
+  }
+  99% {
+    transform: translateX(1px);
+  }
+}
+
+.error-repeat {
+  position: absolute;
+  bottom: 15%;
+  left: 5vw;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0.4;
+}
+
+.error-repeat span {
+  font-size: clamp(0.6rem, 1vw, 0.9rem);
+  font-weight: 700;
+  color: #ff4a1c;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.x-marker {
+  position: absolute;
+  font-size: 1rem;
+  color: #ff4a1c;
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+.x-marker:nth-child(1) {
+  top: 20%;
+  right: 25%;
+}
+
+.x-marker:nth-child(2) {
+  top: 45%;
+  right: 15%;
+}
+
+.x-marker:nth-child(3) {
+  bottom: 25%;
+  right: 35%;
+}
+
+.x-marker:nth-child(4) {
+  bottom: 35%;
+  left: 45%;
+}
+
+.signature {
+  position: absolute;
+  bottom: 8%;
+  left: 5vw;
+  z-index: 10;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  color: #ff4a1c;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+
+.decoration-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.h-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 74, 28, 0.3),
+    transparent
+  );
+  width: 100%;
+}
+
+.h-line:nth-child(1) {
+  top: 30%;
+}
+
+.h-line:nth-child(2) {
+  top: 70%;
+}
+
+.v-line {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 74, 28, 0.2),
+    transparent
+  );
+  height: 100%;
+}
+
+.v-line:nth-child(3) {
+  left: 60%;
+}
+
+.v-line:nth-child(4) {
+  left: 80%;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 74, 28, 0.5),
+    transparent
+  );
+  animation: scan 4s linear infinite;
+  opacity: 0.5;
+  z-index: 20;
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.home-button {
+  position: absolute;
+  bottom: 8%;
+  right: 5vw;
+  z-index: 20;
+  padding: 15px 35px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ff4a1c;
+  background: transparent;
+  border: 2px solid #ff4a1c;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.home-button:hover {
+  background: #ff4a1c;
+  color: #1a1815;
+  box-shadow: 0 0 30px rgba(255, 74, 28, 0.4);
+}
+
+.offline-indicator {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+
+.offline-dot {
+  width: 10px;
+  height: 10px;
+  background: #ff4a1c;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.offline-text {
+  font-size: 0.8rem;
+  color: #ff4a1c;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .error-text {
+    padding-left: 8vw;
+  }
+
+  .error-text h1 {
+    font-size: clamp(3rem, 18vw, 6rem);
+  }
+
+  .error-repeat {
+    bottom: 20%;
+    left: 8vw;
+  }
+
+  .signature {
+    left: 8vw;
+  }
+
+  .home-button {
+    right: 8vw;
+    padding: 12px 25px;
+    font-size: 0.8rem;
+  }
+
+  .x-marker {
+    display: none;
+  }
+}

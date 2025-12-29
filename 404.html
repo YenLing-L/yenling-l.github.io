@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOT IN SERVICE | YEN-LING</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/favicon.png" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="css/404.css" />
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="bg-grid"></div>
+      <div class="bg-overlay"></div>
+      <div class="noise"></div>
+      <div class="scan-line"></div>
+
+      <div class="decoration-lines">
+        <div class="h-line"></div>
+        <div class="h-line"></div>
+        <div class="v-line"></div>
+        <div class="v-line"></div>
+      </div>
+
+      <span class="x-marker">✕</span>
+      <span class="x-marker">✕</span>
+      <span class="x-marker">✕</span>
+      <span class="x-marker">✕</span>
+
+      <div class="error-text">
+        <h1>NOT</h1>
+        <h1>IN</h1>
+        <h1>SERVICE</h1>
+      </div>
+
+      <div class="error-repeat">
+        <span
+          >NOT IN SERVICE&nbsp;&nbsp;&nbsp;NOT IN SERVICE&nbsp;&nbsp;&nbsp;NOT
+          IN SERVICE&nbsp;&nbsp;&nbsp;NOT IN SERVICE</span
+        >
+        <span
+          >NOT IN SERVICE&nbsp;&nbsp;&nbsp;NOT IN SERVICE&nbsp;&nbsp;&nbsp;NOT
+          IN SERVICE</span
+        >
+        <span>NOT IN SERVICE&nbsp;&nbsp;&nbsp;NOT IN SERVICE</span>
+      </div>
+
+      <div class="signature">YEN-LING</div>
+
+      <div class="offline-indicator">
+        <div class="offline-dot"></div>
+        <span class="offline-text">OFFLINE</span>
+      </div>
+
+      <a href="index.html" class="home-button">返回首頁</a>
+    </div>
+
+    <script>
+      window.addEventListener("online", function () {
+        if (document.referrer) {
+          window.location.href = document.referrer;
+        } else {
+          window.location.href = "index.html";
+        }
+      });
+    </script>
+  </body>
+</html>
