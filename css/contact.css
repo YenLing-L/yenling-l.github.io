@@ -39,9 +39,10 @@ nav {
 }
 
 .hamburger-toggle {
-  display: none;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 20px;
   cursor: pointer;
@@ -55,18 +56,25 @@ nav {
   border-radius: 10px;
   background-color: #333;
   transition: all 0.3s ease;
+  position: absolute;
+}
+
+.hamburger-toggle .bar-1 {
+  top: 3px;
+}
+
+.hamburger-toggle .bar-3 {
+  bottom: 3px;
 }
 
 .hamburger-toggle.active .bar-1 {
-  transform: rotate(-45deg) translate(-4.2px, 7px);
-}
-
-.hamburger-toggle.active .bar-2 {
-  transform: rotateX(90deg);
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
 }
 
 .hamburger-toggle.active .bar-3 {
-  transform: rotate(405deg) translate(-7.4px, -7px) scaleX(125%);
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
 }
 
 @media (max-width: 768px) {
@@ -358,6 +366,21 @@ button {
   margin: 5px;
   pointer-events: auto;
   z-index: 10;
+}
+
+/* 覆蓋通用 button 樣式，使 menu-close-button 與 index.css 一致 */
+.menu-close-button {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.menu-close-button:hover {
+  background: transparent;
+  border: 0;
 }
 
 button:hover {
