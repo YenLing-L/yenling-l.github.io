@@ -289,7 +289,7 @@ iframe {
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-size: 12px;
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
   text-decoration: none;
   color: #333;
 }
