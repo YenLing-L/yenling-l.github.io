@@ -592,19 +592,29 @@ iframe {
   transform: translateY(50px);
 }
 
+.project-detail-overlay.active .video-wrapper {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
 .description-text {
   opacity: 0;
   transform: translateY(50px);
 }
 
+.project-detail-overlay.active .description-text {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
 .project-info-grid .info-item {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translate(-50px, 50px);
 }
 
 .project-gallery .gallery-item {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translate(-30px, 30px);
 }
 
 .project-list {
@@ -1022,4 +1032,72 @@ body.overlay-open .project-list {
   .expand-overlay-icon.is-close .icon-bar:last-child {
     transform: translateY(-5px) rotate(-45deg);
   }
+}
+
+/* 展開動畫中的圖片 */
+.expand-overlay-image {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expand-overlay-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* 展開動畫中的程式語言 */
+.expand-overlay-lang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+
+.expand-overlay-lang span {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .expand-overlay-image {
+    border-radius: 8px;
+  }
+}
+
+/* 展開覆蓋層內容容器 */
+.expand-overlay-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 展開動畫中的標題 */
+.expand-overlay-title {
+  color: #333;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 展開動畫中的程式語言 */
+.expand-overlay-lang {
+  color: #888;
+  white-space: nowrap;
+}
+
+/* 展開動畫中的圖片 */
+.expand-overlay-image {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
+
+.expand-overlay-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
 }

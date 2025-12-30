@@ -292,6 +292,14 @@ const app = createApp({
         const clickedRow = event.currentTarget;
         const rect = clickedRow.getBoundingClientRect();
 
+        const nameEl = clickedRow.querySelector(".project-name");
+        const previewEl = clickedRow.querySelector(".hover-preview img");
+
+        const nameRect = nameEl ? nameEl.getBoundingClientRect() : null;
+        const previewRect = previewEl
+          ? previewEl.getBoundingClientRect()
+          : null;
+
         clickedRow.classList.add("expanding");
 
         this.clickPosition = {
@@ -307,6 +315,9 @@ const app = createApp({
         document.body.style.overflow = "hidden";
         document.body.classList.add("overlay-open");
 
+        const projectTitle = project.items[0].dataText;
+        const projectImg = project.items[0].imgSrc;
+
         const expandOverlay = document.createElement("div");
         expandOverlay.className = "expand-overlay";
         expandOverlay.style.top = rect.top + "px";
@@ -314,23 +325,43 @@ const app = createApp({
         expandOverlay.style.width = rect.width + "px";
         expandOverlay.style.height = rect.height + "px";
 
-        const projectTitle = project.items[0].dataText;
-        const projectSubtitle = project.items[1].dataText;
-
         expandOverlay.innerHTML = `
-          <div class="expand-overlay-header">
+          <div class="expand-overlay-content">
             <span class="expand-overlay-title">${projectTitle}</span>
-            <div class="expand-overlay-icon">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+            <div class="expand-overlay-image">
+              <img src="${projectImg}" alt="${projectTitle}" />
             </div>
-          </div>
-          <div class="expand-overlay-bottom">
-            <span class="expand-overlay-subtitle">${projectSubtitle}</span>
           </div>
         `;
 
         document.body.appendChild(expandOverlay);
+
+        const overlayTitle = expandOverlay.querySelector(
+          ".expand-overlay-title"
+        );
+        const overlayImage = expandOverlay.querySelector(
+          ".expand-overlay-image"
+        );
+
+        if (nameRect && overlayTitle) {
+          gsap.set(overlayTitle, {
+            position: "absolute",
+            left: nameRect.left - rect.left,
+            top: nameRect.top - rect.top,
+            fontSize: window.getComputedStyle(nameEl).fontSize,
+            fontWeight: window.getComputedStyle(nameEl).fontWeight,
+          });
+        }
+
+        if (previewRect && overlayImage) {
+          gsap.set(overlayImage, {
+            position: "absolute",
+            left: previewRect.left - rect.left,
+            top: previewRect.top - rect.top,
+            width: previewRect.width,
+            height: previewRect.height,
+          });
+        }
 
         const tl = gsap.timeline();
 
@@ -342,22 +373,6 @@ const app = createApp({
           ease: "power2.out",
         });
 
-        tl.to(
-          ".expand-overlay-icon",
-          {
-            onStart: () => {
-              const iconContainer = expandOverlay.querySelector(
-                ".expand-overlay-icon"
-              );
-              if (iconContainer) {
-                iconContainer.classList.add("is-close");
-              }
-            },
-            duration: 0.3,
-          },
-          "-=0.1"
-        );
-
         tl.to(expandOverlay, {
           top: 0,
           left: 0,
@@ -366,74 +381,118 @@ const app = createApp({
           y: 0,
           scale: 1,
           borderRadius: 0,
-          duration: 0.6,
+          duration: 0.5,
           ease: "power3.inOut",
         });
 
-        tl.to({}, { duration: 0.2 });
+        tl.to(
+          overlayTitle,
+          {
+            left: 25,
+            top: 15,
+            fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)",
+            duration: 0.5,
+            ease: "power3.inOut",
+          },
+          "-=0.5"
+        );
+
+        const targetWidth = Math.min(window.innerWidth * 0.9, 1100);
+        const targetHeight = targetWidth * 0.5;
+
+        tl.to(
+          overlayImage,
+          {
+            left: "50%",
+            top: 100,
+            xPercent: -50,
+            width: targetWidth,
+            height: targetHeight,
+            borderRadius: 16,
+            duration: 0.5,
+            ease: "power3.inOut",
+          },
+          "-=0.5"
+        );
 
         tl.add(() => {
           this.isDetailOpen = true;
-        });
 
-        tl.add(() => {
           this.$nextTick(() => {
-            const overlay = document.querySelector(".project-detail-overlay");
-            if (overlay) {
-              overlay.classList.add("active");
+            const detailOverlay = document.querySelector(
+              ".project-detail-overlay"
+            );
+            if (detailOverlay) {
+              detailOverlay.classList.add("active");
             }
 
-            gsap.to(".detail-header", {
+            gsap.set(".detail-header", {
               opacity: 1,
-              duration: 0.3,
-              ease: "power2.out",
             });
+
+            gsap.set(".description-text", {
+              opacity: 1,
+              clearProps: "transform",
+            });
+
+            const videoWrapper = document.querySelector(".video-wrapper");
+            if (videoWrapper) {
+              videoWrapper.style.transition = "none";
+              videoWrapper.style.opacity = "1";
+              videoWrapper.style.transform = "translateY(0)";
+            }
+
+            setTimeout(() => {
+              if (expandOverlay && expandOverlay.parentNode) {
+                expandOverlay.remove();
+              }
+
+              const infoItems = document.querySelectorAll(
+                ".project-info-grid .info-item"
+              );
+              infoItems.forEach((item, index) => {
+                gsap.fromTo(
+                  item,
+                  {
+                    x: -50,
+                    y: 50,
+                    opacity: 0,
+                  },
+                  {
+                    x: 0,
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    delay: index * 0.15,
+                    ease: "power2.out",
+                  }
+                );
+              });
+
+              const galleryItems = document.querySelectorAll(
+                ".project-gallery .gallery-item"
+              );
+              galleryItems.forEach((item, index) => {
+                gsap.fromTo(
+                  item,
+                  {
+                    x: -30,
+                    y: 30,
+                    opacity: 0,
+                  },
+                  {
+                    x: 0,
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.4,
+                    delay: 0.3 + index * 0.08,
+                    ease: "power2.out",
+                  }
+                );
+              });
+            }, 100);
           });
         });
-
-        tl.to(expandOverlay, {
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.out",
-          onComplete: () => {
-            expandOverlay.remove();
-          },
-        });
-
-        tl.add(() => {
-          gsap.to(".video-wrapper", {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-
-          gsap.to(".description-text", {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            delay: 0.1,
-            ease: "power2.out",
-          });
-
-          gsap.to(".project-info-grid .info-item", {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            delay: 0.2,
-            stagger: 0.1,
-            ease: "power2.out",
-          });
-
-          gsap.to(".project-gallery .gallery-item", {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            delay: 0.4,
-            stagger: 0.05,
-            ease: "power2.out",
-          });
-        }, "+=0.1");
 
         this.detailTimeline = tl;
       }
@@ -448,6 +507,24 @@ const app = createApp({
           this.selectedProject?.items?.[0]?.dataText || "Project";
         const projectSubtitle =
           this.selectedProject?.items?.[1]?.dataText || "";
+        const projectImg = this.selectedProject?.items?.[0]?.imgSrc || "";
+
+        const expandingRow = document.querySelector(".project-row.expanding");
+        let originalNameRect = null;
+        let originalLangRect = null;
+        let originalPreviewRect = null;
+
+        if (expandingRow) {
+          const nameEl = expandingRow.querySelector(".project-name");
+          const langEl = expandingRow.querySelector(".project-lang");
+          const previewEl = expandingRow.querySelector(".hover-preview img");
+
+          originalNameRect = nameEl ? nameEl.getBoundingClientRect() : null;
+          originalLangRect = langEl ? langEl.getBoundingClientRect() : null;
+          originalPreviewRect = previewEl
+            ? previewEl.getBoundingClientRect()
+            : null;
+        }
 
         document.querySelectorAll(".project-detail-overlay").forEach((el) => {
           el.style.display = "none";
@@ -466,19 +543,51 @@ const app = createApp({
         shrinkOverlay.style.zIndex = "10001";
 
         shrinkOverlay.innerHTML = `
-          <div class="expand-overlay-header">
+          <div class="expand-overlay-content">
             <span class="expand-overlay-title">${projectTitle}</span>
-            <div class="expand-overlay-icon is-close">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+            <span class="expand-overlay-lang">${projectSubtitle}</span>
+            <div class="expand-overlay-image">
+              <img src="${projectImg}" alt="${projectTitle}" />
             </div>
-          </div>
-          <div class="expand-overlay-bottom" style="opacity: 1; transform: translateY(0);">
-            <span class="expand-overlay-subtitle">${projectSubtitle}</span>
           </div>
         `;
 
         document.body.appendChild(shrinkOverlay);
+
+        const overlayTitle = shrinkOverlay.querySelector(
+          ".expand-overlay-title"
+        );
+        const overlayLang = shrinkOverlay.querySelector(".expand-overlay-lang");
+        const overlayImage = shrinkOverlay.querySelector(
+          ".expand-overlay-image"
+        );
+
+        gsap.set(overlayTitle, {
+          position: "absolute",
+          left: "50%",
+          top: "40%",
+          xPercent: -50,
+          fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
+          fontWeight: 600,
+        });
+
+        gsap.set(overlayLang, {
+          position: "absolute",
+          left: "50%",
+          top: "calc(40% + 40px)",
+          xPercent: -50,
+          fontSize: "1rem",
+        });
+
+        gsap.set(overlayImage, {
+          position: "absolute",
+          left: "50%",
+          top: "calc(40% + 80px)",
+          xPercent: -50,
+          width: 200,
+          height: 130,
+          borderRadius: 8,
+        });
 
         shrinkOverlay.offsetHeight;
 
@@ -518,43 +627,61 @@ const app = createApp({
           },
         });
 
-        tl.to(shrinkOverlay.querySelector(".expand-overlay-icon"), {
-          onStart: () => {
-            const iconContainer = shrinkOverlay.querySelector(
-              ".expand-overlay-icon"
-            );
-            if (iconContainer) {
-              iconContainer.classList.remove("is-close");
-            }
-          },
-          duration: 0.2,
+        tl.to(shrinkOverlay, {
+          top: clickPosition.top,
+          left: clickPosition.left,
+          width: clickPosition.width,
+          height: clickPosition.height,
+          borderRadius: 16,
+          boxShadow: "0 30px 60px rgba(0, 0, 0, 0.25)",
+          duration: 0.5,
+          ease: "power3.inOut",
         });
 
-        tl.to(
-          shrinkOverlay.querySelector(".expand-overlay-bottom"),
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.3,
-            ease: "power2.in",
-          },
-          "-=0.1"
-        );
+        if (originalNameRect) {
+          tl.to(
+            overlayTitle,
+            {
+              left: originalNameRect.left - clickPosition.left,
+              top: originalNameRect.top - clickPosition.top,
+              xPercent: 0,
+              duration: 0.5,
+              ease: "power3.inOut",
+            },
+            "-=0.5"
+          );
+        }
 
-        tl.to(
-          shrinkOverlay,
-          {
-            top: clickPosition.top,
-            left: clickPosition.left,
-            width: clickPosition.width,
-            height: clickPosition.height,
-            borderRadius: 16,
-            boxShadow: "0 30px 60px rgba(0, 0, 0, 0.25)",
-            duration: 0.5,
-            ease: "power3.inOut",
-          },
-          "-=0.1"
-        );
+        if (originalLangRect) {
+          tl.to(
+            overlayLang,
+            {
+              left: originalLangRect.left - clickPosition.left,
+              top: originalLangRect.top - clickPosition.top,
+              xPercent: 0,
+              duration: 0.5,
+              ease: "power3.inOut",
+            },
+            "-=0.5"
+          );
+        }
+
+        if (originalPreviewRect) {
+          tl.to(
+            overlayImage,
+            {
+              left: originalPreviewRect.left - clickPosition.left,
+              top: originalPreviewRect.top - clickPosition.top,
+              xPercent: 0,
+              width: originalPreviewRect.width,
+              height: originalPreviewRect.height,
+              borderRadius: 4,
+              duration: 0.5,
+              ease: "power3.inOut",
+            },
+            "-=0.5"
+          );
+        }
 
         tl.to(shrinkOverlay, {
           y: 0,
