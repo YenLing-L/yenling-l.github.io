@@ -165,88 +165,82 @@
             </div>
           </div>
 
-          <transition name="detail">
-            <div
-              v-if="selectedProject"
-              class="project-detail-overlay"
-              :class="{ 'active': isDetailOpen }"
-              @scroll="handleDetailScroll"
-              ref="detailOverlay"
-            >
-              <div class="detail-top-anchor" ref="detailTopAnchor"></div>
-              <button class="close-detail" @click="closeProjectDetails">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+          <div
+            v-if="selectedProject"
+            class="project-detail-overlay"
+            :class="{ 'active': isDetailOpen }"
+            @scroll="handleDetailScroll"
+            ref="detailOverlay"
+          >
+            <div class="detail-top-anchor" ref="detailTopAnchor"></div>
+            <!-- Header with title and close icon (same as expand-overlay) -->
+            <div class="detail-header">
+              <span class="detail-title">{{ selectedProject.items[0].dataText }}</span>
+              <div class="detail-close-icon" @click="closeProjectDetails">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </div>
+            </div>
 
-              <div class="detail-content">
-                <div class="video-wrapper" style="position: relative">
-                  <img
-                    v-if="selectedProject && selectedProject.items && selectedProject.items.length > 0"
-                    :src="selectedProject.items[0].imgSrc"
-                    alt="Project Preview"
-                    style="
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
-                    "
-                  />
-                </div>
+            <div class="detail-content">
+              <div class="video-wrapper" style="position: relative">
+                <img
+                  v-if="selectedProject && selectedProject.items && selectedProject.items.length > 0"
+                  :src="selectedProject.items[0].imgSrc"
+                  alt="Project Preview"
+                  style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                  "
+                />
+              </div>
 
-                <div class="description-text">
-                  <h2>{{ selectedProject.items[0].dataText }}</h2>
-                  <p>{{ selectedProject.items[2].dataText }}</p>
+              <div class="description-text">
+                <h2>{{ selectedProject.items[0].dataText }}</h2>
+                <p>{{ selectedProject.items[2].dataText }}</p>
 
-                  <div class="project-info-grid">
-                    <div class="info-item">
-                      <h3>程式語言</h3>
-                      <p>{{ selectedProject.items[1].dataText }}</p>
-                    </div>
-
-                    <div class="info-item" v-if="selectedProject.link">
-                      <h3>查看專案</h3>
-                      <p>
-                        <a
-                          :href="selectedProject.link"
-                          target="_blank"
-                          style="color: #333; text-decoration: underline"
-                        >
-                          前往專案 →
-                        </a>
-                      </p>
-                    </div>
-
-                    <div class="info-item">
-                      <h3>項目介紹</h3>
-                      <p>{{ selectedProject.items[3].dataText }}</p>
-                    </div>
+                <div class="project-info-grid">
+                  <div class="info-item">
+                    <h3>程式語言</h3>
+                    <p>{{ selectedProject.items[1].dataText }}</p>
                   </div>
-                </div>
 
-                <!-- 專案圖片展示 -->
-                <div class="project-gallery">
-                  <div
-                    v-for="(item, index) in selectedProject.items"
-                    :key="index"
-                    class="gallery-item"
-                  >
-                    <img :src="item.imgSrc" :alt="item.dataText" />
+                  <div class="info-item" v-if="selectedProject.link">
+                    <h3>查看專案</h3>
+                    <p>
+                      <a
+                        :href="selectedProject.link"
+                        target="_blank"
+                        style="color: #333; text-decoration: underline"
+                      >
+                        前往專案 →
+                      </a>
+                    </p>
+                  </div>
+
+                  <div class="info-item">
+                    <h3>項目介紹</h3>
+                    <p>{{ selectedProject.items[3].dataText }}</p>
                   </div>
                 </div>
               </div>
+
+              <!-- 專案圖片展示 -->
+              <div class="project-gallery">
+                <div
+                  v-for="(item, index) in selectedProject.items"
+                  :key="index"
+                  class="gallery-item"
+                >
+                  <img :src="item.imgSrc" :alt="item.dataText" />
+                </div>
+              </div>
             </div>
-          </transition>
+          </div>
         </div>
       </div>
 

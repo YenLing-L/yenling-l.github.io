@@ -291,96 +291,286 @@ const app = createApp({
         const clickedRow = event.currentTarget;
         const rect = clickedRow.getBoundingClientRect();
 
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
         clickedRow.classList.add("expanding");
 
         this.clickPosition = {
-          x: centerX,
-          y: centerY,
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
           width: rect.width,
           height: rect.height,
+          top: rect.top,
+          left: rect.left,
         };
         this.selectedProject = project;
 
         document.body.style.overflow = "hidden";
         document.body.classList.add("overlay-open");
 
-        setTimeout(() => {
-          this.isDetailOpen = true;
+        // Create expand overlay element with project info visible
+        const expandOverlay = document.createElement("div");
+        expandOverlay.className = "expand-overlay";
+        expandOverlay.style.top = rect.top + "px";
+        expandOverlay.style.left = rect.left + "px";
+        expandOverlay.style.width = rect.width + "px";
+        expandOverlay.style.height = rect.height + "px";
+        
+        // Add project info content to the overlay - navbar style header
+        const projectTitle = project.items[0].dataText;
+        const projectSubtitle = project.items[1].dataText;
+        
+        expandOverlay.innerHTML = `
+          <div class="expand-overlay-header">
+            <span class="expand-overlay-title">${projectTitle}</span>
+            <div class="expand-overlay-icon">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </div>
+          </div>
+          <div class="expand-overlay-bottom">
+            <span class="expand-overlay-subtitle">${projectSubtitle}</span>
+          </div>
+        `;
+        
+        document.body.appendChild(expandOverlay);
 
+        // GSAP Timeline for expansion
+        const tl = gsap.timeline();
+
+        // Step 1: Float up the row
+        tl.to(expandOverlay, {
+          y: -15,
+          scale: 1.02,
+          boxShadow: "0 30px 60px rgba(0, 0, 0, 0.25)",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        
+        // Step 2: Transform hamburger icon to X
+        tl.to(".expand-overlay-icon", {
+          onStart: () => {
+            const iconContainer = expandOverlay.querySelector(".expand-overlay-icon");
+            if (iconContainer) {
+              iconContainer.classList.add("is-close");
+            }
+          },
+          duration: 0.3,
+        }, "-=0.1");
+
+        // Step 3: Expand to fullscreen (only title + X icon visible)
+        tl.to(expandOverlay, {
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          y: 0,
+          scale: 1,
+          borderRadius: 0,
+          duration: 0.6,
+          ease: "power3.inOut",
+        });
+        
+        // Step 4: Wait a moment at fullscreen (only title + X visible)
+        tl.to({}, { duration: 0.2 });
+
+        // Step 5: Trigger Vue to render the detail component
+        tl.add(() => {
+          this.isDetailOpen = true;
+        });
+
+        // Step 6: After fullscreen reached - cross-fade from expand-overlay to detail-header
+        tl.add(() => {
           this.$nextTick(() => {
             const overlay = document.querySelector(".project-detail-overlay");
             if (overlay) {
-              overlay.style.clipPath = `circle(0% at ${centerX}px ${centerY}px)`;
-              overlay.style.transformOrigin = `${centerX}px ${centerY}px`;
-
-              overlay.style.visibility = "visible";
-              overlay.style.opacity = "0";
-
-              overlay.offsetHeight;
-
               overlay.classList.add("active");
-
-              setTimeout(() => {
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-
-                const distanceToTopLeft = Math.sqrt(
-                  centerX ** 2 + centerY ** 2
-                );
-                const distanceToTopRight = Math.sqrt(
-                  (viewportWidth - centerX) ** 2 + centerY ** 2
-                );
-                const distanceToBottomLeft = Math.sqrt(
-                  centerX ** 2 + (viewportHeight - centerY) ** 2
-                );
-                const distanceToBottomRight = Math.sqrt(
-                  (viewportWidth - centerX) ** 2 +
-                    (viewportHeight - centerY) ** 2
-                );
-
-                const maxRadius = Math.max(
-                  distanceToTopLeft,
-                  distanceToTopRight,
-                  distanceToBottomLeft,
-                  distanceToBottomRight
-                );
-
-                overlay.style.clipPath = `circle(${
-                  maxRadius + 100
-                }px at ${centerX}px ${centerY}px)`;
-                overlay.style.opacity = "1";
-              }, 10);
             }
+            
+            // Cross-fade: show detail-header as expand-overlay fades out
+            gsap.to(".detail-header", {
+              opacity: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
           });
-        }, 400);
+        });
+
+        // Step 7: Fade out expand-overlay (header will cross-fade with detail-header)
+        tl.to(expandOverlay, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.out",
+          onComplete: () => {
+            expandOverlay.remove();
+          },
+        });
+        
+        // Step 8: AFTER expand-overlay is gone, content floats up from bottom in sequence
+        tl.add(() => {
+          // Image floats up
+          gsap.to(".video-wrapper", {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out"
+          });
+
+          // Title and description float up
+          gsap.to(".description-text", {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            delay: 0.1,
+            ease: "power2.out"
+          });
+
+          // Info items (程式語言, 查看專案, 項目介紹) float up
+          gsap.to(".project-info-grid .info-item", {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            delay: 0.2,
+            stagger: 0.1,
+            ease: "power2.out"
+          });
+
+          // Gallery items float up
+          gsap.to(".project-gallery .gallery-item", {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            delay: 0.4,
+            stagger: 0.05,
+            ease: "power2.out"
+          });
+        }, "+=0.1");
+
+        // Store timeline reference
+        this.detailTimeline = tl;
       }
     },
 
     closeProjectDetails() {
-      document.querySelectorAll(".project-row.expanding").forEach((el) => {
-        el.classList.remove("expanding");
-      });
+      // Select the ACTIVE overlay specifically
+      const overlay = document.querySelector(".project-detail-overlay.active");
+      const clickPosition = this.clickPosition;
 
-      const overlay = document.querySelector(".project-detail-overlay");
+      if (overlay && clickPosition) {
+        // Get project info from selected project
+        const projectTitle = this.selectedProject?.items?.[0]?.dataText || "Project";
+        const projectSubtitle = this.selectedProject?.items?.[1]?.dataText || "";
+        
+        // IMMEDIATELY hide ALL overlay content BEFORE creating shrink overlay
+        // Hide all project-detail-overlays to ensure none are visible
+        document.querySelectorAll(".project-detail-overlay").forEach(el => {
+          el.style.display = "none";
+          el.style.opacity = "0";
+          el.style.visibility = "hidden";
+          el.classList.remove("active");
+        });
+        
+        // Create shrink overlay element (at fullscreen, above everything)
+        const shrinkOverlay = document.createElement("div");
+        shrinkOverlay.className = "expand-overlay";
+        shrinkOverlay.style.top = "0";
+        shrinkOverlay.style.left = "0";
+        shrinkOverlay.style.width = "100vw";
+        shrinkOverlay.style.height = "100vh";
+        shrinkOverlay.style.borderRadius = "0";
+        shrinkOverlay.style.zIndex = "10001";
+        
+        // Add content to shrink overlay - starts with X icon (is-close class)
+        shrinkOverlay.innerHTML = `
+          <div class="expand-overlay-header">
+            <span class="expand-overlay-title">${projectTitle}</span>
+            <div class="expand-overlay-icon is-close">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </div>
+          </div>
+          <div class="expand-overlay-bottom" style="opacity: 1; transform: translateY(0);">
+            <span class="expand-overlay-subtitle">${projectSubtitle}</span>
+          </div>
+        `;
+        
+        document.body.appendChild(shrinkOverlay);
 
-      if (overlay) {
-        overlay.classList.remove("active");
+        // Force reflow to ensure shrinkOverlay is rendered
+        shrinkOverlay.offsetHeight;
 
-        setTimeout(() => {
-          this.selectedProject = null;
-          this.isDetailOpen = false;
-          this.showDetailBackToTop = false;
-          this.detailScrollProgress = 0;
-          document.body.style.overflow = "auto";
-          document.body.classList.remove("overlay-open");
+        // Reset GSAP properties on content elements
+        gsap.set([".video-wrapper", ".description-text", ".project-info-grid .info-item", ".project-gallery .gallery-item", ".detail-header"], { clearProps: "all" });
 
-          overlay.style.clipPath = "";
-          overlay.style.transformOrigin = "";
-        }, 300);
+        // GSAP shrink animation
+        const tl = gsap.timeline({
+          onComplete: () => {
+            shrinkOverlay.remove();
+            document.querySelectorAll(".project-row.expanding").forEach((el) => {
+              el.classList.remove("expanding");
+            });
+            // Now it's safe to clear Vue data and reset all overlays
+            document.querySelectorAll(".project-detail-overlay").forEach(el => {
+              el.style.display = "";
+              el.style.visibility = "";
+              el.style.opacity = "";
+            });
+            this.selectedProject = null;
+            this.isDetailOpen = false;
+            this.showDetailBackToTop = false;
+            this.detailScrollProgress = 0;
+            document.body.style.overflow = "auto";
+            document.body.classList.remove("overlay-open");
+          },
+        });
+
+        // Step 1: Transform X icon back to hamburger
+        tl.to(shrinkOverlay.querySelector(".expand-overlay-icon"), {
+          onStart: () => {
+            const iconContainer = shrinkOverlay.querySelector(".expand-overlay-icon");
+            if (iconContainer) {
+              iconContainer.classList.remove("is-close");
+            }
+          },
+          duration: 0.2,
+        });
+
+        // Step 2: Fade out bottom subtitle
+        tl.to(shrinkOverlay.querySelector(".expand-overlay-bottom"), {
+          opacity: 0,
+          y: 20,
+          duration: 0.3,
+          ease: "power2.in",
+        }, "-=0.1");
+
+        // Step 3: Shrink overlay back to original row position
+        tl.to(shrinkOverlay, {
+          top: clickPosition.top,
+          left: clickPosition.left,
+          width: clickPosition.width,
+          height: clickPosition.height,
+          borderRadius: 16,
+          boxShadow: "0 30px 60px rgba(0, 0, 0, 0.25)",
+          duration: 0.5,
+          ease: "power3.inOut",
+        }, "-=0.1");
+
+        // Step 4: Float down and fade out
+        tl.to(shrinkOverlay, {
+          y: 0,
+          scale: 1,
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
       } else {
+        document.querySelectorAll(".project-row.expanding").forEach((el) => {
+          el.classList.remove("expanding");
+        });
+        if (overlay) {
+          overlay.classList.remove("active");
+          overlay.style.opacity = "";
+          overlay.style.visibility = "";
+        }
         this.selectedProject = null;
         this.isDetailOpen = false;
         this.showDetailBackToTop = false;

@@ -450,9 +450,7 @@ iframe {
   overflow-y: auto;
   opacity: 0;
   visibility: hidden;
-  clip-path: circle(0% at 50% 50%);
-  transform-origin: center center;
-  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
 }
 
 .detail-top-anchor {
@@ -466,75 +464,94 @@ iframe {
 .project-detail-overlay.active {
   opacity: 1;
   visibility: visible;
-  clip-path: circle(150% at 50% 50%);
+  pointer-events: auto;
 }
 
+/* Expanding row - positioned fixed for smooth transition */
 .project-row.expanding {
   z-index: 10000;
   position: relative;
-  animation: prepareExpand 0.4s ease forwards;
   background: white;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
-  margin: 10px 0;
-  padding: 40px 20px;
   border: none;
   overflow: hidden;
+  pointer-events: none;
 }
 
-@keyframes prepareExpand {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  50% {
-    transform: scale(1.08);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    transform: scale(1.05);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-  }
+/* Fake overlay that expands from row to fullscreen */
+.expand-overlay {
+  position: fixed;
+  background-color: #ffffff;
+  z-index: 10000;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }
 
 .detail-content {
   margin-top: 20px;
   width: 100%;
   max-width: 1200px;
-  opacity: 0;
-  transform: translateY(30px) scale(0.98);
-  transition: all 0.5s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .project-detail-overlay.active .detail-content {
   opacity: 1;
-  transform: translateY(0) scale(1);
 }
 
-.close-detail {
+/* Detail header - matches expand-overlay-header */
+.detail-header {
   position: fixed;
-  top: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #eee;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 10001;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0) rotate(-180deg);
-  transition: all 0.4s 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  justify-content: space-between;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  z-index: 10001;
+  background: transparent;
+  opacity: 0; /* Start hidden, will be animated in */
 }
 
-.project-detail-overlay.active .close-detail {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
+.detail-title {
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-close-icon {
+  width: 22px;
+  height: 16px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.detail-close-icon .icon-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+/* X shape - both bars crossed */
+.detail-close-icon .icon-bar:first-child {
+  transform: rotate(45deg);
+}
+
+.detail-close-icon .icon-bar:last-child {
+  transform: rotate(-45deg);
+}
+
+.detail-close-icon:hover .icon-bar {
+  background-color: #666;
 }
 
 .video-wrapper {
@@ -544,25 +561,23 @@ iframe {
   background: #f5f5f5;
   border-radius: 16px;
   overflow: hidden;
-  opacity: 0;
-  transform: scale(0.95);
-  transition: all 0.5s 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.project-detail-overlay.active .video-wrapper {
-  opacity: 1;
-  transform: scale(1);
+  opacity: 0; /* Start hidden, will be animated in */
+  transform: translateY(50px);
 }
 
 .description-text {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0; /* Start hidden, will be animated in */
+  transform: translateY(50px);
 }
 
-.project-detail-overlay.active .description-text {
-  opacity: 1;
-  transform: translateY(0);
+.project-info-grid .info-item {
+  opacity: 0; /* Start hidden, will be animated in */
+  transform: translateY(30px);
+}
+
+.project-gallery .gallery-item {
+  opacity: 0; /* Start hidden, will be animated in */
+  transform: translateY(30px);
 }
 
 .project-list {
@@ -897,3 +912,92 @@ body.overlay-open .project-list {
     height: 16px;
   }
 }
+
+/* Expand overlay content styles - navbar style */
+.expand-overlay-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.expand-overlay-title {
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hamburger icon that transforms to X */
+.expand-overlay-icon {
+  width: 22px;
+  height: 16px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.expand-overlay-icon .icon-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Transform to X when .is-close is added */
+.expand-overlay-icon.is-close .icon-bar:first-child {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.expand-overlay-icon.is-close .icon-bar:last-child {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Bottom content - initially hidden */
+.expand-overlay-bottom {
+  position: absolute;
+  bottom: 40%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.expand-overlay-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: #333;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .expand-overlay-header {
+    padding: 12px 15px;
+  }
+
+  .expand-overlay-icon {
+    width: 18px;
+    height: 12px;
+  }
+
+  .expand-overlay-icon.is-close .icon-bar:first-child {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .expand-overlay-icon.is-close .icon-bar:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+}
+
