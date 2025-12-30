@@ -467,7 +467,6 @@ iframe {
   pointer-events: auto;
 }
 
-/* Expanding row - positioned fixed for smooth transition */
 .project-row.expanding {
   z-index: 10000;
   position: relative;
@@ -478,7 +477,6 @@ iframe {
   pointer-events: none;
 }
 
-/* Fake overlay that expands from row to fullscreen */
 .expand-overlay {
   position: fixed;
   background-color: #ffffff;
@@ -498,7 +496,6 @@ iframe {
   opacity: 1;
 }
 
-/* Detail header - matches expand-overlay-header */
 .detail-header {
   position: fixed;
   top: 0;
@@ -511,7 +508,7 @@ iframe {
   box-sizing: border-box;
   z-index: 10001;
   background: transparent;
-  opacity: 0; /* Start hidden, will be animated in */
+  opacity: 0;
 }
 
 .detail-title {
@@ -541,7 +538,6 @@ iframe {
   transition: all 0.3s ease;
 }
 
-/* X shape - both bars crossed */
 .detail-close-icon .icon-bar:first-child {
   transform: rotate(45deg);
 }
@@ -561,22 +557,22 @@ iframe {
   background: #f5f5f5;
   border-radius: 16px;
   overflow: hidden;
-  opacity: 0; /* Start hidden, will be animated in */
+  opacity: 0;
   transform: translateY(50px);
 }
 
 .description-text {
-  opacity: 0; /* Start hidden, will be animated in */
+  opacity: 0;
   transform: translateY(50px);
 }
 
 .project-info-grid .info-item {
-  opacity: 0; /* Start hidden, will be animated in */
+  opacity: 0;
   transform: translateY(30px);
 }
 
 .project-gallery .gallery-item {
-  opacity: 0; /* Start hidden, will be animated in */
+  opacity: 0;
   transform: translateY(30px);
 }
 
@@ -913,7 +909,6 @@ body.overlay-open .project-list {
   }
 }
 
-/* Expand overlay content styles - navbar style */
 .expand-overlay-header {
   position: absolute;
   top: 0;
@@ -935,7 +930,6 @@ body.overlay-open .project-list {
   letter-spacing: 1px;
 }
 
-/* Hamburger icon that transforms to X */
 .expand-overlay-icon {
   width: 22px;
   height: 16px;
@@ -955,7 +949,6 @@ body.overlay-open .project-list {
   transform-origin: center;
 }
 
-/* Transform to X when .is-close is added */
 .expand-overlay-icon.is-close .icon-bar:first-child {
   transform: translateY(7px) rotate(45deg);
 }
@@ -964,7 +957,6 @@ body.overlay-open .project-list {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Bottom content - initially hidden */
 .expand-overlay-bottom {
   position: absolute;
   bottom: 40%;
@@ -1000,4 +992,3 @@ body.overlay-open .project-list {
     transform: translateY(-5px) rotate(-45deg);
   }
 }
-
