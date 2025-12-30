@@ -168,7 +168,7 @@
           <div
             v-if="selectedProject"
             class="project-detail-overlay"
-            :class="{ 'active': isDetailOpen }"
+            :class="{ 'active': isDetailOpen, 'show-scrollbar': showDetailScrollbar }"
             @scroll="handleDetailScroll"
             ref="detailOverlay"
           >

@@ -14,6 +14,7 @@ const app = createApp({
       scrollProgress: 0,
       showDetailBackToTop: false,
       detailScrollProgress: 0,
+      showDetailScrollbar: false,
       isMenuOpen: false,
       navActive: false,
       navItems: [
@@ -511,6 +512,7 @@ const app = createApp({
             this.isDetailOpen = false;
             this.showDetailBackToTop = false;
             this.detailScrollProgress = 0;
+            this.showDetailScrollbar = false;
             document.body.style.overflow = "auto";
             document.body.classList.remove("overlay-open");
           },
@@ -575,6 +577,7 @@ const app = createApp({
         this.isDetailOpen = false;
         this.showDetailBackToTop = false;
         this.detailScrollProgress = 0;
+        this.showDetailScrollbar = false;
         document.body.style.overflow = "auto";
         document.body.classList.remove("overlay-open");
       }
@@ -644,6 +647,11 @@ const app = createApp({
         scrollHeight > 0 ? Math.min(1, scrollTop / scrollHeight) : 0;
 
       this.showDetailBackToTop = scrollTop > 200;
+
+      // 當使用者開始滾動時顯示滾輪條
+      if (scrollTop > 0 && !this.showDetailScrollbar) {
+        this.showDetailScrollbar = true;
+      }
     },
   },
   mounted() {
