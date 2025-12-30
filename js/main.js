@@ -6,6 +6,9 @@ const app = createApp({
       isDetailOpen: false,
       clickPosition: null,
       selectedProject: null,
+      hoverProject: null,
+      hoverCardX: 0,
+      hoverCardY: 0,
       isMenuActive: false,
       mouseX: -200,
       mouseY: -200,
@@ -289,6 +292,9 @@ const app = createApp({
       if (event) {
         event.preventDefault();
 
+        // 隱藏 hover 卡片
+        this.hoverProject = null;
+
         const clickedRow = event.currentTarget;
         const rect = clickedRow.getBoundingClientRect();
 
@@ -496,6 +502,39 @@ const app = createApp({
 
         this.detailTimeline = tl;
       }
+    },
+
+    handleProjectHover(project, event) {
+      this.hoverProject = project;
+      this.updateHoverPosition(event);
+    },
+
+    updateHoverPosition(event) {
+      // 將卡片放在滑鼠右上方
+      const offsetX = 20;
+      const offsetY = -20;
+      const cardWidth = 320;
+      const cardHeight = 300;
+
+      let x = event.clientX + offsetX;
+      let y = event.clientY + offsetY - cardHeight;
+
+      // 確保卡片不超出視窗右邊
+      if (x + cardWidth > window.innerWidth) {
+        x = event.clientX - cardWidth - offsetX;
+      }
+
+      // 確保卡片不超出視窗頂部
+      if (y < 10) {
+        y = event.clientY + offsetX;
+      }
+
+      this.hoverCardX = x;
+      this.hoverCardY = y;
+    },
+
+    handleProjectLeave() {
+      this.hoverProject = null;
     },
 
     closeProjectDetails() {
