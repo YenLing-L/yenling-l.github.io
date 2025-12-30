@@ -149,6 +149,9 @@
               :key="projectIndex"
               class="project-row"
               @click="openProjectDetails(project, $event)"
+              @mouseenter="handleProjectHover(project, $event)"
+              @mousemove="updateHoverPosition($event)"
+              @mouseleave="handleProjectLeave"
             >
               <div class="project-info">
                 <span class="project-name"
@@ -159,8 +162,28 @@
                 >
               </div>
 
+              <!-- 隱藏的預覽圖，用於展開動畫定位 -->
               <div class="hover-preview">
                 <img :src="project.items[0].imgSrc" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Hover Card -->
+          <div 
+            class="project-hover-card"
+            v-if="hoverProject"
+            :style="{ left: hoverCardX + 'px', top: hoverCardY + 'px' }"
+          >
+            <div class="hover-card-image">
+              <img :src="hoverProject.items[0].imgSrc" :alt="hoverProject.items[0].dataText" />
+            </div>
+            <div class="hover-card-content">
+              <h3 class="hover-card-title">{{ hoverProject.items[0].dataText }}</h3>
+              <p class="hover-card-desc">{{ hoverProject.items[2].dataText }}</p>
+              <div class="hover-card-tags">
+                <span class="hover-card-tag">{{ hoverProject.items[1].dataText }}</span>
+                <span class="hover-card-tag" v-if="hoverProject.items[3]">{{ hoverProject.items[3].dataText }}</span>
               </div>
             </div>
           </div>
