@@ -1146,7 +1146,7 @@ p {
   }
 }
 
-/* 證照區塊樣式 */
+/*  證照區塊樣式 ===== */
 .certificates-table {
   width: 100%;
   pointer-events: auto;
@@ -1154,7 +1154,7 @@ p {
 
 .certificates-header {
   display: grid;
-  grid-template-columns: 80px 1fr 100px 120px;
+  grid-template-columns: 1fr 100px 120px;
   gap: 15px;
   padding: 15px 10px;
   border-bottom: 0.5px solid #333;
@@ -1197,7 +1197,7 @@ p {
 
 .certificates-row {
   display: grid;
-  grid-template-columns: 80px 1fr 100px 120px;
+  grid-template-columns: 1fr 100px 120px;
   gap: 15px;
   padding: 18px 10px;
   border-bottom: 1px solid #eee;
@@ -1283,7 +1283,7 @@ p {
 @media (max-width: 900px) {
   .certificates-header,
   .certificates-row {
-    grid-template-columns: 70px 1fr 90px 100px;
+    grid-template-columns: 1fr 90px 100px;
     gap: 10px;
   }
 }
