@@ -69,8 +69,8 @@ const app = createApp({
           subtitle: "經歷",
           image: "img/flight.jpg",
           content: [
-            "朝陽科技大學　碩士　2023<br>Chaoyang University of Technology, Master",
-            "朝陽科技大學　學士　2022<br>Chaoyang University of Technology, Bachelor",
+            "朝陽科技大學　行銷與流通管理　碩士　2023<br>Chaoyang University of Technology, Department of Marketing and Logistics Management, Master",
+            "朝陽科技大學　行銷與流通管理　學士　2022<br>Chaoyang University of Technology, Department of Marketing and Logistics Management, Bachelor",
             "德國雷根斯堡大學　交換生　2022<br>University of Regensburg, Exchange student",
             "創價心工程顧問公司　專案管理師　2023-2024<br>Chuang jia xin Engineering Consultants, Project manager",
             "天鎏科技企業有限公司　網頁前端工程師　2025-至今<br>Tyan Liu Technology Co., Ltd., Frontend Engineer",
@@ -762,24 +762,25 @@ const app = createApp({
       const currentPath = window.location.pathname;
       const targetPath = url.pathname;
       const hash = url.hash;
-      
+
       // 檢查是否在同一頁面
-      const isSamePage = currentPath === targetPath || 
-                         currentPath.endsWith(targetPath) ||
-                         targetPath.endsWith(currentPath.split('/').pop());
-      
+      const isSamePage =
+        currentPath === targetPath ||
+        currentPath.endsWith(targetPath) ||
+        targetPath.endsWith(currentPath.split("/").pop());
+
       if (isSamePage && hash) {
         // 同一頁面，阻止預設行為並手動滾動
         event.preventDefault();
         this.closeMenu();
-        
+
         // 等待 menu 關閉動畫完成後再滾動
         setTimeout(() => {
           const targetElement = document.querySelector(hash);
           if (targetElement) {
             targetElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
+              behavior: "smooth",
+              block: "start",
             });
             // 更新 URL hash
             history.pushState(null, null, hash);
