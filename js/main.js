@@ -986,13 +986,15 @@ const app = createApp({
         active: true
       });
 
-      /* 監聽所有線上用戶 */
+      /* 監聽所有線上用戶（不包含自己） */
       fb.onValue(onlineCountRef, (snapshot) => {
         if (snapshot.exists()) {
           const onlineUsers = snapshot.val();
-          this.onlineVisitors = Object.keys(onlineUsers).length;
+          /* 總人數減 1（不含自己） */
+          const count = Object.keys(onlineUsers).length - 1;
+          this.onlineVisitors = Math.max(0, count);
         } else {
-          this.onlineVisitors = 1;
+          this.onlineVisitors = 0;
         }
       });
 
