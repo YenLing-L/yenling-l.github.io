@@ -37,6 +37,7 @@ const app = createApp({
           subItems: [
             { text: "經歷　EXPERIENCE", link: "index.html#Experience" },
             { text: "專長　EXPERTISE", link: "index.html#Expertise" },
+            { text: "證照　CERTIFICATES", link: "index.html#Certificates" },
           ],
         },
         {
