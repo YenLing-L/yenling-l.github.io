@@ -337,6 +337,35 @@ p {
 @media (max-width: 900px) {
   .footer_info {
     grid-template-columns: repeat(2, 1fr);
+    padding: 50px 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer_info {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "info follow"
+      "contact .";
+    padding: 30px 20px;
+    position: relative;
+    gap: 20px;
+  }
+
+  .footer_info-item {
+    overflow: visible;
+  }
+
+  .footer_info-item:nth-child(1) {
+    grid-area: info;
+  }
+
+  .footer_info-item:nth-child(2) {
+    grid-area: follow;
+  }
+
+  .footer_info-item:nth-child(3) {
+    grid-area: contact;
   }
 }
 
@@ -1146,10 +1175,9 @@ p {
   }
 }
 
-/* ===== 證照區塊樣式 ===== */
+/* 證照區塊樣式 */
 .certificates-table {
   width: 100%;
-  /* border-top: 2px solid #333; */
   pointer-events: auto;
 }
 
