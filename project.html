@@ -62,6 +62,7 @@
                     v-for="(subItem, sIndex) in item.subItems"
                     :key="sIndex"
                     :href="subItem.link"
+                    @click="handleMenuLink(subItem.link, $event)"
                   >
                     {{ subItem.text }}
                   </a>
@@ -98,6 +99,7 @@
                   v-for="(subItem, sIndex) in item.subItems"
                   :key="sIndex"
                   :href="subItem.link"
+                  @click="handleMenuLink(subItem.link, $event)"
                 >
                   {{ subItem.text }}
                 </a>
@@ -135,6 +137,7 @@
       <div
         v-for="(section, sectionIndex) in portfolioSections"
         :key="sectionIndex"
+        :id="section.title.part1.replace(/\s+/g, '')"
         class="content"
       >
         <h2>
@@ -170,20 +173,31 @@
           </div>
 
           <!-- Hover Card -->
-          <div 
+          <div
             class="project-hover-card"
             v-if="hoverProject"
             :style="{ left: hoverCardX + 'px', top: hoverCardY + 'px' }"
           >
             <div class="hover-card-image">
-              <img :src="hoverProject.items[0].imgSrc" :alt="hoverProject.items[0].dataText" />
+              <img
+                :src="hoverProject.items[0].imgSrc"
+                :alt="hoverProject.items[0].dataText"
+              />
             </div>
             <div class="hover-card-content">
-              <h3 class="hover-card-title">{{ hoverProject.items[0].dataText }}</h3>
-              <p class="hover-card-desc">{{ hoverProject.items[2].dataText }}</p>
+              <h3 class="hover-card-title">
+                {{ hoverProject.items[0].dataText }}
+              </h3>
+              <p class="hover-card-desc">
+                {{ hoverProject.items[2].dataText }}
+              </p>
               <div class="hover-card-tags">
-                <span class="hover-card-tag">{{ hoverProject.items[1].dataText }}</span>
-                <span class="hover-card-tag" v-if="hoverProject.items[3]">{{ hoverProject.items[3].dataText }}</span>
+                <span class="hover-card-tag"
+                  >{{ hoverProject.items[1].dataText }}</span
+                >
+                <span class="hover-card-tag" v-if="hoverProject.items[3]"
+                  >{{ hoverProject.items[3].dataText }}</span
+                >
               </div>
             </div>
           </div>

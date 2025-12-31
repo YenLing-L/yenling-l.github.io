@@ -25,8 +25,8 @@ const app = createApp({
           title: "PROJECTS",
           link: "project.html",
           subItems: [
-            { text: "網站　WEBSITE", link: "project.html" },
-            { text: "平面　GRAPHIC", link: "project.html" },
+            { text: "網站　WEBSITE", link: "project.html#WebsiteDesign" },
+            { text: "平面　GRAPHIC", link: "project.html#GraphicDesign" },
           ],
         },
         {
@@ -35,8 +35,8 @@ const app = createApp({
           image:
             "https://notion-avatar.app/api/svg/eyJmYWNlIjo4LCJub3NlIjozLCJtb3V0aCI6MTIsImV5ZXMiOjMsImV5ZWJyb3dzIjo3LCJnbGFzc2VzIjowLCJoYWlyIjo1MCwiYWNjZXNzb3JpZXMiOjgsImRldGFpbHMiOjEsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InRyYW5zcGFyZW50Iiwic2hhcGUiOiJjaXJjbGUifQ==",
           subItems: [
-            { text: "經歷　EXPERIENCE", link: "index.html" },
-            { text: "專長　EXPERTISE", link: "index.html" },
+            { text: "經歷　EXPERIENCE", link: "index.html#Experience" },
+            { text: "專長　EXPERTISE", link: "index.html#Expertise" },
           ],
         },
         {
@@ -49,7 +49,7 @@ const app = createApp({
               link: "https://github.com/YenLing-L?tab=overview&from",
             },
             { text: "Instagram", link: "#" },
-            { text: "HaveFun", link: "#" },
+            { text: "Have Fun", link: "contact.html#HaveFun" },
           ],
         },
       ],
@@ -755,6 +755,40 @@ const app = createApp({
     closeMenu() {
       this.isMenuActive = false;
       this.isMenuOpen = false;
+    },
+    handleMenuLink(link, event) {
+      // 解析連結
+      const url = new URL(link, window.location.href);
+      const currentPath = window.location.pathname;
+      const targetPath = url.pathname;
+      const hash = url.hash;
+      
+      // 檢查是否在同一頁面
+      const isSamePage = currentPath === targetPath || 
+                         currentPath.endsWith(targetPath) ||
+                         targetPath.endsWith(currentPath.split('/').pop());
+      
+      if (isSamePage && hash) {
+        // 同一頁面，阻止預設行為並手動滾動
+        event.preventDefault();
+        this.closeMenu();
+        
+        // 等待 menu 關閉動畫完成後再滾動
+        setTimeout(() => {
+          const targetElement = document.querySelector(hash);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            // 更新 URL hash
+            history.pushState(null, null, hash);
+          }
+        }, 300);
+      } else {
+        // 不同頁面，讓瀏覽器正常導航
+        this.closeMenu();
+      }
     },
     updateSpotlight(event) {
       this.mouseX = event.clientX;

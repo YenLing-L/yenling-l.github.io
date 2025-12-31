@@ -61,6 +61,7 @@
                     v-for="(subItem, sIndex) in item.subItems"
                     :key="sIndex"
                     :href="subItem.link"
+                    @click="handleMenuLink(subItem.link, $event)"
                   >
                     {{ subItem.text }}
                   </a>
@@ -97,6 +98,7 @@
                   v-for="(subItem, sIndex) in item.subItems"
                   :key="sIndex"
                   :href="subItem.link"
+                  @click="handleMenuLink(subItem.link, $event)"
                 >
                   {{ subItem.text }}
                 </a>
@@ -157,7 +159,7 @@
             </div>
             <br />
 
-            <h2>
+            <h2 id="HaveFun">
               <span class="part1">Have Fun</span>
               <span class="part2">|到此一遊</span>
             </h2>

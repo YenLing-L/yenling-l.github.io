@@ -60,6 +60,7 @@
                     v-for="(subItem, sIndex) in item.subItems"
                     :key="sIndex"
                     :href="subItem.link"
+                    @click="handleMenuLink(subItem.link, $event)"
                   >
                     {{ subItem.text }}
                   </a>
@@ -96,6 +97,7 @@
                   v-for="(subItem, sIndex) in item.subItems"
                   :key="sIndex"
                   :href="subItem.link"
+                  @click="handleMenuLink(subItem.link, $event)"
                 >
                   {{ subItem.text }}
                 </a>
@@ -136,6 +138,7 @@
             class="event"
             v-for="(section, index) in sections"
             :key="index"
+            :id="section.title"
             data-aos="fade-up"
           >
             <div class="year">
