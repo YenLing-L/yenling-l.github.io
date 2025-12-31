@@ -294,7 +294,7 @@ const app = createApp({
           nameCN: "網頁設計丙級技術士",
           nameEN: "Web Design Technician Level C",
           nameENShort: "Web Design Level C",
-          category: "網頁相關",
+          category: "網頁",
           date: "2022-08-10",
         },
         {
@@ -316,6 +316,7 @@ const app = createApp({
       ],
       certificateSortKey: "id",
       certificateSortOrder: "asc",
+      isFilterMenuOpen: false,
     };
   },
   computed: {
@@ -355,6 +356,10 @@ const app = createApp({
     sortCertificates(key, order) {
       this.certificateSortKey = key;
       this.certificateSortOrder = order;
+      this.isFilterMenuOpen = false;
+    },
+    toggleFilterMenu() {
+      this.isFilterMenuOpen = !this.isFilterMenuOpen;
     },
     openProjectDetails(project, event) {
       if (event) {
