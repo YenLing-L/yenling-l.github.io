@@ -189,6 +189,132 @@
               </div>
             </div>
           </div>
+          <!-- Certificates Section - 獨立區塊 -->
+          <div class="event" id="Certificates" data-aos="fade-up">
+            <div class="year">
+              <h2>
+                <span class="part1">Certificates</span>
+                <span class="part2">|證照</span>
+              </h2>
+            </div>
+            <div class="word">
+              <div class="certificates-table">
+                <div class="certificates-header">
+                  <div class="certificates-header-cell">
+                    <span>編號</span>
+                    <div class="sort-buttons">
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'asc' }"
+                        @click="sortCertificates('id', 'asc')"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'desc' }"
+                        @click="sortCertificates('id', 'desc')"
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  </div>
+                  <div class="certificates-header-cell">
+                    <span>證照名稱</span>
+                    <div class="sort-buttons">
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'asc' }"
+                        @click="sortCertificates('nameCN', 'asc')"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'desc' }"
+                        @click="sortCertificates('nameCN', 'desc')"
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  </div>
+                  <div class="certificates-header-cell">
+                    <span>證照分類</span>
+                    <div class="sort-buttons">
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'asc' }"
+                        @click="sortCertificates('category', 'asc')"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'desc' }"
+                        @click="sortCertificates('category', 'desc')"
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  </div>
+                  <div class="certificates-header-cell">
+                    <span>證照日期</span>
+                    <div class="sort-buttons">
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'asc' }"
+                        @click="sortCertificates('date', 'asc')"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        class="sort-btn"
+                        :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'desc' }"
+                        @click="sortCertificates('date', 'desc')"
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="certificates-row"
+                  v-for="(cert, cIndex) in sortedCertificates"
+                  :key="cIndex"
+                >
+                  <!-- 桌機版欄位 -->
+                  <div class="certificates-cell cert-id">{{ cert.id }}</div>
+                  <div class="certificates-cell cert-name-cell">
+                    <span class="cert-name-cn">{{ cert.nameCN }}</span>
+                    <span class="cert-name-en">{{ cert.nameEN }}</span>
+                  </div>
+                  <div class="certificates-cell cert-category-cell">
+                    <span
+                      class="category-tag"
+                      :class="'category-' + cert.category"
+                      >{{ cert.category }}</span
+                    >
+                  </div>
+                  <div class="certificates-cell cert-date-cell">
+                    {{ cert.date }}
+                  </div>
+                  <!-- 手機版標題列 -->
+                  <div class="cert-mobile-header">
+                    <span class="cert-mobile-id">{{ cert.id }}</span>
+                    <span class="cert-mobile-date">{{ cert.date }}</span>
+                    <span class="cert-mobile-category"
+                      >{{ cert.category }}</span
+                    >
+                  </div>
+                  <!-- 手機版名稱 -->
+                  <div class="cert-mobile-names">
+                    <span class="cert-mobile-name-cn">{{ cert.nameCN }}</span>
+                    <span class="cert-mobile-name-en">{{ cert.nameEN }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

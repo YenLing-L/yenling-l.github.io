@@ -1000,3 +1000,218 @@ p {
     left: 20px;
   }
 }
+
+/* ===== 證照區塊樣式 ===== */
+.certificates-table {
+  width: 100%;
+  border-top: 2px solid #333;
+  pointer-events: auto;
+}
+
+.certificates-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 120px;
+  gap: 15px;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.certificates-header-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: clamp(0.85rem, 0.9vw, 1rem);
+  font-weight: 600;
+  color: #555;
+}
+
+.sort-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sort-btn {
+  background: none;
+  border: none;
+  padding: 0 4px;
+  font-size: 10px;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.sort-btn:hover {
+  color: #333;
+}
+
+.sort-btn.active {
+  color: #d4a574;
+  font-weight: bold;
+}
+
+.certificates-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 120px;
+  gap: 15px;
+  padding: 18px 10px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.certificates-row:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.certificates-cell {
+  font-size: clamp(0.85rem, 0.9vw, 1rem);
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.certificates-cell:first-child {
+  color: #d4a574;
+  font-weight: 500;
+}
+
+/* 證照名稱欄位 - 中英文堆疊 */
+.cert-name-cell {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cert-name-cn {
+  font-weight: 500;
+  color: #333;
+}
+
+.cert-name-en {
+  font-size: clamp(0.75rem, 0.8vw, 0.85rem);
+  color: #888;
+}
+
+/* 桌機版顯示完整英文名稱，隱藏簡稱 */
+.cert-name-en-full {
+  display: inline;
+}
+
+.cert-name-en-short {
+  display: none;
+}
+
+/* 手機版的分類與日期資訊 - 桌機版隱藏 */
+.cert-info-mobile {
+  display: none;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.category-tag.category-行銷 {
+  background-color: #e8f4fd;
+  color: #1a73e8;
+}
+
+.category-tag.category-語言 {
+  background-color: #fef3e8;
+  color: #e67700;
+}
+
+.category-tag.category-網頁相關 {
+  background-color: #e8f8e8;
+  color: #2e7d32;
+}
+
+.category-tag.category-AI {
+  background-color: #f3e8fd;
+  color: #7c4dff;
+}
+
+/* 證照區塊響應式設計 */
+@media (max-width: 900px) {
+  .certificates-header,
+  .certificates-row {
+    grid-template-columns: 70px 1fr 90px 100px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .certificates-header {
+    display: none;
+  }
+
+  .certificates-row {
+    display: block;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* 隱藏桌機版的欄位 */
+  .certificates-cell {
+    display: none;
+  }
+
+  /* 手機版標題列 - 編號 + 日期 + 分類 */
+  .cert-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .cert-mobile-id {
+    color: #d4a574;
+    font-weight: 500;
+    font-size: clamp(1rem, 0.8vw, 1.1rem);
+  }
+
+  .cert-mobile-date {
+    color: #888;
+    font-size: clamp(1rem, 0.8vw, 1.1rem);
+  }
+
+  .cert-mobile-category {
+    color: #888;
+    font-size: clamp(1rem, 0.8vw, 1.1rem);
+  }
+
+  /* 手機版名稱區塊 */
+  .cert-mobile-names {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cert-mobile-name-cn {
+    font-weight: 500;
+    color: #333;
+    font-size: clamp(1rem, 0.8vw, 1.1rem);
+    line-height: 1.5;
+  }
+
+  .cert-mobile-name-en {
+    color: #888;
+    font-size: clamp(1rem, 0.8vw, 1.1rem);
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* 桌機版隱藏手機專用元素 */
+@media (min-width: 769px) {
+  .cert-mobile-header,
+  .cert-mobile-names {
+    display: none !important;
+  }
+}
