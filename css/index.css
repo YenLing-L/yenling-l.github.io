@@ -337,35 +337,6 @@ p {
 @media (max-width: 900px) {
   .footer_info {
     grid-template-columns: repeat(2, 1fr);
-    padding: 50px 30px;
-  }
-}
-
-@media (max-width: 600px) {
-  .footer_info {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "info follow"
-      "contact .";
-    padding: 30px 20px;
-    position: relative;
-    gap: 20px;
-  }
-
-  .footer_info-item {
-    overflow: visible;
-  }
-
-  .footer_info-item:nth-child(1) {
-    grid-area: info;
-  }
-
-  .footer_info-item:nth-child(2) {
-    grid-area: follow;
-  }
-
-  .footer_info-item:nth-child(3) {
-    grid-area: contact;
   }
 }
 
@@ -1183,7 +1154,7 @@ p {
 
 .certificates-header {
   display: grid;
-  grid-template-columns: 1fr 150px 120px;
+  grid-template-columns: 80px 1fr 100px 120px;
   gap: 15px;
   padding: 15px 10px;
   border-bottom: 0.5px solid #333;
@@ -1193,22 +1164,22 @@ p {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: clamp(1rem, 0.8vw, 1.1rem);
+  font-size: clamp(0.85rem, 0.9vw, 1rem);
   font-weight: 600;
   color: black;
 }
 
 .sort-buttons {
   display: flex;
-  flex-direction: row;
-  gap: 4px;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .sort-btn {
   background: none;
   border: none;
-  padding: 0 6px;
-  font-size: 14px;
+  padding: 0 4px;
+  font-size: 10px;
   color: #aaa;
   cursor: pointer;
   line-height: 1;
@@ -1226,7 +1197,7 @@ p {
 
 .certificates-row {
   display: grid;
-  grid-template-columns: 1fr 150px 120px;
+  grid-template-columns: 80px 1fr 100px 120px;
   gap: 15px;
   padding: 18px 10px;
   border-bottom: 1px solid #eee;
@@ -1290,29 +1261,29 @@ p {
 
 .category-tag.category-行銷 {
   background-color: #e8f4fd;
-  color: #333;
+  color: #1a73e8;
 }
 
 .category-tag.category-語言 {
   background-color: #fef3e8;
-  color: #333;
+  color: #e67700;
 }
 
-.category-tag.category-網頁 {
+.category-tag.category-網頁相關 {
   background-color: #e8f8e8;
-  color: #333;
+  color: #2e7d32;
 }
 
 .category-tag.category-AI {
   background-color: #f3e8fd;
-  color: #333;
+  color: #7c4dff;
 }
 
 /* 證照區塊響應式設計 */
 @media (max-width: 900px) {
   .certificates-header,
   .certificates-row {
-    grid-template-columns: 1fr 90px 100px;
+    grid-template-columns: 70px 1fr 90px 100px;
     gap: 10px;
   }
 }
