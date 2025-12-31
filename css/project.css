@@ -1174,3 +1174,10 @@ body.overlay-open .project-list {
   border-radius: 20px;
   border: 1px solid #e0e0e0;
 }
+
+/* 手機裝置隱藏 Hover Card */
+@media (max-width: 768px) {
+  .project-hover-card {
+    display: none !important;
+  }
+}
