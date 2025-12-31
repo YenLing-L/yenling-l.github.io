@@ -156,7 +156,7 @@
               <div v-if="section.header">
                 <div class="typewriter">
                   <div>
-                    <h2><a href="yenling.html">{{ siteTitle }}</a></h2>
+                    <h2><a href="index.html">{{ siteTitle }}</a></h2>
                   </div>
                 </div>
               </div>
@@ -168,7 +168,12 @@
               ></p>
               <br />
               <div v-if="section.resumeLink">
-                <a :href="section.resumeLink" target="_blank">查看詳細履歷</a>
+                <a
+                  :href="section.resumeLink"
+                  target="_blank"
+                  class="resume-link"
+                  >查看詳細履歷</a
+                >
               </div>
               <div v-if="section.skills" class="grid">
                 <div
