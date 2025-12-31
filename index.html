@@ -189,14 +189,14 @@
               </div>
             </div>
           </div>
-          <!-- Certificates Section - 獨立區塊 -->
+          <!-- 證照區塊 -->
           <div class="event" id="Certificates" data-aos="fade-up">
             <div class="year cert-title-row">
               <h2>
                 <span class="part1">Certificates</span>
                 <span class="part2">|證照</span>
               </h2>
-              <!-- 手機版篩選按鈕 -->
+              <!-- 手機版排序按鈕 -->
               <button class="filter-btn-mobile" @click="toggleFilterMenu">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -215,27 +215,12 @@
               </button>
             </div>
             <div class="word">
-              <!-- 手機版篩選下拉選單 -->
+              <!-- 手機版排序下拉選單 -->
               <div class="cert-filter-dropdown-wrapper">
                 <div
                   class="filter-dropdown"
                   :class="{ open: isFilterMenuOpen }"
                 >
-                  <div class="filter-group">
-                    <div class="filter-group-title">編號</div>
-                    <button
-                      @click="sortCertificates('id', 'asc')"
-                      :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'asc' }"
-                    >
-                      升序 ↑
-                    </button>
-                    <button
-                      @click="sortCertificates('id', 'desc')"
-                      :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'desc' }"
-                    >
-                      降序 ↓
-                    </button>
-                  </div>
                   <div class="filter-group">
                     <div class="filter-group-title">名稱</div>
                     <button
@@ -286,26 +271,7 @@
               <div class="certificates-table">
                 <div class="certificates-header">
                   <div class="certificates-header-cell">
-                    <span>編號</span>
-                    <div class="sort-buttons">
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'asc' }"
-                        @click="sortCertificates('id', 'asc')"
-                      >
-                        ↑
-                      </button>
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'id' && certificateSortOrder === 'desc' }"
-                        @click="sortCertificates('id', 'desc')"
-                      >
-                        ↓
-                      </button>
-                    </div>
-                  </div>
-                  <div class="certificates-header-cell">
-                    <span>證照名稱</span>
+                    <h3>證照名稱</h3>
                     <div class="sort-buttons">
                       <button
                         class="sort-btn"
@@ -324,7 +290,7 @@
                     </div>
                   </div>
                   <div class="certificates-header-cell">
-                    <span>證照分類</span>
+                    <h3>分類</h3>
                     <div class="sort-buttons">
                       <button
                         class="sort-btn"
@@ -343,7 +309,7 @@
                     </div>
                   </div>
                   <div class="certificates-header-cell">
-                    <span>證照日期</span>
+                    <h3>日期</h3>
                     <div class="sort-buttons">
                       <button
                         class="sort-btn"
@@ -367,8 +333,7 @@
                   v-for="(cert, cIndex) in sortedCertificates"
                   :key="cIndex"
                 >
-                  <!-- 桌機版欄位 -->
-                  <div class="certificates-cell cert-id">{{ cert.id }}</div>
+                  <!-- 電腦版欄位 -->
                   <div class="certificates-cell cert-name-cell">
                     <span class="cert-name-cn">{{ cert.nameCN }}</span>
                     <span class="cert-name-en">{{ cert.nameEN }}</span>
@@ -385,7 +350,6 @@
                   </div>
                   <!-- 手機版標題列 -->
                   <div class="cert-mobile-header">
-                    <span class="cert-mobile-id">{{ cert.id }}</span>
                     <span class="cert-mobile-date">{{ cert.date }}</span>
                     <span class="cert-mobile-category"
                       >{{ cert.category }}</span
