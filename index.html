@@ -420,6 +420,51 @@
       </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.0/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+        get,
+        onValue,
+        onDisconnect,
+        serverTimestamp,
+        increment,
+      } from "https://www.gstatic.com/firebasejs/11.7.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "[REMOVED_API_KEY]",
+        authDomain: "yenling-portfolio.firebaseapp.com",
+        databaseURL:
+          "https://yenling-portfolio-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "yenling-portfolio",
+        storageBucket: "yenling-portfolio.firebasestorage.app",
+        messagingSenderId: "467952459798",
+        appId: "1:467952459798:web:6248d5b77070c1ad825537",
+        measurementId: "G-S8XCGMZQGN",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      /* 將 Firebase 相關功能暴露給全域使用 */
+      window.firebaseDB = {
+        database,
+        ref,
+        set,
+        get,
+        onValue,
+        onDisconnect,
+        serverTimestamp,
+        increment,
+      };
+
+      /* 通知 main.js Firebase 已準備好 */
+      window.dispatchEvent(new Event("firebaseReady"));
+    </script>
+
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/js/main.js"></script>
     <script>
