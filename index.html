@@ -380,6 +380,15 @@
             v-html="line"
           ></p>
         </div>
+        <!-- 訪客統計 -->
+        <div class="footer_info-item visitor-item">
+          <h3>瀏覽人數</h3>
+          <p>{{ totalVisitors }}</p>
+        </div>
+        <div class="footer_info-item visitor-item">
+          <h3>同時瀏覽人數</h3>
+          <p class="online-count">{{ onlineVisitors }}</p>
+        </div>
       </div>
 
       <div class="marquee-container">

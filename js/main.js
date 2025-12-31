@@ -318,6 +318,9 @@ const app = createApp({
       certificateSortKey: "id",
       certificateSortOrder: "asc",
       isFilterMenuOpen: false,
+      totalVisitors: 0,
+      onlineVisitors: 0,
+      sessionId: null,
     };
   },
   computed: {
@@ -923,9 +926,93 @@ const app = createApp({
 
       this.showDetailBackToTop = scrollTop > 200;
 
-      // 當使用者開始滾動時顯示滾輪條
       if (scrollTop > 0 && !this.showDetailScrollbar) {
         this.showDetailScrollbar = true;
+      }
+    },
+    /* 訪客統計相關方法 */
+    generateSessionId() {
+      return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    },
+    initVisitorTracking() {
+      /* 生成或獲取 session ID */
+      this.sessionId = sessionStorage.getItem('visitorSessionId');
+      if (!this.sessionId) {
+        this.sessionId = this.generateSessionId();
+        sessionStorage.setItem('visitorSessionId', this.sessionId);
+      }
+
+      /* 總瀏覽人數（使用 localStorage） */
+      let totalCount = parseInt(localStorage.getItem('totalVisitorCount') || '0');
+      const lastVisitDate = localStorage.getItem('lastVisitDate');
+      const today = new Date().toDateString();
+      
+      /* 如果是新的一天或首次訪問，增加計數 */
+      if (lastVisitDate !== today) {
+        totalCount += 1;
+        localStorage.setItem('totalVisitorCount', totalCount.toString());
+        localStorage.setItem('lastVisitDate', today);
+      }
+      this.totalVisitors = totalCount;
+
+      /* 線上同時瀏覽人數（使用 BroadcastChannel + localStorage） */
+      this.updateOnlineVisitors();
+      
+      /* 使用 BroadcastChannel 進行即時同步 */
+      if ('BroadcastChannel' in window) {
+        this.visitorChannel = new BroadcastChannel('visitor_tracking');
+        this.visitorChannel.onmessage = () => {
+          this.updateOnlineVisitors();
+        };
+      }
+
+      /* 定期更新線上人數 */
+      this.onlineInterval = setInterval(() => {
+        this.heartbeat();
+        this.updateOnlineVisitors();
+      }, 5000);
+
+      /* 初始心跳 */
+      this.heartbeat();
+
+      /* 頁面關閉時移除 session */
+      window.addEventListener('beforeunload', this.handleBeforeUnload);
+    },
+    heartbeat() {
+      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
+      sessions[this.sessionId] = Date.now();
+      localStorage.setItem('activeSessions', JSON.stringify(sessions));
+      
+      /* 通知其他標籤頁 */
+      if (this.visitorChannel) {
+        this.visitorChannel.postMessage({ type: 'heartbeat' });
+      }
+    },
+    updateOnlineVisitors() {
+      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
+      const now = Date.now();
+      const activeThreshold = 15000; /* 15 秒內視為活躍 */
+      
+      /* 清理過期 session */
+      let activeCount = 0;
+      for (const [id, timestamp] of Object.entries(sessions)) {
+        if (now - timestamp < activeThreshold) {
+          activeCount++;
+        } else {
+          delete sessions[id];
+        }
+      }
+      
+      localStorage.setItem('activeSessions', JSON.stringify(sessions));
+      this.onlineVisitors = Math.max(1, activeCount);
+    },
+    handleBeforeUnload() {
+      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
+      delete sessions[this.sessionId];
+      localStorage.setItem('activeSessions', JSON.stringify(sessions));
+      
+      if (this.visitorChannel) {
+        this.visitorChannel.postMessage({ type: 'leave' });
       }
     },
   },
@@ -949,9 +1036,21 @@ const app = createApp({
     observeFadeIn(".year");
     observeFadeIn(".word");
     observeFadeIn(".project-row");
+
+    /* 初始化訪客統計 */
+    this.initVisitorTracking();
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
+    
+    /* 清理訪客統計資源 */
+    if (this.onlineInterval) {
+      clearInterval(this.onlineInterval);
+    }
+    if (this.visitorChannel) {
+      this.visitorChannel.close();
+    }
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
 });
 

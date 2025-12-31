@@ -304,7 +304,7 @@ p {
 
 .footer_info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 30px;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -334,6 +334,18 @@ p {
   color: #333;
 }
 
+/* 線上人數綠色樣式 */
+.footer_info-item .online-count {
+  color: #11998e;
+}
+
+@media (max-width: 1200px) {
+  .footer_info {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 50px 30px;
+  }
+}
+
 @media (max-width: 900px) {
   .footer_info {
     grid-template-columns: repeat(2, 1fr);
@@ -346,7 +358,8 @@ p {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "info follow"
-      "contact .";
+      "contact visitors1"
+      "visitors2 .";
     padding: 30px 20px;
     position: relative;
     gap: 20px;
@@ -366,6 +379,60 @@ p {
 
   .footer_info-item:nth-child(3) {
     grid-area: contact;
+  }
+
+  .footer_info-item:nth-child(4) {
+    grid-area: visitors1;
+  }
+
+  .footer_info-item:nth-child(5) {
+    grid-area: visitors2;
+  }
+}
+
+/* 訪客統計樣式 */
+.visitor-stats {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  padding: 30px 50px;
+  margin: 20px auto;
+}
+
+.visitor-stats-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.visitor-stats-item h3 {
+  font-size: clamp(1.4rem, 1.2vw, 2rem);
+  text-decoration: none;
+  color: #333;
+  margin: 0;
+}
+
+.visitor-count {
+  font-size: clamp(1rem, 0.8vw, 1.1rem);
+  color: #333;
+  margin: 0;
+}
+
+.visitor-count.online {
+  color: #11998e;
+}
+
+@media (max-width: 768px) {
+  .visitor-stats {
+    flex-direction: row;
+    gap: 40px;
+    padding: 20px 30px;
+  }
+  
+  .visitor-stats-item h3 {
+    font-size: clamp(1.1rem, 1vw, 1.4rem);
   }
 }
 
