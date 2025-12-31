@@ -930,90 +930,79 @@ const app = createApp({
         this.showDetailScrollbar = true;
       }
     },
-    /* 訪客統計相關方法 */
+    /* Firebase 訪客統計相關方法 */
     generateSessionId() {
       return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     },
     initVisitorTracking() {
+      /* 檢查 Firebase 是否已準備好 */
+      if (window.firebaseDB) {
+        this.setupFirebaseTracking();
+      } else {
+        window.addEventListener('firebaseReady', () => {
+          this.setupFirebaseTracking();
+        });
+      }
+    },
+    async setupFirebaseTracking() {
+      const fb = window.firebaseDB;
+      if (!fb) return;
+
       /* 生成或獲取 session ID */
       this.sessionId = sessionStorage.getItem('visitorSessionId');
-      if (!this.sessionId) {
+      const isNewSession = !this.sessionId;
+      if (isNewSession) {
         this.sessionId = this.generateSessionId();
         sessionStorage.setItem('visitorSessionId', this.sessionId);
       }
 
-      /* 總瀏覽人數（使用 localStorage） */
-      let totalCount = parseInt(localStorage.getItem('totalVisitorCount') || '0');
-      const lastVisitDate = localStorage.getItem('lastVisitDate');
-      const today = new Date().toDateString();
-      
-      /* 如果是新的一天或首次訪問，增加計數 */
-      if (lastVisitDate !== today) {
-        totalCount += 1;
-        localStorage.setItem('totalVisitorCount', totalCount.toString());
-        localStorage.setItem('lastVisitDate', today);
-      }
-      this.totalVisitors = totalCount;
-
-      /* 線上同時瀏覽人數（使用 BroadcastChannel + localStorage） */
-      this.updateOnlineVisitors();
-      
-      /* 使用 BroadcastChannel 進行即時同步 */
-      if ('BroadcastChannel' in window) {
-        this.visitorChannel = new BroadcastChannel('visitor_tracking');
-        this.visitorChannel.onmessage = () => {
-          this.updateOnlineVisitors();
-        };
-      }
-
-      /* 定期更新線上人數 */
-      this.onlineInterval = setInterval(() => {
-        this.heartbeat();
-        this.updateOnlineVisitors();
-      }, 5000);
-
-      /* 初始心跳 */
-      this.heartbeat();
-
-      /* 頁面關閉時移除 session */
-      window.addEventListener('beforeunload', this.handleBeforeUnload);
-    },
-    heartbeat() {
-      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
-      sessions[this.sessionId] = Date.now();
-      localStorage.setItem('activeSessions', JSON.stringify(sessions));
-      
-      /* 通知其他標籤頁 */
-      if (this.visitorChannel) {
-        this.visitorChannel.postMessage({ type: 'heartbeat' });
-      }
-    },
-    updateOnlineVisitors() {
-      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
-      const now = Date.now();
-      const activeThreshold = 15000; /* 15 秒內視為活躍 */
-      
-      /* 清理過期 session */
-      let activeCount = 0;
-      for (const [id, timestamp] of Object.entries(sessions)) {
-        if (now - timestamp < activeThreshold) {
-          activeCount++;
-        } else {
-          delete sessions[id];
+      /* 總瀏覽人數 - 每個新 session 增加計數 */
+      const totalRef = fb.ref(fb.database, 'visitors/total');
+      if (isNewSession) {
+        try {
+          const snapshot = await fb.get(totalRef);
+          const currentCount = snapshot.exists() ? snapshot.val() : 0;
+          await fb.set(totalRef, currentCount + 1);
+        } catch (error) {
+          console.error('Error updating total visitors:', error);
         }
       }
       
-      localStorage.setItem('activeSessions', JSON.stringify(sessions));
-      this.onlineVisitors = Math.max(1, activeCount);
-    },
-    handleBeforeUnload() {
-      const sessions = JSON.parse(localStorage.getItem('activeSessions') || '{}');
-      delete sessions[this.sessionId];
-      localStorage.setItem('activeSessions', JSON.stringify(sessions));
+      /* 監聽總瀏覽人數變化 */
+      fb.onValue(totalRef, (snapshot) => {
+        this.totalVisitors = snapshot.exists() ? snapshot.val() : 0;
+      });
+
+      /* 線上人數 - 使用 Firebase Presence 系統 */
+      const myOnlineRef = fb.ref(fb.database, `online/${this.sessionId}`);
+      const onlineCountRef = fb.ref(fb.database, 'online');
       
-      if (this.visitorChannel) {
-        this.visitorChannel.postMessage({ type: 'leave' });
-      }
+      /* 設定離線時自動移除 */
+      fb.onDisconnect(myOnlineRef).remove();
+      
+      /* 標記自己上線 */
+      fb.set(myOnlineRef, {
+        timestamp: Date.now(),
+        active: true
+      });
+
+      /* 監聽所有線上用戶 */
+      fb.onValue(onlineCountRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const onlineUsers = snapshot.val();
+          this.onlineVisitors = Object.keys(onlineUsers).length;
+        } else {
+          this.onlineVisitors = 1;
+        }
+      });
+
+      /* 定期更新 timestamp 保持活躍 */
+      this.onlineInterval = setInterval(() => {
+        fb.set(myOnlineRef, {
+          timestamp: Date.now(),
+          active: true
+        });
+      }, 30000);
     },
   },
   mounted() {
@@ -1047,10 +1036,6 @@ const app = createApp({
     if (this.onlineInterval) {
       clearInterval(this.onlineInterval);
     }
-    if (this.visitorChannel) {
-      this.visitorChannel.close();
-    }
-    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
 });
 
