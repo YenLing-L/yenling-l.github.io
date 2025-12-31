@@ -272,6 +272,50 @@ const app = createApp({
         },
       ],
       copyright: "copyright © 2025 YEN-LING　All Rights Reserved.",
+      certificates: [
+        {
+          id: "C-001",
+          nameCN: "Google Analytics 個人認證",
+          nameEN: "Google Analytics Individual Qualification",
+          nameENShort: "GAIQ",
+          category: "行銷",
+          date: "2024-06-15",
+        },
+        {
+          id: "C-002",
+          nameCN: "多益英語測驗",
+          nameEN: "TOEIC",
+          nameENShort: "TOEIC",
+          category: "語言",
+          date: "2023-03-20",
+        },
+        {
+          id: "C-003",
+          nameCN: "網頁設計丙級技術士",
+          nameEN: "Web Design Technician Level C",
+          nameENShort: "Web Design Level C",
+          category: "網頁相關",
+          date: "2022-08-10",
+        },
+        {
+          id: "C-004",
+          nameCN: "AI 應用基礎認證",
+          nameEN: "AI Application Fundamentals",
+          nameENShort: "AI Fundamentals",
+          category: "AI",
+          date: "2024-01-25",
+        },
+        {
+          id: "C-005",
+          nameCN: "Google Ads 搜尋廣告認證",
+          nameEN: "Google Ads Search Certification",
+          nameENShort: "Google Ads Search",
+          category: "行銷",
+          date: "2024-05-08",
+        },
+      ],
+      certificateSortKey: "id",
+      certificateSortOrder: "asc",
     };
   },
   computed: {
@@ -286,8 +330,32 @@ const app = createApp({
         transform: `translate(${this.mouseX}px, ${this.mouseY}px)`,
       };
     },
+    sortedCertificates() {
+      const sorted = [...this.certificates];
+      const key = this.certificateSortKey;
+      const order = this.certificateSortOrder;
+      sorted.sort((a, b) => {
+        let valA = a[key];
+        let valB = b[key];
+        if (key === "date") {
+          valA = new Date(valA);
+          valB = new Date(valB);
+        } else if (typeof valA === "string") {
+          valA = valA.toLowerCase();
+          valB = valB.toLowerCase();
+        }
+        if (valA < valB) return order === "asc" ? -1 : 1;
+        if (valA > valB) return order === "asc" ? 1 : -1;
+        return 0;
+      });
+      return sorted;
+    },
   },
   methods: {
+    sortCertificates(key, order) {
+      this.certificateSortKey = key;
+      this.certificateSortOrder = order;
+    },
     openProjectDetails(project, event) {
       if (event) {
         event.preventDefault();
