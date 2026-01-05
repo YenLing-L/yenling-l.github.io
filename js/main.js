@@ -23,6 +23,19 @@ const app = createApp({
       showDetailScrollbar: false,
       isMenuOpen: false,
       navActive: false,
+      /* 平面設計相關 */
+      isGraphicProject: false,
+      showLightbox: false,
+      mirror1X: 100,
+      mirror1Y: 150,
+      mirror2X: 300,
+      mirror2Y: 250,
+      mirror3X: 500,
+      mirror3Y: 350,
+      mirrorDragging: null,
+      mirrorOffsetX: 0,
+      mirrorOffsetY: 0,
+      graphicImageRect: null,
       navItems: [
         {
           title: "PROJECTS",
@@ -226,6 +239,12 @@ const app = createApp({
                 { dataText: "時間的回聲", imgSrc: "img/35.png" },
                 { dataText: "海報設計作品", imgSrc: "img/35.png" },
               ],
+              descCn:
+                "這是一幅探討時間本質的海報設計作品，透過抽象的視覺元素呈現時間的流逝與回響。",
+              descEn:
+                "This is a poster design exploring the essence of time, presenting the passage and echo of time through abstract visual elements.",
+              concept:
+                "作品以時間為主題，運用現代設計語言詮釋時光的流動與記憶的沉澱，創造出引人深思的視覺體驗。",
             },
             {
               link: "#",
@@ -235,6 +254,12 @@ const app = createApp({
                 { dataText: "無冒犯之意", imgSrc: "img/34.png" },
                 { dataText: "視覺設計作品", imgSrc: "img/34.png" },
               ],
+              descCn:
+                "以幽默詼諧的方式探討日常溝通中的微妙界限，透過視覺設計傳達人際互動的藝術。",
+              descEn:
+                "Exploring the subtle boundaries in daily communication with humor, conveying the art of interpersonal interaction through visual design.",
+              concept:
+                "設計靈感來自於日常對話中的微妙尷尬，以輕鬆的視覺語言化解緊張氣氛。",
             },
             {
               link: "#",
@@ -244,6 +269,12 @@ const app = createApp({
                 { dataText: "品牌形象設計", imgSrc: "img/YEN LING.png" },
                 { dataText: "視覺識別系統", imgSrc: "img/YEN LING.png" },
               ],
+              descCn:
+                "為生活品牌打造完整的視覺識別系統，包含標誌設計、色彩規範和應用延伸。",
+              descEn:
+                "Creating a complete visual identity system for a lifestyle brand, including logo design, color guidelines, and application extensions.",
+              concept:
+                "以簡約現代的設計風格，傳達品牌追求生活品質與時間價值的核心理念。",
             },
             {
               link: "#",
@@ -253,6 +284,12 @@ const app = createApp({
                 { dataText: "雜誌封面設計", imgSrc: "img/雜誌2.png" },
                 { dataText: "排版與視覺設計", imgSrc: "img/雜誌2.png" },
               ],
+              descCn:
+                "為時尚雜誌設計的封面作品，融合攝影與圖形設計，展現當代美學風格。",
+              descEn:
+                "A magazine cover design combining photography and graphic design, showcasing contemporary aesthetic style.",
+              concept:
+                "透過大膽的排版和色彩運用，打造吸引目光的封面設計，傳達雜誌的獨特定位。",
             },
           ],
         },
@@ -374,6 +411,35 @@ const app = createApp({
 
         // 隱藏 hover 卡片
         this.hoverProject = null;
+
+        // 判斷是否為平面設計項目
+        const isGraphic = project.items[1]?.dataText === "平面設計";
+        this.isGraphicProject = isGraphic;
+
+        if (isGraphic) {
+          this.selectedProject = project;
+          this.isDetailOpen = true;
+          /* 2 個鏡子在圖片左側，1 個在右側 */
+          this.mirror1X = window.innerWidth * 0.42;
+          this.mirror1Y = window.innerHeight * 0.15;
+          this.mirror2X = window.innerWidth * 0.35;
+          this.mirror2Y = window.innerHeight * 0.4;
+          this.mirror3X = window.innerWidth * 0.75;
+          this.mirror3Y = window.innerHeight * 0.3;
+          document.body.style.overflow = "hidden";
+          document.body.classList.add("overlay-open");
+
+          this.$nextTick(() => {
+            let imgContainer = this.$refs.graphicImageContainer;
+            if (Array.isArray(imgContainer)) {
+              imgContainer = imgContainer[0];
+            }
+            if (imgContainer && imgContainer.getBoundingClientRect) {
+              this.graphicImageRect = imgContainer.getBoundingClientRect();
+            }
+          });
+          return;
+        }
 
         const clickedRow = event.currentTarget;
         const rect = clickedRow.getBoundingClientRect();
@@ -618,6 +684,15 @@ const app = createApp({
     },
 
     closeProjectDetails() {
+      if (this.isGraphicProject) {
+        this.isDetailOpen = false;
+        this.selectedProject = null;
+        this.isGraphicProject = false;
+        document.body.style.overflow = "auto";
+        document.body.classList.remove("overlay-open");
+        return;
+      }
+
       const overlay = document.querySelector(".project-detail-overlay.active");
       const clickPosition = this.clickPosition;
 
@@ -932,6 +1007,97 @@ const app = createApp({
       if (scrollTop > 0 && !this.showDetailScrollbar) {
         this.showDetailScrollbar = true;
       }
+    },
+
+    startMirrorDrag(event, mirrorId) {
+      event.preventDefault();
+      this.mirrorDragging = mirrorId;
+
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+
+      let mirrorX, mirrorY;
+      if (mirrorId === 1) {
+        mirrorX = this.mirror1X;
+        mirrorY = this.mirror1Y;
+      } else if (mirrorId === 2) {
+        mirrorX = this.mirror2X;
+        mirrorY = this.mirror2Y;
+      } else {
+        mirrorX = this.mirror3X;
+        mirrorY = this.mirror3Y;
+      }
+
+      this.mirrorOffsetX = clientX - mirrorX;
+      this.mirrorOffsetY = clientY - mirrorY;
+    },
+
+    onGraphicMouseMove(event) {
+      if (this.mirrorDragging) {
+        const clientX = event.touches
+          ? event.touches[0].clientX
+          : event.clientX;
+        const clientY = event.touches
+          ? event.touches[0].clientY
+          : event.clientY;
+
+        const newX = clientX - this.mirrorOffsetX;
+        const newY = clientY - this.mirrorOffsetY;
+
+        if (this.mirrorDragging === 1) {
+          this.mirror1X = newX;
+          this.mirror1Y = newY;
+        } else if (this.mirrorDragging === 2) {
+          this.mirror2X = newX;
+          this.mirror2Y = newY;
+        } else {
+          this.mirror3X = newX;
+          this.mirror3Y = newY;
+        }
+      }
+    },
+
+    stopMirrorDrag() {
+      this.mirrorDragging = null;
+    },
+
+    openLightbox() {
+      this.showLightbox = true;
+    },
+
+    closeLightbox() {
+      this.showLightbox = false;
+    },
+
+    getMirrorImageStyle(mirrorId) {
+      const mirrorX = mirrorId === 1 ? this.mirror1X : this.mirror2X;
+      const mirrorY = mirrorId === 1 ? this.mirror1Y : this.mirror2Y;
+      const imgRect = this.graphicImageRect;
+
+      if (!imgRect) {
+        return {
+          position: "absolute",
+          left: "0px",
+          top: "0px",
+          width: "100%",
+          height: "auto",
+        };
+      }
+
+      /* 鏡子尺寸 */
+      const mirrorWidth = 280;
+      const mirrorHeight = 100;
+
+      const offsetX = -(mirrorX - imgRect.left);
+      const offsetY = -(mirrorY - imgRect.top);
+
+      return {
+        position: "absolute",
+        left: offsetX + "px",
+        top: offsetY + "px",
+        width: imgRect.width + "px",
+        height: imgRect.height + "px",
+      };
     },
 
     generateSessionId() {

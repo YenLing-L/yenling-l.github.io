@@ -1181,3 +1181,363 @@ body.overlay-open .project-list {
     display: none !important;
   }
 }
+
+/* 平面設計詳情頁*/
+.graphic-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f5f5f5;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  overflow: hidden;
+}
+
+.graphic-detail-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.graphic-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  z-index: 10001;
+  background: transparent;
+}
+
+.graphic-title {
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.graphic-close-icon {
+  width: 26px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.graphic-close-icon .icon-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.graphic-close-icon .icon-bar:first-child {
+  transform: rotate(45deg);
+}
+
+.graphic-close-icon .icon-bar:last-child {
+  transform: rotate(-45deg);
+}
+
+.graphic-close-icon:hover .icon-bar {
+  background-color: #888;
+}
+
+/* 左右分欄佈局 */
+.graphic-layout {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+}
+
+/* 左側固定區域 */
+.graphic-left {
+  width: 33.333%;
+  height: 100%;
+  position: sticky;
+  top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  background: #f5f5f5;
+}
+
+.graphic-left-content {
+  text-align: center;
+}
+
+.graphic-left-content h1 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 20px 0;
+  letter-spacing: 2px;
+}
+
+.graphic-left-content h2 {
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+}
+
+/* 右側可滾動區域 */
+.graphic-right {
+  width: 66.666%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 40px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.graphic-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.graphic-main-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.graphic-info {
+  padding: 20px 0;
+}
+
+.graphic-info-item {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.graphic-info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.graphic-info-item h3 {
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 500;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 15px 0;
+}
+
+.graphic-info-item p {
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  color: #333;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.graphic-image-container {
+  cursor: zoom-in;
+  position: relative;
+}
+
+.graphic-image-container::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.graphic-image-container:hover::after {
+  opacity: 1;
+}
+
+.graphic-image-container:hover .graphic-main-image {
+  filter: brightness(0.8);
+}
+
+.graphic-main-image {
+  transition: filter 0.3s ease;
+}
+
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  z-index: 20001;
+}
+
+.lightbox-close:hover {
+  opacity: 0.7;
+}
+
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  cursor: default;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 可拖曳的鏡子 */
+.draggable-mirror {
+  position: fixed;
+  width: 280px;
+  height: 100px;
+  z-index: 10002;
+  cursor: grab;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  backdrop-filter: invert(1) grayscale(1);
+  -webkit-backdrop-filter: invert(1) grayscale(1);
+  background: transparent;
+  touch-action: none;
+}
+
+.draggable-mirror:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.draggable-mirror:active {
+  cursor: grabbing;
+}
+
+.mirror-content {
+  display: none;
+}
+
+.mirror-image {
+  display: none;
+}
+
+.mirror-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid #333;
+  border-radius: 4px;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .graphic-header {
+    padding: 15px 20px;
+  }
+
+  .graphic-layout {
+    flex-direction: column;
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .graphic-left {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+    padding: 30px 20px;
+  }
+
+  .graphic-left-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .graphic-left-content h2 {
+    font-size: 1.1rem;
+  }
+
+  .graphic-right {
+    width: 100%;
+    height: auto;
+    overflow-y: visible;
+    padding: 20px;
+  }
+
+  .graphic-main-image {
+    max-height: 50vh;
+  }
+
+  .graphic-info-item {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+  }
+
+  .draggable-mirror {
+    width: 180px;
+    height: 60px;
+  }
+}

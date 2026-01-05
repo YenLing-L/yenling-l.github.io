@@ -202,8 +202,9 @@
             </div>
           </div>
 
+          <!-- 網站設計詳情頁 -->
           <div
-            v-if="selectedProject"
+            v-if="selectedProject && !isGraphicProject"
             class="project-detail-overlay"
             :class="{ 'active': isDetailOpen, 'show-scrollbar': showDetailScrollbar }"
             @scroll="handleDetailScroll"
@@ -274,6 +275,88 @@
                   <img :src="item.imgSrc" :alt="item.dataText" />
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- 平面設計詳情頁 -->
+          <div
+            v-if="selectedProject && isGraphicProject"
+            class="graphic-detail-overlay"
+            :class="{ 'active': isDetailOpen }"
+            @mousemove="onGraphicMouseMove"
+            @touchmove.prevent="onGraphicMouseMove"
+            @mouseup="stopMirrorDrag"
+            @touchend="stopMirrorDrag"
+            @mouseleave="stopMirrorDrag"
+          >
+            <div class="graphic-header">
+              <span class="graphic-title"
+                >{{ selectedProject.items[0].dataText }}</span
+              >
+              <div class="graphic-close-icon" @click="closeProjectDetails">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </div>
+            </div>
+
+            <div class="graphic-layout">
+              <!-- 左側固定區域 -->
+              <div class="graphic-left">
+                <div class="graphic-left-content">
+                  <h1>{{ selectedProject.items[0].dataText }}</h1>
+                  <h2>{{ selectedProject.items[2].dataText }}</h2>
+                </div>
+              </div>
+
+              <!-- 右側可滾動區域 -->
+              <div class="graphic-right">
+                <div
+                  class="graphic-image-container"
+                  ref="graphicImageContainer"
+                >
+                  <img
+                    :src="selectedProject.items[0].imgSrc"
+                    :alt="selectedProject.items[0].dataText"
+                    class="graphic-main-image"
+                    ref="graphicMainImage"
+                  />
+                </div>
+
+                <div class="graphic-info">
+                  <div class="graphic-info-item">
+                    <h3>中文介紹</h3>
+                    <p>{{ selectedProject.descCn || selectedProject.items[3].dataText }}</p>
+                  </div>
+                  <div class="graphic-info-item">
+                    <h3>English Description</h3>
+                    <p>{{ selectedProject.descEn || '' }}</p>
+                  </div>
+                  <div class="graphic-info-item">
+                    <h3>設計理念</h3>
+                    <p>{{ selectedProject.concept || '' }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 鏡子 1 -->
+            <div
+              class="draggable-mirror"
+              :style="{ left: mirror1X + 'px', top: mirror1Y + 'px' }"
+              @mousedown="startMirrorDrag($event, 1)"
+              @touchstart.prevent="startMirrorDrag($event, 1)"
+            >
+              <div class="mirror-frame"></div>
+            </div>
+
+            <!-- 鏡子 2 -->
+            <div
+              class="draggable-mirror"
+              :style="{ left: mirror3X + 'px', top: mirror3Y + 'px' }"
+              @mousedown="startMirrorDrag($event, 3)"
+              @touchstart.prevent="startMirrorDrag($event, 3)"
+            >
+              <div class="mirror-frame"></div>
             </div>
           </div>
         </div>
