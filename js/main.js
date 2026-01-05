@@ -1,5 +1,8 @@
 const { createApp } = Vue;
 
+/* Cloudflare Worker API URL */
+const VISITOR_API_URL = "https://visitor-proxy.elenaaitest.workers.dev";
+
 const app = createApp({
   data() {
     return {
@@ -931,7 +934,6 @@ const app = createApp({
       }
     },
     /* 訪客統計相關方法 - 透過 Cloudflare Worker 代理 */
-    VISITOR_API_URL: "https://visitor-proxy.elenaaitest.workers.dev",
 
     generateSessionId() {
       return (
@@ -942,7 +944,6 @@ const app = createApp({
       this.setupVisitorTracking();
     },
     async setupVisitorTracking() {
-      const API_URL = this.VISITOR_API_URL;
 
       /* 生成或獲取 session ID */
       this.sessionId = sessionStorage.getItem("visitorSessionId");
@@ -955,7 +956,7 @@ const app = createApp({
       /* 如果是新 session，增加總瀏覽人數 */
       if (isNewSession) {
         try {
-          await fetch(`${API_URL}/api/visitor/increment-total`, {
+          await fetch(`${VISITOR_API_URL}/api/visitor/increment-total`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
           });
@@ -995,7 +996,7 @@ const app = createApp({
     async fetchTotalVisitors() {
       try {
         const response = await fetch(
-          `${this.VISITOR_API_URL}/api/visitor/total`
+          `${VISITOR_API_URL}/api/visitor/total`
         );
         const data = await response.json();
         this.totalVisitors = data.total || 0;
@@ -1006,7 +1007,7 @@ const app = createApp({
     async fetchOnlineVisitors() {
       try {
         const response = await fetch(
-          `${this.VISITOR_API_URL}/api/visitor/online`
+          `${VISITOR_API_URL}/api/visitor/online`
         );
         const data = await response.json();
         /* 顯示線上人數（不含自己，所以減 1） */
@@ -1017,7 +1018,7 @@ const app = createApp({
     },
     async sendHeartbeat() {
       try {
-        await fetch(`${this.VISITOR_API_URL}/api/visitor/heartbeat`, {
+        await fetch(`${VISITOR_API_URL}/api/visitor/heartbeat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sessionId: this.sessionId }),
@@ -1029,7 +1030,7 @@ const app = createApp({
     sendOffline() {
       /* 使用 sendBeacon 確保頁面關閉時能發送 */
       const data = JSON.stringify({ sessionId: this.sessionId });
-      navigator.sendBeacon(`${this.VISITOR_API_URL}/api/visitor/offline`, data);
+      navigator.sendBeacon(`${VISITOR_API_URL}/api/visitor/offline`, data);
     },
   },
   mounted() {
