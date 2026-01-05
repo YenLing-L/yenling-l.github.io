@@ -1250,7 +1250,7 @@ p {
 
 .certificates-header {
   display: grid;
-  grid-template-columns: 1fr 140px 120px;
+  grid-template-columns: 3fr 1fr 1fr;
   gap: 15px;
   padding: 15px 10px;
   border-bottom: 0.5px solid #333;
@@ -1259,16 +1259,24 @@ p {
 .certificates-header-cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   font-size: clamp(0.85rem, 0.9vw, 1rem);
   font-weight: 600;
   color: black;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.certificates-header-cell h3 {
+  margin: 0;
+  white-space: nowrap;
 }
 
 .sort-buttons {
   display: flex;
   flex-direction: row;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .sort-btn {
@@ -1293,7 +1301,7 @@ p {
 
 .certificates-row {
   display: grid;
-  grid-template-columns: 1fr 140px 120px;
+  grid-template-columns: 3fr 1fr 1fr;
   gap: 15px;
   padding: 18px 10px;
   border-bottom: 1px solid #eee;
@@ -1361,8 +1369,21 @@ p {
 @media (max-width: 900px) {
   .certificates-header,
   .certificates-row {
-    grid-template-columns: 1fr 120px 100px;
+    grid-template-columns: 3fr 1fr 1fr;
     gap: 10px;
+  }
+
+  .certificates-header-cell {
+    gap: 2px;
+  }
+
+  .sort-buttons {
+    gap: 2px;
+  }
+
+  .sort-btn {
+    padding: 2px 4px;
+    font-size: 14px;
   }
 }
 

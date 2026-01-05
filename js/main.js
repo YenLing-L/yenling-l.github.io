@@ -933,7 +933,6 @@ const app = createApp({
         this.showDetailScrollbar = true;
       }
     },
-    /* 訪客統計相關方法 - 透過 Cloudflare Worker 代理 */
 
     generateSessionId() {
       return (
@@ -944,7 +943,6 @@ const app = createApp({
       this.setupVisitorTracking();
     },
     async setupVisitorTracking() {
-
       /* 生成或獲取 session ID */
       this.sessionId = sessionStorage.getItem("visitorSessionId");
       const isNewSession = !this.sessionId;
@@ -995,9 +993,7 @@ const app = createApp({
     },
     async fetchTotalVisitors() {
       try {
-        const response = await fetch(
-          `${VISITOR_API_URL}/api/visitor/total`
-        );
+        const response = await fetch(`${VISITOR_API_URL}/api/visitor/total`);
         const data = await response.json();
         this.totalVisitors = data.total || 0;
       } catch (error) {
@@ -1006,11 +1002,9 @@ const app = createApp({
     },
     async fetchOnlineVisitors() {
       try {
-        const response = await fetch(
-          `${VISITOR_API_URL}/api/visitor/online`
-        );
+        const response = await fetch(`${VISITOR_API_URL}/api/visitor/online`);
         const data = await response.json();
-        /* 顯示線上人數（不含自己，所以減 1） */
+        /* 顯示線上人數（不包含自己，所以減 1） */
         this.onlineVisitors = Math.max(0, (data.online || 1) - 1);
       } catch (error) {
         console.error("Error fetching online visitors:", error);
