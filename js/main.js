@@ -930,81 +930,106 @@ const app = createApp({
         this.showDetailScrollbar = true;
       }
     },
-    /* Firebase 訪客統計相關方法 */
+    /* 訪客統計相關方法 - 透過 Cloudflare Worker 代理 */
+    VISITOR_API_URL: "https://visitor-proxy.elenaaitest.workers.dev",
+
     generateSessionId() {
-      return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      return (
+        "session_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9)
+      );
     },
     initVisitorTracking() {
-      /* 檢查 Firebase 是否已準備好 */
-      if (window.firebaseDB) {
-        this.setupFirebaseTracking();
-      } else {
-        window.addEventListener('firebaseReady', () => {
-          this.setupFirebaseTracking();
-        });
-      }
+      this.setupVisitorTracking();
     },
-    async setupFirebaseTracking() {
-      const fb = window.firebaseDB;
-      if (!fb) return;
+    async setupVisitorTracking() {
+      const API_URL = this.VISITOR_API_URL;
 
       /* 生成或獲取 session ID */
-      this.sessionId = sessionStorage.getItem('visitorSessionId');
+      this.sessionId = sessionStorage.getItem("visitorSessionId");
       const isNewSession = !this.sessionId;
       if (isNewSession) {
         this.sessionId = this.generateSessionId();
-        sessionStorage.setItem('visitorSessionId', this.sessionId);
+        sessionStorage.setItem("visitorSessionId", this.sessionId);
       }
 
-      /* 總瀏覽人數 - 每個新 session 增加計數 */
-      const totalRef = fb.ref(fb.database, 'visitors/total');
+      /* 如果是新 session，增加總瀏覽人數 */
       if (isNewSession) {
         try {
-          const snapshot = await fb.get(totalRef);
-          const currentCount = snapshot.exists() ? snapshot.val() : 0;
-          await fb.set(totalRef, currentCount + 1);
+          await fetch(`${API_URL}/api/visitor/increment-total`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          });
         } catch (error) {
-          console.error('Error updating total visitors:', error);
+          console.error("Error incrementing total visitors:", error);
         }
       }
-      
-      /* 監聽總瀏覽人數變化 */
-      fb.onValue(totalRef, (snapshot) => {
-        this.totalVisitors = snapshot.exists() ? snapshot.val() : 0;
+
+      /* 取得並更新總瀏覽人數 */
+      this.fetchTotalVisitors();
+
+      /* 發送初始心跳 */
+      this.sendHeartbeat();
+
+      /* 取得線上人數 */
+      this.fetchOnlineVisitors();
+
+      /* 定期更新 */
+      this.visitorInterval = setInterval(() => {
+        this.sendHeartbeat();
+        this.fetchOnlineVisitors();
+        this.fetchTotalVisitors();
+      }, 30000);
+
+      /* 頁面關閉時通知離線 */
+      window.addEventListener("beforeunload", () => {
+        this.sendOffline();
       });
 
-      /* 線上人數 - 使用 Firebase Presence 系統 */
-      const myOnlineRef = fb.ref(fb.database, `online/${this.sessionId}`);
-      const onlineCountRef = fb.ref(fb.database, 'online');
-      
-      /* 設定離線時自動移除 */
-      fb.onDisconnect(myOnlineRef).remove();
-      
-      /* 標記自己上線 */
-      fb.set(myOnlineRef, {
-        timestamp: Date.now(),
-        active: true
-      });
-
-      /* 監聽所有線上用戶（不包含自己） */
-      fb.onValue(onlineCountRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const onlineUsers = snapshot.val();
-          /* 總人數減 1（不含自己） */
-          const count = Object.keys(onlineUsers).length - 1;
-          this.onlineVisitors = Math.max(0, count);
-        } else {
-          this.onlineVisitors = 0;
+      /* 使用 visibilitychange 處理頁面切換 */
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          this.sendHeartbeat();
         }
       });
-
-      /* 定期更新 timestamp 保持活躍 */
-      this.onlineInterval = setInterval(() => {
-        fb.set(myOnlineRef, {
-          timestamp: Date.now(),
-          active: true
+    },
+    async fetchTotalVisitors() {
+      try {
+        const response = await fetch(
+          `${this.VISITOR_API_URL}/api/visitor/total`
+        );
+        const data = await response.json();
+        this.totalVisitors = data.total || 0;
+      } catch (error) {
+        console.error("Error fetching total visitors:", error);
+      }
+    },
+    async fetchOnlineVisitors() {
+      try {
+        const response = await fetch(
+          `${this.VISITOR_API_URL}/api/visitor/online`
+        );
+        const data = await response.json();
+        /* 顯示線上人數（不含自己，所以減 1） */
+        this.onlineVisitors = Math.max(0, (data.online || 1) - 1);
+      } catch (error) {
+        console.error("Error fetching online visitors:", error);
+      }
+    },
+    async sendHeartbeat() {
+      try {
+        await fetch(`${this.VISITOR_API_URL}/api/visitor/heartbeat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId: this.sessionId }),
         });
-      }, 30000);
+      } catch (error) {
+        console.error("Error sending heartbeat:", error);
+      }
+    },
+    sendOffline() {
+      /* 使用 sendBeacon 確保頁面關閉時能發送 */
+      const data = JSON.stringify({ sessionId: this.sessionId });
+      navigator.sendBeacon(`${this.VISITOR_API_URL}/api/visitor/offline`, data);
     },
   },
   mounted() {
@@ -1033,10 +1058,10 @@ const app = createApp({
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
-    
+
     /* 清理訪客統計資源 */
-    if (this.onlineInterval) {
-      clearInterval(this.onlineInterval);
+    if (this.visitorInterval) {
+      clearInterval(this.visitorInterval);
     }
   },
 });

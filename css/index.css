@@ -430,7 +430,7 @@ p {
     gap: 40px;
     padding: 20px 30px;
   }
-  
+
   .visitor-stats-item h3 {
     font-size: clamp(1.1rem, 1vw, 1.4rem);
   }
