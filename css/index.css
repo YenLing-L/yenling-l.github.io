@@ -144,6 +144,7 @@ a {
   padding: 20px 0;
   border-bottom: 1px solid #ccc;
   align-items: start;
+  margin-bottom: 20px;
 }
 
 .year {
@@ -160,7 +161,7 @@ a {
   pointer-events: auto;
   font-size: clamp(1.4rem, 1.5vw, 1.6rem);
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   display: flex;
   flex-wrap: nowrap;
 }
