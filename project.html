@@ -284,7 +284,7 @@
             class="graphic-detail-overlay"
             :class="{ 'active': isDetailOpen }"
             @mousemove="onGraphicMouseMove"
-            @touchmove.prevent="onGraphicMouseMove"
+            @touchmove="onGraphicTouchMove"
             @mouseup="stopMirrorDrag"
             @touchend="stopMirrorDrag"
             @mouseleave="stopMirrorDrag"
@@ -313,6 +313,7 @@
                 <div
                   class="graphic-image-container"
                   ref="graphicImageContainer"
+                  @click="openLightbox"
                 >
                   <img
                     :src="selectedProject.items[0].imgSrc"
@@ -325,7 +326,10 @@
                 <div class="graphic-info">
                   <div class="graphic-info-item">
                     <h3>中文介紹</h3>
-                    <p>{{ selectedProject.descCn || selectedProject.items[3].dataText }}</p>
+                    <p>
+                      {{ selectedProject.descCn ||
+                      selectedProject.items[3].dataText }}
+                    </p>
                   </div>
                   <div class="graphic-info-item">
                     <h3>English Description</h3>
@@ -358,6 +362,21 @@
             >
               <div class="mirror-frame"></div>
             </div>
+          </div>
+
+          <!-- 圖片放大 Lightbox -->
+          <div
+            v-if="showLightbox && selectedProject"
+            class="image-lightbox"
+            @click="closeLightbox"
+          >
+            <span class="lightbox-close" @click.stop="closeLightbox">&times;</span>
+            <img
+              :src="selectedProject.items[0].imgSrc"
+              :alt="selectedProject.items[0].dataText"
+              class="lightbox-image"
+              @click.stop
+            />
           </div>
         </div>
       </div>

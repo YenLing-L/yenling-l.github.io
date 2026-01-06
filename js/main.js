@@ -1057,6 +1057,14 @@ const app = createApp({
       }
     },
 
+    onGraphicTouchMove(event) {
+      /* 只在拖曳鏡子時阻止滾動 */
+      if (this.mirrorDragging) {
+        event.preventDefault();
+        this.onGraphicMouseMove(event);
+      }
+    },
+
     stopMirrorDrag() {
       this.mirrorDragging = null;
     },

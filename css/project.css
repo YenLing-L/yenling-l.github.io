@@ -1362,29 +1362,6 @@ body.overlay-open .project-list {
   position: relative;
 }
 
-.graphic-image-container::after {
-  content: "+";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 60px;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.9);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.graphic-image-container:hover::after {
-  opacity: 1;
-}
-
-.graphic-image-container:hover .graphic-main-image {
-  filter: brightness(0.8);
-}
-
 .graphic-main-image {
   transition: filter 0.3s ease;
 }
