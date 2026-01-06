@@ -1470,6 +1470,10 @@ body.overlay-open .project-list {
 }
 
 @media (max-width: 768px) {
+  .graphic-detail-overlay {
+    overflow-y: auto;
+  }
+
   .graphic-header {
     padding: 15px 20px;
   }
