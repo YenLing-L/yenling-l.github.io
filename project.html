@@ -370,7 +370,9 @@
             class="image-lightbox"
             @click="closeLightbox"
           >
-            <span class="lightbox-close" @click.stop="closeLightbox">&times;</span>
+            <span class="lightbox-close" @click.stop="closeLightbox"
+              >&times;</span
+            >
             <img
               :src="selectedProject.items[0].imgSrc"
               :alt="selectedProject.items[0].dataText"

@@ -912,24 +912,23 @@ const app = createApp({
       this.isMenuOpen = false;
     },
     handleMenuLink(link, event) {
-      // 解析連結
       const url = new URL(link, window.location.href);
       const currentPath = window.location.pathname;
       const targetPath = url.pathname;
       const hash = url.hash;
 
-      // 檢查是否在同一頁面
+      const currentFile = currentPath.split("/").pop() || "index.html";
+      const targetFile = targetPath.split("/").pop() || "index.html";
+
       const isSamePage =
-        currentPath === targetPath ||
-        currentPath.endsWith(targetPath) ||
-        targetPath.endsWith(currentPath.split("/").pop());
+        currentFile === targetFile ||
+        (currentFile === "" && targetFile === "index.html") ||
+        (currentFile === "index.html" && targetFile === "");
 
       if (isSamePage && hash) {
-        // 同一頁面，阻止預設行為並手動滾動
         event.preventDefault();
         this.closeMenu();
 
-        // 等待 menu 關閉動畫完成後再滾動
         setTimeout(() => {
           const targetElement = document.querySelector(hash);
           if (targetElement) {
@@ -937,12 +936,10 @@ const app = createApp({
               behavior: "smooth",
               block: "start",
             });
-            // 更新 URL hash
             history.pushState(null, null, hash);
           }
         }, 300);
       } else {
-        // 不同頁面，讓瀏覽器正常導航
         this.closeMenu();
       }
     },
