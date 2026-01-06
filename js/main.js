@@ -1,7 +1,9 @@
 const { createApp } = Vue;
 
-/* Cloudflare Worker API URL */
 const VISITOR_API_URL = "https://visitor-proxy.elenaaitest.workers.dev";
+const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbwyv1h2ieL-niQ3X_te8SHUkRBzTT6d8L8O-q9Fgv-9IwaBoyvAlUnuqeuoq7cM4Gc/exec";
+const CACHE_KEY = "portfolio_data_cache";
+const CACHE_DURATION = 1000 * 60 * 5; /* 快取資料放5分鐘 */
 
 const app = createApp({
   data() {
@@ -151,147 +153,14 @@ const app = createApp({
             part1: "Website  Design",
             part2: "| 網站設計",
           },
-          projects: [
-            {
-              link: "Lumos.html",
-              items: [
-                { dataText: "Lumos", imgSrc: "img/LM01.png" },
-                { dataText: "Vue.js", imgSrc: "img/LM02.png" },
-                { dataText: "燈具商店", imgSrc: "img/LM03.png" },
-                { dataText: "案例分享", imgSrc: "img/LM04.png" },
-              ],
-            },
-            {
-              link: "CMS.html",
-              items: [
-                { dataText: "CMS管理系統", imgSrc: "img/CM01.png" },
-                { dataText: "Vue.js", imgSrc: "img/CM02.png" },
-                { dataText: "學生收費項目", imgSrc: "img/CM03.png" },
-                { dataText: "管理平台", imgSrc: "img/CM04.png" },
-              ],
-            },
-            {
-              link: "muyifang.html",
-              items: [
-                { dataText: "木藝坊", imgSrc: "img/muyifang_logo.png" },
-                {
-                  dataText: "Vue.js",
-                  imgSrc:
-                    "https://images.unsplash.com/photo-1617384104622-5f04202ca46b?q=80&w=2705&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                },
-                {
-                  dataText: "家具設計",
-                  imgSrc:
-                    "https://plus.unsplash.com/premium_photo-1704686580555-6f31384f756a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29vZCUyMGNoYWlyc3xlbnwwfHwwfHx8MA%3D%3D",
-                },
-                { dataText: "流程介紹", imgSrc: "img/muyifang01.png" },
-              ],
-            },
-            {
-              link: "RandomStation.html",
-              items: [
-                { dataText: "隨機車站", imgSrc: "img/RS01.gif" },
-                { dataText: "Vue.js", imgSrc: "img/RS02.png" },
-                { dataText: "隨機旅行", imgSrc: "img/RS03.png" },
-                { dataText: "相關介紹", imgSrc: "img/RS04.png" },
-              ],
-            },
-            {
-              link: "inews.html",
-              items: [
-                { dataText: "映時新聞", imgSrc: "img/b5_logo.png" },
-                { dataText: "Bootstrap", imgSrc: "img/bs5_web2.png" },
-                { dataText: "Vue.js", imgSrc: "img/雜誌.png" },
-                { dataText: "即時搜尋", imgSrc: "img/Scene.gif" },
-              ],
-            },
-            {
-              link: "green.html",
-              items: [
-                { dataText: "Green Energy", imgSrc: "img/green_logo.png" },
-                { dataText: "Tailwind", imgSrc: "img/green_bg.jpg" },
-                { dataText: "綠能顧問公司", imgSrc: "img/green3.png" },
-                { dataText: "表單內容", imgSrc: "img/green2.png" },
-              ],
-            },
-            {
-              link: "game.html",
-              items: [
-                { dataText: "時光裂隙", imgSrc: "img/logo.png" },
-                { dataText: "HTML", imgSrc: "img/game2.png" },
-                { dataText: "Javascript", imgSrc: "img/game3.gif" },
-                { dataText: "遊戲", imgSrc: "img/game4.png" },
-              ],
-            },
-          ],
+          projects: [],
         },
         {
           title: {
             part1: "Graphic Design",
             part2: "| 平面設計",
           },
-          projects: [
-            {
-              link: "#",
-              items: [
-                { dataText: "The echo of Time", imgSrc: "img/35.png" },
-                { dataText: "平面設計", imgSrc: "img/35.png" },
-                { dataText: "時間的回聲", imgSrc: "img/35.png" },
-                { dataText: "海報設計作品", imgSrc: "img/35.png" },
-              ],
-              descCn:
-                "這是一幅探討時間本質的海報設計作品，透過抽象的視覺元素呈現時間的流逝與回響。",
-              descEn:
-                "This is a poster design exploring the essence of time, presenting the passage and echo of time through abstract visual elements.",
-              concept:
-                "作品以時間為主題，運用現代設計語言詮釋時光的流動與記憶的沉澱，創造出引人深思的視覺體驗。",
-            },
-            {
-              link: "#",
-              items: [
-                { dataText: "No offense", imgSrc: "img/34.png" },
-                { dataText: "平面設計", imgSrc: "img/34.png" },
-                { dataText: "無冒犯之意", imgSrc: "img/34.png" },
-                { dataText: "視覺設計作品", imgSrc: "img/34.png" },
-              ],
-              descCn:
-                "以幽默詼諧的方式探討日常溝通中的微妙界限，透過視覺設計傳達人際互動的藝術。",
-              descEn:
-                "Exploring the subtle boundaries in daily communication with humor, conveying the art of interpersonal interaction through visual design.",
-              concept:
-                "設計靈感來自於日常對話中的微妙尷尬，以輕鬆的視覺語言化解緊張氣氛。",
-            },
-            {
-              link: "#",
-              items: [
-                { dataText: "INHOUR", imgSrc: "img/YEN LING.png" },
-                { dataText: "平面設計", imgSrc: "img/YEN LING.png" },
-                { dataText: "品牌形象設計", imgSrc: "img/YEN LING.png" },
-                { dataText: "視覺識別系統", imgSrc: "img/YEN LING.png" },
-              ],
-              descCn:
-                "為生活品牌打造完整的視覺識別系統，包含標誌設計、色彩規範和應用延伸。",
-              descEn:
-                "Creating a complete visual identity system for a lifestyle brand, including logo design, color guidelines, and application extensions.",
-              concept:
-                "以簡約現代的設計風格，傳達品牌追求生活品質與時間價值的核心理念。",
-            },
-            {
-              link: "#",
-              items: [
-                { dataText: "雜誌封面", imgSrc: "img/雜誌2.png" },
-                { dataText: "平面設計", imgSrc: "img/雜誌2.png" },
-                { dataText: "雜誌封面設計", imgSrc: "img/雜誌2.png" },
-                { dataText: "排版與視覺設計", imgSrc: "img/雜誌2.png" },
-              ],
-              descCn:
-                "為時尚雜誌設計的封面作品，融合攝影與圖形設計，展現當代美學風格。",
-              descEn:
-                "A magazine cover design combining photography and graphic design, showcasing contemporary aesthetic style.",
-              concept:
-                "透過大膽的排版和色彩運用，打造吸引目光的封面設計，傳達雜誌的獨特定位。",
-            },
-          ],
+          projects: [],
         },
       ],
       footerInfo: [
@@ -313,48 +182,7 @@ const app = createApp({
         },
       ],
       copyright: "copyright © 2025 YEN-LING　All Rights Reserved.",
-      certificates: [
-        {
-          id: "C-001",
-          nameCN: "Google Analytics 個人認證",
-          nameEN: "Google Analytics Individual Qualification",
-          nameENShort: "GAIQ",
-          category: "行銷",
-          date: "2024-06-15",
-        },
-        {
-          id: "C-002",
-          nameCN: "多益英語測驗",
-          nameEN: "TOEIC",
-          nameENShort: "TOEIC",
-          category: "語言",
-          date: "2023-03-20",
-        },
-        {
-          id: "C-003",
-          nameCN: "網頁設計丙級技術士",
-          nameEN: "Web Design Technician Level C",
-          nameENShort: "Web Design Level C",
-          category: "網頁",
-          date: "2022-08-10",
-        },
-        {
-          id: "C-004",
-          nameCN: "AI 應用基礎認證",
-          nameEN: "AI Application Fundamentals",
-          nameENShort: "AI Fundamentals",
-          category: "AI",
-          date: "2024-01-25",
-        },
-        {
-          id: "C-005",
-          nameCN: "Google Ads 搜尋廣告認證",
-          nameEN: "Google Ads Search Certification",
-          nameENShort: "Google Ads Search",
-          category: "行銷",
-          date: "2024-05-08",
-        },
-      ],
+      certificates: [],
       certificateSortKey: "id",
       certificateSortOrder: "asc",
       isFilterMenuOpen: false,
@@ -1193,12 +1021,151 @@ const app = createApp({
       }
     },
     sendOffline() {
-      /* 使用 sendBeacon 確保頁面關閉時能發送 */
       const data = JSON.stringify({ sessionId: this.sessionId });
       navigator.sendBeacon(`${VISITOR_API_URL}/api/visitor/offline`, data);
     },
+
+    /* Google Sheets 資料載入 */
+    async loadPortfolioData() {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const { data, timestamp } = JSON.parse(cached);
+          if (Date.now() - timestamp < CACHE_DURATION) {
+
+            this.applySheetData(data);
+            return;
+          }
+        }
+
+        const [certificates, websiteProjects, graphicProjects] = await Promise.all([
+          this.fetchSheetData("certificates"),
+          this.fetchSheetData("websiteProjects"),
+          this.fetchSheetData("graphicProjects"),
+        ]);
+
+        const data = { certificates, websiteProjects, graphicProjects };
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          data,
+          timestamp: Date.now(),
+        }));
+
+        this.applySheetData(data);
+      } catch (error) {
+        console.error("Failed to load portfolio data:", error);
+      }
+    },
+
+    async fetchSheetData(sheetName) {
+      const response = await fetch(`${SHEETS_API_URL}?sheet=${sheetName}`);
+      if (!response.ok) throw new Error(`Failed to fetch ${sheetName}`);
+      return response.json();
+    },
+
+    applySheetData(data) {
+
+      if (data.certificates && data.certificates.length > 0) {
+        this.certificates = data.certificates.map(cert => ({
+          ...cert,
+          date: this.formatDate(cert.date)
+        }));
+
+      }
+
+      if (data.websiteProjects && data.websiteProjects.length > 0) {
+        const webProjects = this.transformWebProjects(data.websiteProjects);
+
+        this.portfolioSections = [
+          {
+            title: this.portfolioSections[0].title,
+            projects: webProjects
+          },
+          this.portfolioSections[1]
+        ];
+      }
+
+      if (data.graphicProjects && data.graphicProjects.length > 0) {
+        const graphicProjects = this.transformGraphicProjects(data.graphicProjects);
+
+        this.portfolioSections = [
+          this.portfolioSections[0],
+          {
+            title: this.portfolioSections[1].title,
+            projects: graphicProjects
+          }
+        ];
+      }
+      
+      this.$nextTick(() => {
+        this.observeNewProjectRows();
+      });
+    },
+    
+    observeNewProjectRows() {
+      const elements = document.querySelectorAll('.project-row:not(.fade-in-up)');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("fade-in-up");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      elements.forEach((el) => observer.observe(el));
+    },
+
+    transformWebProjects(rows) {
+      return rows.map((row) => ({
+        link: row.link || "#",
+        items: [
+          { dataText: row.name, imgSrc: row.img1 },
+          { dataText: row.lang, imgSrc: row.img2 },
+          { dataText: row.category, imgSrc: row.img3 },
+          { dataText: row.description, imgSrc: row.img4 },
+        ],
+      }));
+    },
+
+    transformGraphicProjects(rows) {
+      return rows.map((row) => ({
+        link: "#",
+        items: [
+          { dataText: row.name, imgSrc: row.img },
+          { dataText: "平面設計", imgSrc: row.img },
+          { dataText: row.subtitle, imgSrc: row.img },
+          { dataText: row.description, imgSrc: row.img },
+        ],
+        descCn: row.descCn || "",
+        descEn: row.descEn || "",
+        concept: row.concept || "",
+      }));
+    },
+
+    formatDate(dateStr) {
+      if (!dateStr) return '';
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        return String(dateStr).substring(0, 10);
+      }
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+
+    clearPortfolioCache() {
+      localStorage.removeItem(CACHE_KEY);
+
+    },
   },
   mounted() {
+    this.loadPortfolioData();
+
     const observeFadeIn = (selector) => {
       const elements = document.querySelectorAll(selector);
       const observer = new IntersectionObserver(
