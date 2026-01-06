@@ -1,9 +1,10 @@
 const { createApp } = Vue;
 
 const VISITOR_API_URL = "https://visitor-proxy.elenaaitest.workers.dev";
-const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbwyv1h2ieL-niQ3X_te8SHUkRBzTT6d8L8O-q9Fgv-9IwaBoyvAlUnuqeuoq7cM4Gc/exec";
+const SHEETS_API_URL =
+  "https://script.google.com/macros/s/AKfycbwyv1h2ieL-niQ3X_te8SHUkRBzTT6d8L8O-q9Fgv-9IwaBoyvAlUnuqeuoq7cM4Gc/exec";
 const CACHE_KEY = "portfolio_data_cache";
-const CACHE_DURATION = 1000 * 60 * 5; /* 快取資料放5分鐘 */
+const CACHE_DURATION = 1000 * 60 * 60; /* 快取資料放1小時 */
 
 const app = createApp({
   data() {
@@ -1032,24 +1033,27 @@ const app = createApp({
         if (cached) {
           const { data, timestamp } = JSON.parse(cached);
           if (Date.now() - timestamp < CACHE_DURATION) {
-
             this.applySheetData(data);
             return;
           }
         }
 
-        const [certificates, websiteProjects, graphicProjects] = await Promise.all([
-          this.fetchSheetData("certificates"),
-          this.fetchSheetData("websiteProjects"),
-          this.fetchSheetData("graphicProjects"),
-        ]);
+        const [certificates, websiteProjects, graphicProjects] =
+          await Promise.all([
+            this.fetchSheetData("certificates"),
+            this.fetchSheetData("websiteProjects"),
+            this.fetchSheetData("graphicProjects"),
+          ]);
 
         const data = { certificates, websiteProjects, graphicProjects };
 
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          data,
-          timestamp: Date.now(),
-        }));
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({
+            data,
+            timestamp: Date.now(),
+          })
+        );
 
         this.applySheetData(data);
       } catch (error) {
@@ -1064,13 +1068,11 @@ const app = createApp({
     },
 
     applySheetData(data) {
-
       if (data.certificates && data.certificates.length > 0) {
-        this.certificates = data.certificates.map(cert => ({
+        this.certificates = data.certificates.map((cert) => ({
           ...cert,
-          date: this.formatDate(cert.date)
+          date: this.formatDate(cert.date),
         }));
-
       }
 
       if (data.websiteProjects && data.websiteProjects.length > 0) {
@@ -1079,31 +1081,35 @@ const app = createApp({
         this.portfolioSections = [
           {
             title: this.portfolioSections[0].title,
-            projects: webProjects
+            projects: webProjects,
           },
-          this.portfolioSections[1]
+          this.portfolioSections[1],
         ];
       }
 
       if (data.graphicProjects && data.graphicProjects.length > 0) {
-        const graphicProjects = this.transformGraphicProjects(data.graphicProjects);
+        const graphicProjects = this.transformGraphicProjects(
+          data.graphicProjects
+        );
 
         this.portfolioSections = [
           this.portfolioSections[0],
           {
             title: this.portfolioSections[1].title,
-            projects: graphicProjects
-          }
+            projects: graphicProjects,
+          },
         ];
       }
-      
+
       this.$nextTick(() => {
         this.observeNewProjectRows();
       });
     },
-    
+
     observeNewProjectRows() {
-      const elements = document.querySelectorAll('.project-row:not(.fade-in-up)');
+      const elements = document.querySelectorAll(
+        ".project-row:not(.fade-in-up)"
+      );
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -1115,7 +1121,7 @@ const app = createApp({
         },
         { threshold: 0.1 }
       );
-      
+
       elements.forEach((el) => observer.observe(el));
     },
 
@@ -1147,20 +1153,19 @@ const app = createApp({
     },
 
     formatDate(dateStr) {
-      if (!dateStr) return '';
+      if (!dateStr) return "";
       const date = new Date(dateStr);
       if (isNaN(date.getTime())) {
         return String(dateStr).substring(0, 10);
       }
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
 
     clearPortfolioCache() {
       localStorage.removeItem(CACHE_KEY);
-
     },
   },
   mounted() {
