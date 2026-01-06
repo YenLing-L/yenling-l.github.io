@@ -203,9 +203,9 @@ a {
   .event img {
     grid-area: area-img;
     opacity: 1 !important;
-    width: 120px !important;
-    height: 120px !important;
-    min-width: 140px !important;
+    width: clamp(80px, 20vw, 120px);
+    height: clamp(80px, 20vw, 120px);
+    max-width: 100%;
     object-fit: cover;
     border-radius: 4px;
     margin: 0;
@@ -273,6 +273,7 @@ a {
 
   .year {
     order: 1;
+    margin-bottom: 20px;
   }
 
   .word {
@@ -1456,5 +1457,27 @@ p {
   .cert-mobile-header,
   .cert-mobile-names {
     display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .year {
+    gap: 0 10px;
+  }
+
+  .event img {
+    width: 150px;
+    height: clamp(60px, 18vw, 100px);
+  }
+}
+
+@media (max-width: 360px) {
+  .year {
+    gap: 0 8px;
+  }
+
+  .event img {
+    width: 100px;
+    height: clamp(50px, 15vw, 80px);
   }
 }
