@@ -313,7 +313,6 @@ p {
 .grid {
   display: grid;
   grid-template-columns: 2fr 2fr 7fr 1fr;
-
   gap: 0;
   padding-bottom: 30px;
   pointer-events: none;
@@ -433,7 +432,7 @@ button:hover {
   height: 300px;
   border: 1px solid #000;
   position: relative;
-  margin-left: 20px;
+  margin-left: -50px;
 }
 
 /* 相機視訊畫面 */
@@ -551,4 +550,65 @@ button:hover {
 .scrolling:hover {
   animation-play-state: paused;
   cursor: pointer;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  pointer-events: auto;
+}
+
+.contact-arrow {
+  font-weight: 400;
+  margin-right: 8px;
+}
+
+.contact-label {
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.contact-value {
+  font-size: clamp(1rem, 1vw, 1.2rem);
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-value::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 11px solid #333;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.contact-value:hover {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
+.contact-value:hover::after {
+  opacity: 1;
+  margin-left: 8px;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .contact-item {
+    margin-bottom: 25px;
+  }
 }
