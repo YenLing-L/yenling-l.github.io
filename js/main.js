@@ -93,7 +93,7 @@ const app = createApp({
             "朝陽科技大學　行銷與流通管理系　學士　2022<br>Chaoyang University of Technology, Marketing & Logistics, Bachelor",
             "德國雷根斯堡大學　交換生　2022<br>University of Regensburg, Exchange Student",
             "創價心工程顧問公司　專案管理師　2023-2024<br>Chuang Jia Xin Engineering Consultants, Project Manager",
-            "天鎏科技企業有限公司　網頁前端工程師　2025-至今<br>Tyan Liu Technology Co., Ltd., Frontend Engineer",
+            "天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br>Tyan Liu Technology Co., Ltd., Frontend Engineer",
           ],
           resumeLink: "https://yen061.notion.site/",
         },
@@ -178,6 +178,7 @@ const app = createApp({
         {
           title: "Contact",
           items: [
+            "+886　910-632-166",
             '<a href="mailto:yenling061@gmail.com">yenling061@gmail.com</a>',
           ],
         },
