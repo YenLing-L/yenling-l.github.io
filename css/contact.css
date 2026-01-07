@@ -560,8 +560,11 @@ button:hover {
 }
 
 .contact-arrow {
-  font-weight: 400;
+  width: 20px;
+  height: 20px;
   margin-right: 8px;
+  vertical-align: middle;
+  stroke-width: 2.5;
 }
 
 .contact-label {
