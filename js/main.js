@@ -9,6 +9,8 @@ const CACHE_DURATION = 1000 * 60 * 60; /* 快取資料放1小時 */
 const app = createApp({
   data() {
     return {
+      isLoading: true,
+      loadingProgress: 0,
       isDetailOpen: false,
       clickPosition: null,
       selectedProject: null,
@@ -1035,18 +1037,16 @@ const app = createApp({
           const { data, timestamp } = JSON.parse(cached);
           if (Date.now() - timestamp < CACHE_DURATION) {
             this.applySheetData(data);
+            this.isLoading = false;
             return;
           }
         }
 
-        const [certificates, websiteProjects, graphicProjects] =
-          await Promise.all([
-            this.fetchSheetData("certificates"),
-            this.fetchSheetData("websiteProjects"),
-            this.fetchSheetData("graphicProjects"),
-          ]);
+        const dataPromise = this.fetchAllSheetData();
 
-        const data = { certificates, websiteProjects, graphicProjects };
+        await this.runLoadingAnimation();
+
+        const data = await dataPromise;
 
         localStorage.setItem(
           CACHE_KEY,
@@ -1057,9 +1057,36 @@ const app = createApp({
         );
 
         this.applySheetData(data);
+
+        this.completeLoading();
       } catch (error) {
         console.error("Failed to load portfolio data:", error);
+        this.completeLoading();
       }
+    },
+
+    async fetchAllSheetData() {
+      const [certificates, websiteProjects, graphicProjects] =
+        await Promise.all([
+          this.fetchSheetData("certificates"),
+          this.fetchSheetData("websiteProjects"),
+          this.fetchSheetData("graphicProjects"),
+        ]);
+      return { certificates, websiteProjects, graphicProjects };
+    },
+
+    async runLoadingAnimation() {
+      const steps = [0, 20, 40, 60, 80, 100];
+      const stepDuration = 600;
+
+      for (const step of steps) {
+        await this.animateLoadingProgress(step, stepDuration);
+        if (step < 100) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+        }
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
     },
 
     async fetchSheetData(sheetName) {
@@ -1167,6 +1194,38 @@ const app = createApp({
 
     clearPortfolioCache() {
       localStorage.removeItem(CACHE_KEY);
+    },
+
+    animateLoadingProgress(targetPercent, duration = 300) {
+      return new Promise((resolve) => {
+        const startPercent = this.loadingProgress;
+        const startTime = performance.now();
+
+        const animate = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          const eased = 1 - Math.pow(1 - progress, 3);
+          this.loadingProgress = Math.round(
+            startPercent + (targetPercent - startPercent) * eased
+          );
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            this.loadingProgress = targetPercent;
+            resolve();
+          }
+        };
+
+        requestAnimationFrame(animate);
+      });
+    },
+
+    completeLoading() {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
     },
   },
   mounted() {
