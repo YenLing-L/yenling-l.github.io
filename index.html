@@ -367,164 +367,167 @@
 
       <!-- 網站設計報價洽詢 -->
       <section class="quote-section" id="quote">
-        <div class="section-header">
-          <h2>
-            <span class="part1">Get a Quote</span>
-            <span class="part2">| 網站設計報價洽詢</span>
-          </h2>
-        </div>
-        <form class="quote-form" id="quoteForm">
-          <div class="form-row">
-            <div class="form-group required">
-              <label for="name">聯絡人姓名</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                placeholder="請輸入您的姓名"
-              />
-            </div>
-            <div class="form-group">
-              <label>性別</label>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input type="radio" name="gender" value="male" />
-                  <span>男</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="gender" value="female" />
-                  <span>女</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" name="gender" value="other" />
-                  <span>其他</span>
-                </label>
+        <div class="quote-container">
+          <div class="quote-header">
+            <h2>
+              <span class="part1">Get a Quote</span>
+              <span class="part2">| 網站設計報價洽詢</span>
+            </h2>
+          </div>
+          <form class="quote-form" id="quoteForm">
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="name">聯絡人姓名</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="請輸入您的姓名"
+                />
+              </div>
+              <div class="form-group">
+                <label>性別</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="gender" value="male" />
+                    <span>男</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="gender" value="female" />
+                    <span>女</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="gender" value="other" />
+                    <span>其他</span>
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group required">
-              <label for="phone">連絡電話</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="phone">連絡電話</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  placeholder="09XX-XXX-XXX"
+                />
+              </div>
+              <div class="form-group required">
+                <label for="email">電子信箱</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="example@email.com"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">公司名稱</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="公司/組織名稱（選填）"
+                />
+              </div>
+              <div class="form-group">
+                <label for="website">公司網址</label>
+                <input
+                  type="url"
+                  id="website"
+                  name="website"
+                  placeholder="https://（選填）"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group required">
+                <label for="deadline">預計完成時間</label>
+                <select id="deadline" name="deadline" required>
+                  <option value="">請選擇</option>
+                  <option value="1month">1個月內</option>
+                  <option value="3months">1-3個月</option>
+                  <option value="6months">3-6個月</option>
+                  <option value="flexible">時間彈性</option>
+                </select>
+              </div>
+              <div class="form-group required">
+                <label for="budget">網頁建置預算</label>
+                <select id="budget" name="budget" required>
+                  <option value="">請選擇預算範圍</option>
+                  <option value="under30k">30,000元以下</option>
+                  <option value="30k-50k">30,000 - 50,000元</option>
+                  <option value="50k-100k">50,000 - 100,000元</option>
+                  <option value="100k-200k">100,000 - 200,000元</option>
+                  <option value="over200k">200,000元以上</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>我的需求主題（可複選）</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="topic" value="website" />
+                    <span>網站建置</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="topic" value="cooperation" />
+                    <span>合作提案</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="topic" value="other" />
+                    <span>其他洽詢問題</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reference">參考網站</label>
+                <input
+                  type="text"
+                  id="reference"
+                  name="reference"
+                  placeholder="請提供您喜歡的網站風格參考（選填）"
+                />
+              </div>
+            </div>
+
+            <div class="form-group required form-group-spaced">
+              <label for="requirements">簡述需求</label>
+              <textarea
+                id="requirements"
+                name="requirements"
                 required
-                placeholder="09XX-XXX-XXX"
-              />
+                rows="5"
+                placeholder="請描述您的網站需求，例如：網站類型、功能需求、設計風格偏好等..."
+              ></textarea>
             </div>
-            <div class="form-group required">
-              <label for="email">電子信箱</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                placeholder="example@email.com"
-              />
-            </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="company">公司名稱</label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                placeholder="公司/組織名稱（選填）"
-              />
+            <div class="form-submit">
+              <button type="submit" class="view-more-btn">
+                送出表單
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-            <div class="form-group">
-              <label for="website">公司網址</label>
-              <input
-                type="url"
-                id="website"
-                name="website"
-                placeholder="https://（選填）"
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>我的需求主題（可複選）</label>
-            <div class="checkbox-group">
-              <label class="checkbox-label">
-                <input type="checkbox" name="topic" value="website" />
-                <span>網站建置</span>
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="topic" value="cooperation" />
-                <span>合作提案</span>
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="topic" value="other" />
-                <span>其他洽詢問題</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group required">
-              <label for="deadline">預計完成時間</label>
-              <select id="deadline" name="deadline" required>
-                <option value="">請選擇</option>
-                <option value="1month">1個月內</option>
-                <option value="3months">1-3個月</option>
-                <option value="6months">3-6個月</option>
-                <option value="flexible">時間彈性</option>
-              </select>
-            </div>
-            <div class="form-group required">
-              <label for="budget">網頁建置預算</label>
-              <select id="budget" name="budget" required>
-                <option value="">請選擇預算範圍</option>
-                <option value="under30k">30,000元以下</option>
-                <option value="30k-50k">30,000 - 50,000元</option>
-                <option value="50k-100k">50,000 - 100,000元</option>
-                <option value="100k-200k">100,000 - 200,000元</option>
-                <option value="over200k">200,000元以上</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="reference">參考網站</label>
-            <input
-              type="text"
-              id="reference"
-              name="reference"
-              placeholder="請提供您喜歡的網站風格參考（選填）"
-            />
-          </div>
-
-          <div class="form-group required">
-            <label for="requirements">簡述需求</label>
-            <textarea
-              id="requirements"
-              name="requirements"
-              required
-              rows="5"
-              placeholder="請描述您的網站需求，例如：網站類型、功能需求、設計風格偏好等..."
-            ></textarea>
-          </div>
-
-          <div class="form-submit">
-            <button type="submit" class="view-more-btn">
-              送出表單
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </section>
 
       <!-- Footer -->
