@@ -33,13 +33,29 @@ self.addEventListener("fetch", (event) => {
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.match(OFFLINE_URL);
+        return caches.match(OFFLINE_URL).then((response) => {
+          return (
+            response ||
+            new Response("Offline page not found", {
+              status: 404,
+              statusText: "Not Found",
+            })
+          );
+        });
       })
     );
   } else {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.match(event.request);
+        return caches.match(event.request).then((response) => {
+          return (
+            response ||
+            new Response("Network error and not found in cache", {
+              status: 404,
+              statusText: "Not Found",
+            })
+          );
+        });
       })
     );
   }
