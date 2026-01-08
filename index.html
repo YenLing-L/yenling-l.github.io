@@ -407,7 +407,7 @@
 
             <div class="form-row">
               <div class="form-group required">
-                <label for="phone">連絡電話</label>
+                <label for="phone">聯絡電話</label>
                 <input
                   type="tel"
                   id="phone"
@@ -474,6 +474,28 @@
             </div>
 
             <div class="form-row">
+              <div class="form-group required">
+                <label for="industry">產業類型</label>
+                <input
+                  type="text"
+                  id="industry"
+                  name="industry"
+                  required
+                  placeholder="食品/餐廳/汽車/傳產...等"
+                />
+              </div>
+              <div class="form-group">
+                <label for="reference">參考網站</label>
+                <input
+                  type="text"
+                  id="reference"
+                  name="reference"
+                  placeholder="請提供您喜歡的網站風格參考（選填）"
+                />
+              </div>
+            </div>
+
+            <div class="form-row form-row-aligned">
               <div class="form-group">
                 <label>我的需求主題（可複選）</label>
                 <div class="checkbox-group">
@@ -491,26 +513,16 @@
                   </label>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="reference">參考網站</label>
-                <input
-                  type="text"
-                  id="reference"
-                  name="reference"
-                  placeholder="請提供您喜歡的網站風格參考（選填）"
-                />
+              <div class="form-group required">
+                <label for="requirements">簡述需求</label>
+                <textarea
+                  id="requirements"
+                  name="requirements"
+                  required
+                  rows="2"
+                  placeholder="請描述您的網站需求，例如：網站類型、功能需求、設計風格偏好等..."
+                ></textarea>
               </div>
-            </div>
-
-            <div class="form-group required form-group-spaced">
-              <label for="requirements">簡述需求</label>
-              <textarea
-                id="requirements"
-                name="requirements"
-                required
-                rows="5"
-                placeholder="請描述您的網站需求，例如：網站類型、功能需求、設計風格偏好等..."
-              ></textarea>
             </div>
 
             <div class="form-submit">
