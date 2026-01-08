@@ -52,13 +52,13 @@ const app = createApp({
         },
         {
           title: "INFO",
-          link: "index.html",
+          link: "info.html",
           image:
             "https://notion-avatar.app/api/svg/eyJmYWNlIjo4LCJub3NlIjozLCJtb3V0aCI6MTIsImV5ZXMiOjMsImV5ZWJyb3dzIjo3LCJnbGFzc2VzIjowLCJoYWlyIjo1MCwiYWNjZXNzb3JpZXMiOjgsImRldGFpbHMiOjEsImJlYXJkIjowLCJmbGlwIjowLCJjb2xvciI6InRyYW5zcGFyZW50Iiwic2hhcGUiOiJjaXJjbGUifQ==",
           subItems: [
-            { text: "經歷　EXPERIENCE", link: "index.html#Experience" },
-            { text: "專長　EXPERTISE", link: "index.html#Expertise" },
-            { text: "證照　CERTIFICATES", link: "index.html#Certificates" },
+            { text: "經歷　EXPERIENCE", link: "info.html#Experience" },
+            { text: "專長　EXPERTISE", link: "info.html#Expertise" },
+            { text: "證照　CERTIFICATES", link: "info.html#Certificates" },
           ],
         },
         {
@@ -749,13 +749,13 @@ const app = createApp({
       const targetPath = url.pathname;
       const hash = url.hash;
 
-      const currentFile = currentPath.split("/").pop() || "index.html";
-      const targetFile = targetPath.split("/").pop() || "index.html";
+      const currentFile = currentPath.split("/").pop() || "info.html";
+      const targetFile = targetPath.split("/").pop() || "info.html";
 
       const isSamePage =
         currentFile === targetFile ||
-        (currentFile === "" && targetFile === "index.html") ||
-        (currentFile === "index.html" && targetFile === "");
+        (currentFile === "" && targetFile === "info.html") ||
+        (currentFile === "info.html" && targetFile === "");
 
       if (isSamePage && hash) {
         event.preventDefault();
