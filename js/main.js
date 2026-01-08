@@ -185,7 +185,7 @@ const app = createApp({
           ],
         },
       ],
-      copyright: "copyright © 2025 YEN-LING　All Rights Reserved.",
+      copyright: `copyright © ${new Date().getFullYear()} YEN-LING　All Rights Reserved.`,
       certificates: [],
       certificateSortKey: "id",
       certificateSortOrder: "asc",
@@ -1265,3 +1265,171 @@ const app = createApp({
 });
 
 app.mount("#app");
+
+if (
+  window.location.pathname === "/" ||
+  window.location.pathname === "/index.html" ||
+  window.location.pathname.endsWith("/index.html")
+) {
+  const yearElement = document.getElementById("currentYear");
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+
+  if (typeof gsap !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    window.addEventListener("load", () => {
+      const tl = gsap.timeline();
+
+      tl.from(".hero-line", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out",
+      })
+        .from(
+          ".hero-subtitle",
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.5"
+        )
+        .from(
+          ".hero-cta",
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .from(
+          ".hero-scroll-indicator",
+          {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.3"
+        );
+    });
+
+    gsap.utils.toArray(".section-header").forEach((header) => {
+      gsap.from(header, {
+        scrollTrigger: {
+          trigger: header,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    });
+
+    gsap.utils.toArray(".service-card").forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.6,
+        delay: i * 0.15,
+        ease: "power3.out",
+      });
+    });
+
+    gsap.utils.toArray(".portfolio-card").forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "power3.out",
+      });
+    });
+  }
+
+  const backToTop = document.getElementById("backToTop");
+  if (backToTop) {
+    const progressCircle = backToTop.querySelector("circle");
+
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTop / docHeight;
+
+      if (progressCircle) {
+        progressCircle.style.strokeDashoffset = 138 - progress * 138;
+      }
+
+      if (scrollTop > 300) {
+        backToTop.classList.add("visible");
+      } else {
+        backToTop.classList.remove("visible");
+      }
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  const form = document.getElementById("quoteForm");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const required = form.querySelectorAll("[required]");
+      let isValid = true;
+
+      required.forEach((field) => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.classList.add("error");
+        } else {
+          field.classList.remove("error");
+        }
+      });
+
+      if (isValid) {
+        alert("感謝您的詢問！我們會盡快與您聯繫。");
+        form.reset();
+      } else {
+        alert("請填寫所有必填欄位");
+      }
+    });
+
+    form.querySelectorAll("input, select, textarea").forEach((field) => {
+      field.addEventListener("input", () => {
+        field.classList.remove("error");
+      });
+    });
+  }
+}

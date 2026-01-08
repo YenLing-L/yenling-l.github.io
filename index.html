@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YEN-LING</title>
+    <title>YEN-LING | 客製化網站設計</title>
+    <meta
+      name="description"
+      content="專業客製化網站設計服務，提供RWD響應式設計、視覺設計、程式開發一站式解決方案"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,9 +17,565 @@
     />
     <link rel="icon" href="/favicon.png" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/info.css" />
     <link rel="stylesheet" href="/css/index.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   </head>
   <body>
-    <!-- 新首頁內容 -->
+    <div id="app">
+      <div
+        class="menu-overlay"
+        :class="{ 'is-active': isMenuActive }"
+        @mousemove="updateSpotlight"
+        @mouseleave="resetSpotlight"
+      >
+        <div class="liquid-wrapper">
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+          <div class="blob"></div>
+        </div>
+
+        <div class="menu-content-spotlight" :style="spotlightStyle">
+          <div class="menu-content">
+            <button class="menu-close-button" @click="closeMenu">
+              <span class="close-bar-1"></span>
+              <span class="close-bar-2"></span>
+            </button>
+            <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
+            <div class="menu-nav">
+              <div
+                class="menu-column"
+                v-for="(item, index) in navItems"
+                :key="index"
+              >
+                <div v-if="item.image" class="menu-info-header">
+                  <div class="menu-title">
+                    <a :href="item.link">{{ item.title }}</a>
+                  </div>
+                  <img :src="item.image" alt="Avatar" class="menu-avatar" />
+                </div>
+                <div v-else class="menu-title">
+                  <a :href="item.link">{{ item.title }}</a>
+                </div>
+
+                <div class="menu-sub-items">
+                  <a
+                    v-for="(subItem, sIndex) in item.subItems"
+                    :key="sIndex"
+                    :href="subItem.link"
+                    @click="handleMenuLink(subItem.link, $event)"
+                  >
+                    {{ subItem.text }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-content">
+          <button class="menu-close-button" @click="closeMenu">
+            <span class="close-bar-1"></span>
+            <span class="close-bar-2"></span>
+          </button>
+          <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
+          <div class="menu-nav">
+            <div
+              class="menu-column"
+              v-for="(item, index) in navItems"
+              :key="index"
+            >
+              <div v-if="item.image" class="menu-info-header">
+                <div class="menu-title">
+                  <a :href="item.link">{{ item.title }}</a>
+                </div>
+                <img :src="item.image" alt="Avatar" class="menu-avatar" />
+              </div>
+              <div v-else class="menu-title">
+                <a :href="item.link">{{ item.title }}</a>
+              </div>
+
+              <div class="menu-sub-items">
+                <a
+                  v-for="(subItem, sIndex) in item.subItems"
+                  :key="sIndex"
+                  :href="subItem.link"
+                  @click="handleMenuLink(subItem.link, $event)"
+                >
+                  {{ subItem.text }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <svg class="svg-filters">
+        <filter id="wave-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"
+            result="wave"
+          />
+          <feBlend in="SourceGraphic" in2="wave" />
+        </filter>
+      </svg>
+
+      <!-- 導覽列 -->
+      <nav class="landing-nav" v-show="!isMenuActive">
+        <a class="logo" href="index.html">{{ siteTitle }}</a>
+        <div class="nav-links">
+          <a href="info.html">INFO</a>
+          <a href="project.html">PROJECTS</a>
+          <a href="contact.html">CONTACT</a>
+        </div>
+        <div
+          class="hamburger-toggle"
+          :class="{ active: isMenuOpen }"
+          @click="toggleMenu"
+        >
+          <span class="bar-1"></span>
+          <span class="bar-3"></span>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-text-wrapper">
+            <h1 class="hero-title">
+              <span class="hero-line" data-text="客製化">客製化</span>
+              <span class="hero-line" data-text="網站設計">網站設計</span>
+            </h1>
+            <p class="hero-subtitle">CUSTOM WEB DESIGN</p>
+          </div>
+          <div class="hero-cta">
+            <a href="#quote" class="cta-button primary">取得報價</a>
+            <a href="#services" class="cta-button secondary">了解服務</a>
+          </div>
+        </div>
+        <div class="hero-scroll-indicator">
+          <span>SCROLL</span>
+          <div class="scroll-line"></div>
+        </div>
+      </section>
+
+      <!-- 網頁設計服務 -->
+      <section class="service-intro" id="services">
+        <div class="section-header">
+          <h2>
+            <span class="part1">Web Design Service</span>
+            <span class="part2">| 網頁設計服務</span>
+          </h2>
+        </div>
+        <p class="service-description">
+          專注於將品牌的核心價值與視覺美學完美結合，致力於創造兼具創新性與功能性的數位體驗。
+          我們提供從設計到開發的完整解決方案，讓您的品牌在數位世界中脫穎而出。
+        </p>
+        <div class="service-buttons">
+          <a href="#quote" class="service-btn">
+            <span class="btn-icon">📝</span>
+            <span class="btn-text">取得報價</span>
+          </a>
+          <a href="contact.html" class="service-btn">
+            <span class="btn-icon">💬</span>
+            <span class="btn-text">聯繫我們</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 建置服務內容 -->
+      <section class="services-grid-section">
+        <div class="section-header">
+          <h2>
+            <span class="part1">Our Services</span>
+            <span class="part2">| 建置服務內容</span>
+          </h2>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="card-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+                <rect x="5" y="6" width="14" height="8" rx="1" />
+              </svg>
+            </div>
+            <h3>RWD 網頁設計</h3>
+            <p>
+              響應式網頁設計，完美適配各種裝置尺寸，提供最佳瀏覽體驗。從桌面到手機，一套設計全面覆蓋。
+            </p>
+            <div class="card-tags">
+              <span>Responsive</span>
+              <span>Mobile First</span>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="card-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+                <circle cx="12" cy="12" r="2" />
+              </svg>
+            </div>
+            <h3>客製化網站視覺</h3>
+            <p>
+              根據品牌特色量身打造獨特視覺風格，從配色到動態效果，每個細節都為您的品牌量身定制。
+            </p>
+            <div class="card-tags">
+              <span>UI Design</span>
+              <span>Branding</span>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="card-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+                <line x1="14" y1="4" x2="10" y2="20" />
+              </svg>
+            </div>
+            <h3>程式設計</h3>
+            <p>
+              專業前後端開發，從靜態網頁到動態系統，提供穩定可靠的技術解決方案，讓您的網站功能完善。
+            </p>
+            <div class="card-tags">
+              <span>Frontend</span>
+              <span>Backend</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 網頁設計案例 -->
+      <section class="portfolio-section">
+        <div class="section-header">
+          <h2>
+            <span class="part1">Portfolio</span>
+            <span class="part2">| 網頁設計案例</span>
+          </h2>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 180">
+              <div class="placeholder-text">01</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>企業形象網站</h4>
+              <p>Corporate Website</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 200">
+              <div class="placeholder-text">02</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>電商平台</h4>
+              <p>E-commerce Platform</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 220">
+              <div class="placeholder-text">03</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>品牌官網</h4>
+              <p>Brand Website</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 240">
+              <div class="placeholder-text">04</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>個人作品集</h4>
+              <p>Personal Portfolio</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 160">
+              <div class="placeholder-text">05</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>活動網站</h4>
+              <p>Event Website</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <div class="card-image placeholder-bg" style="--bg-hue: 280">
+              <div class="placeholder-text">06</div>
+              <div class="card-overlay">
+                <span>查看詳情</span>
+              </div>
+            </div>
+            <div class="card-info">
+              <h4>產品展示頁</h4>
+              <p>Product Landing</p>
+            </div>
+          </div>
+        </div>
+        <div class="view-more-wrapper">
+          <a href="project.html#WebsiteDesign" class="view-more-btn">
+            查看更多作品
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- 網站設計報價洽詢 -->
+      <section class="quote-section" id="quote">
+        <div class="section-header">
+          <h2>
+            <span class="part1">Get a Quote</span>
+            <span class="part2">| 網站設計報價洽詢</span>
+          </h2>
+        </div>
+        <form class="quote-form" id="quoteForm">
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="name">聯絡人姓名</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="請輸入您的姓名"
+              />
+            </div>
+            <div class="form-group">
+              <label>性別</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="male" />
+                  <span>男</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="female" />
+                  <span>女</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="gender" value="other" />
+                  <span>其他</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="phone">連絡電話</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="09XX-XXX-XXX"
+              />
+            </div>
+            <div class="form-group required">
+              <label for="email">電子信箱</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="example@email.com"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">公司名稱</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                placeholder="公司/組織名稱（選填）"
+              />
+            </div>
+            <div class="form-group">
+              <label for="website">公司網址</label>
+              <input
+                type="url"
+                id="website"
+                name="website"
+                placeholder="https://（選填）"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>我的需求主題（可複選）</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="topic" value="website" />
+                <span>網站建置</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="topic" value="cooperation" />
+                <span>合作提案</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="topic" value="other" />
+                <span>其他洽詢問題</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="deadline">預計完成時間</label>
+              <select id="deadline" name="deadline" required>
+                <option value="">請選擇</option>
+                <option value="1month">1個月內</option>
+                <option value="3months">1-3個月</option>
+                <option value="6months">3-6個月</option>
+                <option value="flexible">時間彈性</option>
+              </select>
+            </div>
+            <div class="form-group required">
+              <label for="budget">網頁建置預算</label>
+              <select id="budget" name="budget" required>
+                <option value="">請選擇預算範圍</option>
+                <option value="under30k">30,000元以下</option>
+                <option value="30k-50k">30,000 - 50,000元</option>
+                <option value="50k-100k">50,000 - 100,000元</option>
+                <option value="100k-200k">100,000 - 200,000元</option>
+                <option value="over200k">200,000元以上</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reference">參考網站</label>
+            <input
+              type="text"
+              id="reference"
+              name="reference"
+              placeholder="請提供您喜歡的網站風格參考（選填）"
+            />
+          </div>
+
+          <div class="form-group required">
+            <label for="requirements">簡述需求</label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              required
+              rows="5"
+              placeholder="請描述您的網站需求，例如：網站類型、功能需求、設計風格偏好等..."
+            ></textarea>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="view-more-btn">
+              送出表單
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Footer -->
+      <div class="footer_info">
+        <div class="footer_info-item">
+          <h3>Info</h3>
+          <p>YEN-LING</p>
+          <p>Web Designer</p>
+          <p>UI/UX Designer</p>
+          <p>Graphic Designer</p>
+        </div>
+        <div class="footer_info-item">
+          <h3>Follow</h3>
+          <p>
+            <a href="https://github.com/YenLing-L" target="_blank">Github</a>
+          </p>
+          <p><a href="#">Instagram</a></p>
+          <p><a href="#">Facebook</a></p>
+        </div>
+        <div class="footer_info-item">
+          <h3>Contact</h3>
+          <p>+886　910-632-166</p>
+          <p><a href="mailto:yenling061@gmail.com">yenling061@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="marquee-container">
+        <div class="scrolling" id="copyrightText">
+          copyright © <span id="currentYear"></span> YEN-LING　All Rights
+          Reserved.
+        </div>
+      </div>
+
+      <!-- Back to Top -->
+      <div class="back-to-top" id="backToTop">
+        <svg class="progress-ring" viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="22" />
+        </svg>
+        <svg
+          class="arrow-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>
