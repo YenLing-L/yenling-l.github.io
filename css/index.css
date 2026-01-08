@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   background-color: #fafafa;
   font-family: "Montserrat", "Noto Sans TC", sans-serif;
@@ -15,6 +16,7 @@ body {
       0 22,
     auto;
   overflow-x: hidden;
+  width: 100%;
 }
 
 a {
@@ -140,6 +142,13 @@ a {
 
   .landing-nav {
     padding: 15px 20px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden !important;
+    position: relative;
+    width: 100%;
   }
 }
 
@@ -864,12 +873,13 @@ a {
 /*  Footer */
 .footer_info {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  margin-top: 5px;
+  margin-top: 50px;
   margin-bottom: 10px;
-  padding: 100px;
-  position: absolute;
+  padding: 40px 100px;
+  position: relative;
+  width: 100%;
 }
 
 .footer_info-item {
@@ -908,7 +918,7 @@ a {
 @media (max-width: 900px) {
   .footer_info {
     grid-template-columns: repeat(2, 1fr);
-    padding: 50px 30px;
+    padding: 40px 30px;
   }
 }
 
@@ -920,6 +930,8 @@ a {
       "contact .";
     padding: 30px 20px;
     gap: 20px;
+    position: relative;
+    width: 100%;
   }
 
   .footer_info-item {
@@ -997,7 +1009,7 @@ a {
 .back-to-top {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  right: 20px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1010,7 +1022,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
@@ -1078,8 +1090,18 @@ a {
     flex-direction: column;
   }
 
-  .landing-footer {
+  .footer_info {
     padding: 60px 20px 20px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
   }
 }
 
