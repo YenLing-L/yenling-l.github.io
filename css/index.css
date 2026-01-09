@@ -672,7 +672,7 @@ a {
   margin-bottom: 8px;
 }
 
-.form-group.required label::after {
+.form-group.required > label::after {
   content: "*";
   color: #c0392b;
   margin-left: 4px;
@@ -680,10 +680,17 @@ a {
 
 .form-group label {
   display: block;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: #333;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.form-group label .label-en {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #666;
+  margin-left: 8px;
 }
 
 .form-group input,
@@ -809,6 +816,11 @@ a {
 .checkbox-label:has(input:checked) {
   background-color: #333;
   color: #fff;
+}
+
+.radio-group.error .radio-label,
+.checkbox-group.error .checkbox-label {
+  border-color: #c0392b;
 }
 
 .form-submit {

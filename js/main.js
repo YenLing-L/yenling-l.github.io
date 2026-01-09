@@ -2,7 +2,7 @@ const { createApp } = Vue;
 
 const VISITOR_API_URL = "https://visitor-proxy.elenaaitest.workers.dev";
 const SHEETS_API_URL =
-  "https://script.google.com/macros/s/AKfycbwyv1h2ieL-niQ3X_te8SHUkRBzTT6d8L8O-q9Fgv-9IwaBoyvAlUnuqeuoq7cM4Gc/exec";
+  "https://script.google.com/macros/s/AKfycbwVrmIrJJnh56Gf6peYMKWeq64VkIY_77YU9gL_yevnfQ-UoRi2-Y6owwZ71b5j1z4/exec";
 const CACHE_KEY = "portfolio_data_cache";
 const CACHE_DURATION = 1000 * 60 * 60; /* 快取資料放1小時 */
 
@@ -1403,7 +1403,7 @@ if (
 
   const form = document.getElementById("quoteForm");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const required = form.querySelectorAll("[required]");
@@ -1418,11 +1418,76 @@ if (
         }
       });
 
-      if (isValid) {
-        alert("感謝您的詢問！我們會盡快與您聯繫。");
-        form.reset();
+      // 檢查性別是否已選擇
+      const genderSelected = form.querySelector('input[name="gender"]:checked');
+      const genderGroup = form.querySelector('.form-group.required .radio-group');
+      if (!genderSelected) {
+        isValid = false;
+        if (genderGroup) {
+          genderGroup.classList.add("error");
+        }
       } else {
+        if (genderGroup) {
+          genderGroup.classList.remove("error");
+        }
+      }
+
+      if (!isValid) {
         alert("請填寫所有必填欄位");
+        return;
+      }
+
+      // 收集表單資料
+      const formData = new FormData(form);
+      
+      // 處理複選框（我的需求主題）
+      const topics = [];
+      formData.getAll("topic").forEach(value => topics.push(value));
+      
+      // 建立 URL 參數（使用 GET 請求避免 CORS preflight）
+      const params = new URLSearchParams({
+        action: "submitQuote",
+        name: formData.get("name"),
+        gender: formData.get("gender") || "",
+        phone: formData.get("phone"),
+        email: formData.get("email"),
+        company: formData.get("company") || "",
+        website: formData.get("website") || "",
+        deadline: formData.get("deadline"),
+        budget: formData.get("budget"),
+        industry: formData.get("industry"),
+        reference: formData.get("reference") || "",
+        topics: topics.join(", "),
+        requirements: formData.get("requirements")
+      });
+
+      // 顯示提交中狀態
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.disabled = true;
+      submitButton.innerHTML = "提交中...";
+
+      try {
+        const response = await fetch(`${SHEETS_API_URL}?${params.toString()}`);
+
+        if (!response.ok) {
+          throw new Error("提交失敗");
+        }
+
+        const result = await response.json();
+        
+        if (result.status === "success" || result.result === "success") {
+          alert("感謝您的詢問！我們已收到您的資料，會盡快與您聯繫。");
+          form.reset();
+        } else {
+          throw new Error(result.message || "提交失敗");
+        }
+      } catch (error) {
+        console.error("Form submission error:", error);
+        alert("提交失敗，請稍後再試或直接來電 0910-632-166 聯繫我們。");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonText;
       }
     });
 
