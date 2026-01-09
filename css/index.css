@@ -634,6 +634,10 @@ a {
   color: #333;
 }
 
+.quote-description{
+  margin-top: 40px;
+}
+
 .quote-form {
   max-width: 80%;
 }
@@ -808,8 +812,8 @@ a {
 }
 
 .form-submit {
-  text-align: center;
-  margin-top: 50px;
+  text-align: right;
+  margin-top: 30px;
 }
 
 @media (max-width: 900px) {
@@ -877,9 +881,8 @@ a {
   gap: 30px;
   margin-top: 50px;
   margin-bottom: 10px;
-  padding: 40px 100px;
-  position: relative;
-  width: 100%;
+  padding: 100px;
+  position: absolute;
 }
 
 .footer_info-item {
@@ -904,21 +907,10 @@ a {
   color: #333;
 }
 
-.footer_info-item a:hover {
-  color: #11998e;
-}
-
-@media (max-width: 1200px) {
-  .footer_info {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 50px 30px;
-  }
-}
-
 @media (max-width: 900px) {
   .footer_info {
     grid-template-columns: repeat(2, 1fr);
-    padding: 40px 30px;
+    padding: 50px 30px;
   }
 }
 
@@ -929,9 +921,8 @@ a {
       "info follow"
       "contact .";
     padding: 30px 20px;
-    gap: 20px;
     position: relative;
-    width: 100%;
+    gap: 20px;
   }
 
   .footer_info-item {

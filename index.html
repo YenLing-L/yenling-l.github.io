@@ -373,6 +373,10 @@
               <span class="part1">Get a Quote</span>
               <span class="part2">| 網站設計報價洽詢</span>
             </h2>
+            <p class="quote-description">
+              請填寫表單資料，我們將盡快與您聯繫!<br>
+              或來電 0910-632-166
+            </p>
           </div>
           <form class="quote-form" id="quoteForm">
             <div class="form-row">
@@ -544,33 +548,22 @@
 
       <!-- Footer -->
       <div class="footer_info">
-        <div class="footer_info-item">
-          <h3>Info</h3>
-          <p>YEN-LING</p>
-          <p>Web Designer</p>
-          <p>UI/UX Designer</p>
-          <p>Graphic Designer</p>
-        </div>
-        <div class="footer_info-item">
-          <h3>Follow</h3>
-          <p>
-            <a href="https://github.com/YenLing-L" target="_blank">Github</a>
-          </p>
-          <p><a href="#">Instagram</a></p>
-          <p><a href="#">Facebook</a></p>
-        </div>
-        <div class="footer_info-item">
-          <h3>Contact</h3>
-          <p>+886　910-632-166</p>
-          <p><a href="mailto:yenling061@gmail.com">yenling061@gmail.com</a></p>
+        <div
+          class="footer_info-item"
+          v-for="(footer, fIndex) in footerInfo"
+          :key="fIndex"
+        >
+          <h3>{{ footer.title }}</h3>
+          <p
+            v-for="(line, lIndex) in footer.items"
+            :key="lIndex"
+            v-html="line"
+          ></p>
         </div>
       </div>
 
       <div class="marquee-container">
-        <div class="scrolling" id="copyrightText">
-          copyright © <span id="currentYear"></span> YEN-LING　All Rights
-          Reserved.
-        </div>
+        <div class="scrolling">{{ copyright }}</div>
       </div>
 
       <!-- Back to Top -->
