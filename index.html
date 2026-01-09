@@ -374,7 +374,7 @@
               <span class="part2">| 網站設計報價洽詢</span>
             </h2>
             <p class="quote-description">
-              請填寫表單資料，我們將盡快與您聯繫!<br>
+              請填寫表單資料，我們將盡快與您聯繫!<br />
               或來電 0910-632-166
             </p>
           </div>
@@ -456,24 +456,23 @@
             <div class="form-row">
               <div class="form-group required">
                 <label for="deadline">預計完成時間</label>
-                <select id="deadline" name="deadline" required>
-                  <option value="">請選擇</option>
-                  <option value="1month">1個月內</option>
-                  <option value="3months">1-3個月</option>
-                  <option value="6months">3-6個月</option>
-                  <option value="flexible">時間彈性</option>
-                </select>
+                <input
+                  type="date"
+                  id="deadline"
+                  name="deadline"
+                  required
+                  placeholder="請選擇預計完成日期"
+                />
               </div>
               <div class="form-group required">
                 <label for="budget">網頁建置預算</label>
-                <select id="budget" name="budget" required>
-                  <option value="">請選擇預算範圍</option>
-                  <option value="under30k">30,000元以下</option>
-                  <option value="30k-50k">30,000 - 50,000元</option>
-                  <option value="50k-100k">50,000 - 100,000元</option>
-                  <option value="100k-200k">100,000 - 200,000元</option>
-                  <option value="over200k">200,000元以上</option>
-                </select>
+                <input
+                  type="text"
+                  id="budget"
+                  name="budget"
+                  required
+                  placeholder="請輸入預算金額（台幣）"
+                />
               </div>
             </div>
 
@@ -485,7 +484,7 @@
                   id="industry"
                   name="industry"
                   required
-                  placeholder="食品/餐廳/汽車/傳產...等"
+                  placeholder="食品/金融/教育/工業...等"
                 />
               </div>
               <div class="form-group">
