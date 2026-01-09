@@ -127,13 +127,7 @@
       </svg>
 
       <!-- 導覽列 -->
-      <nav class="landing-nav" v-show="!isMenuActive">
-        <a class="logo" href="index.html">{{ siteTitle }}</a>
-        <div class="nav-links">
-          <a href="info.html">INFO</a>
-          <a href="project.html">PROJECTS</a>
-          <a href="contact.html">CONTACT</a>
-        </div>
+      <nav class="landing-nav">
         <div
           class="hamburger-toggle"
           :class="{ active: isMenuOpen }"
@@ -142,6 +136,9 @@
           <span class="bar-1"></span>
           <span class="bar-3"></span>
         </div>
+        <a class="logo" v-if="!isMenuActive" href="index.html"
+          >{{ siteTitle }}</a
+        >
       </nav>
 
       <!-- Hero -->
