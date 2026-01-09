@@ -1164,6 +1164,7 @@ a {
     position: relative;
     width: 100%;
     overflow: hidden;
+    margin: 10px 10px;
   }
 
   .back-to-top {
