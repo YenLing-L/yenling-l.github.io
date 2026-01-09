@@ -1334,6 +1334,21 @@ if (
       });
     });
 
+    // 段落內容區塊 fade in 動畫
+    gsap.utils.toArray(".service-intro-right").forEach((el) => {
+      gsap.from(el, {
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    });
+
     gsap.utils.toArray(".service-card").forEach((card, i) => {
       gsap.from(card, {
         scrollTrigger: {
@@ -1420,7 +1435,9 @@ if (
 
       // 檢查性別是否已選擇
       const genderSelected = form.querySelector('input[name="gender"]:checked');
-      const genderGroup = form.querySelector('.form-group.required .radio-group');
+      const genderGroup = form.querySelector(
+        ".form-group.required .radio-group"
+      );
       if (!genderSelected) {
         isValid = false;
         if (genderGroup) {
@@ -1439,11 +1456,11 @@ if (
 
       // 收集表單資料
       const formData = new FormData(form);
-      
+
       // 處理複選框（我的需求主題）
       const topics = [];
-      formData.getAll("topic").forEach(value => topics.push(value));
-      
+      formData.getAll("topic").forEach((value) => topics.push(value));
+
       // 建立 URL 參數（使用 GET 請求避免 CORS preflight）
       const params = new URLSearchParams({
         action: "submitQuote",
@@ -1458,7 +1475,7 @@ if (
         industry: formData.get("industry"),
         reference: formData.get("reference") || "",
         topics: topics.join(", "),
-        requirements: formData.get("requirements")
+        requirements: formData.get("requirements"),
       });
 
       // 顯示提交中狀態
@@ -1475,7 +1492,7 @@ if (
         }
 
         const result = await response.json();
-        
+
         if (result.status === "success" || result.result === "success") {
           alert("感謝您的詢問！我們已收到您的資料，會盡快與您聯繫。");
           form.reset();

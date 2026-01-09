@@ -164,28 +164,56 @@
           <div class="scroll-line"></div>
         </div>
       </section>
-
       <!-- 網頁設計服務 -->
       <section class="service-intro" id="services">
-        <div class="section-header">
-          <h2>
-            <span class="part1">Web Design Service</span>
-            <span class="part2">| 網頁設計服務</span>
-          </h2>
-        </div>
-        <p class="service-description">
-          專注於將品牌的核心價值與視覺美學完美結合，致力於創造兼具創新性與功能性的數位體驗。
-          我們提供從設計到開發的完整解決方案，讓您的品牌在數位世界中脫穎而出。
-        </p>
-        <div class="service-buttons">
-          <a href="#quote" class="service-btn">
-            <span class="btn-icon">📝</span>
-            <span class="btn-text">取得報價</span>
-          </a>
-          <a href="contact.html" class="service-btn">
-            <span class="btn-icon">💬</span>
-            <span class="btn-text">聯繫我們</span>
-          </a>
+        <div class="service-intro-container">
+          <div class="service-intro-left">
+            <div class="section-header">
+              <h2>
+                <span class="part1">Web Design Service</span>
+                <span class="part2">| 網頁設計服務</span>
+              </h2>
+            </div>
+            <div class="service-buttons">
+              <a href="#quote" class="view-more-btn">
+                取得報價
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="contact.html" class="view-more-btn">
+                聯繫我們
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="service-intro-right">
+            <p class="service-description">
+              專注於將品牌的核心價值與視覺美學完美結合，致力於創造兼具創新性與功能性的數位體驗。設計風格以精準、現代化且符合趨勢為特色，並透過數位化的思維，為客戶打造獨一無二的品牌形象。作品不僅是視覺的呈現，更是與用戶互動的橋樑。因此，我從不設限於單一風格或形式，而是根據不同產業、企業及團隊的需求，量身定制專屬的設計方案，讓每個品牌都能展現其獨特的個性與魅力。
+            </p>
+            <p class="service-description service-description-en">
+              Focused on blending brand values with visual aesthetics to create
+              innovative, functional digital experiences. The design style is
+              precise, modern, and trend-driven, crafting unique brand
+              identities through digital thinking. Designs are not just visual
+              presentations, but bridges for user interaction. Never limited to
+              a single style or form, solutions are tailored to each industry
+              and team, ensuring every brand shines with its unique personality
+              and charm.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -381,7 +409,9 @@
           <form class="quote-form" id="quoteForm">
             <div class="form-row">
               <div class="form-group required">
-                <label for="name">聯絡人姓名 <span class="label-en">Name</span></label>
+                <label for="name"
+                  >聯絡人姓名 <span class="label-en">Name</span></label
+                >
                 <input
                   type="text"
                   id="name"
@@ -411,7 +441,9 @@
 
             <div class="form-row">
               <div class="form-group required">
-                <label for="phone">聯絡電話 <span class="label-en">Phone</span></label>
+                <label for="phone"
+                  >聯絡電話 <span class="label-en">Phone</span></label
+                >
                 <input
                   type="tel"
                   id="phone"
@@ -421,7 +453,9 @@
                 />
               </div>
               <div class="form-group required">
-                <label for="email">電子信箱 <span class="label-en">Email</span></label>
+                <label for="email"
+                  >電子信箱 <span class="label-en">Email</span></label
+                >
                 <input
                   type="email"
                   id="email"
@@ -434,7 +468,9 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="company">公司名稱 <span class="label-en">Company</span></label>
+                <label for="company"
+                  >公司名稱 <span class="label-en">Company</span></label
+                >
                 <input
                   type="text"
                   id="company"
@@ -443,7 +479,9 @@
                 />
               </div>
               <div class="form-group">
-                <label for="website">公司網址 <span class="label-en">Website</span></label>
+                <label for="website"
+                  >公司網址 <span class="label-en">Website</span></label
+                >
                 <input
                   type="url"
                   id="website"
@@ -455,7 +493,9 @@
 
             <div class="form-row">
               <div class="form-group required">
-                <label for="deadline">預計完成時間 <span class="label-en">Deadline</span></label>
+                <label for="deadline"
+                  >預計完成時間 <span class="label-en">Deadline</span></label
+                >
                 <input
                   type="date"
                   id="deadline"
@@ -465,7 +505,9 @@
                 />
               </div>
               <div class="form-group required">
-                <label for="budget">網頁建置預算 <span class="label-en">Budget</span></label>
+                <label for="budget"
+                  >網頁建置預算 <span class="label-en">Budget</span></label
+                >
                 <input
                   type="text"
                   id="budget"
@@ -478,7 +520,9 @@
 
             <div class="form-row">
               <div class="form-group required">
-                <label for="industry">產業類型 <span class="label-en">Industry</span></label>
+                <label for="industry"
+                  >產業類型 <span class="label-en">Industry</span></label
+                >
                 <input
                   type="text"
                   id="industry"
@@ -488,7 +532,9 @@
                 />
               </div>
               <div class="form-group">
-                <label for="reference">參考網站 <span class="label-en">Reference</span></label>
+                <label for="reference"
+                  >參考網站 <span class="label-en">Reference</span></label
+                >
                 <input
                   type="text"
                   id="reference"
@@ -500,7 +546,10 @@
 
             <div class="form-row form-row-aligned">
               <div class="form-group">
-                <label>我的需求主題（可複選） <span class="label-en">Topics</span></label>
+                <label
+                  >我的需求主題（可複選）
+                  <span class="label-en">Topics</span></label
+                >
                 <div class="checkbox-group">
                   <label class="checkbox-label">
                     <input type="checkbox" name="topic" value="website" />
@@ -517,7 +566,9 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label for="requirements">簡述需求 <span class="label-en">Requirements</span></label>
+                <label for="requirements"
+                  >簡述需求 <span class="label-en">Requirements</span></label
+                >
                 <textarea
                   id="requirements"
                   name="requirements"

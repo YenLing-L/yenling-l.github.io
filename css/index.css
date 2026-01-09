@@ -299,6 +299,14 @@ a {
   margin-bottom: 50px;
 }
 
+.services-grid-section .section-header,
+.portfolio-section .section-header {
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+
 .section-header h2 {
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   color: #333;
@@ -326,18 +334,70 @@ a {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
+.service-intro-right {
+  flex: 1;
+  max-width: 750px;
+  padding: 0 40px 40px 0;
+  border-radius: 16px;
+}
+
+.service-intro-container {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.service-intro-left {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .service-description {
   font-size: clamp(1rem, 1.2vw, 1.2rem);
   line-height: 2;
   color: #555;
-  max-width: 800px;
   margin-bottom: 40px;
+  text-align: justify;
+}
+
+.service-description-en {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  color: #666;
+  margin-top: -20px;
 }
 
 .service-buttons {
   display: flex;
-  gap: 20px;
+  flex-direction: row;
+  gap: 15px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .service-intro-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .service-intro-left {
+    flex: 1;
+  }
+
+  .service-buttons {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  .service-buttons .view-more-btn {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+  }
 }
 
 .service-btn {
@@ -380,6 +440,8 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+  max-width: 80vw;
+  margin: 0 auto;
 }
 
 .service-card {
@@ -457,6 +519,8 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
+  max-width: 80vw;
+  margin: 0 auto;
   margin-bottom: 50px;
 }
 
@@ -610,6 +674,8 @@ a {
   grid-template-columns: auto 1fr;
   gap: 60px;
   align-items: start;
+  max-width: 80vw;
+  margin: 0 auto;
 }
 
 .quote-header {
@@ -634,12 +700,12 @@ a {
   color: #333;
 }
 
-.quote-description{
+.quote-description {
   margin-top: 40px;
 }
 
 .quote-form {
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .quote-form .form-row {
