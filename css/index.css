@@ -329,7 +329,7 @@ a {
 .service-intro {
   padding: 100px 40px;
   background: #fff;
-  margin: 0 20px;
+  margin: 0 28px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -430,7 +430,7 @@ a {
 /* 建置服務內容 */
 .services-grid-section {
   padding: 100px 40px;
-  margin: 40px 20px;
+  margin: 40px 28px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -509,7 +509,7 @@ a {
 /* 網頁設計案例 */
 .portfolio-section {
   padding: 100px 40px;
-  margin: 40px 20px;
+  margin: 40px 28px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -663,7 +663,7 @@ a {
 /* 網站設計報價洽詢 */
 .quote-section {
   padding: 80px 40px;
-  margin: 40px 20px;
+  margin: 40px 28px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
