@@ -33,7 +33,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 20px 20px;
   z-index: 10;
   background: rgba(250, 250, 250, 0.9);
   backdrop-filter: blur(10px);
@@ -41,12 +41,14 @@ a {
 }
 
 .landing-nav .logo {
-  font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+  font-size: clamp(1.2rem, 1.1vw, 1.5rem);
   font-weight: 600;
   color: #333;
   text-decoration: none;
-  position: relative;
-  margin: 0;
+  position: absolute;
+  margin-top: 36px;
+  margin-left: 8px;
+  z-index: 10;
 }
 
 .nav-links {
@@ -76,7 +78,8 @@ a {
 
 .landing-nav .hamburger-toggle {
   position: absolute;
-  right: 40px;
+  right: 28px;
+  top: 18px;
 }
 
 .hamburger-toggle span {
