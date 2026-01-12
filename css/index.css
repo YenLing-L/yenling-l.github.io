@@ -1138,6 +1138,57 @@ a {
   color: #333;
 }
 
+/* 品牌標誌滾動區塊 */
+.brand-marquee-section {
+  padding: 60px 0;
+  overflow: hidden;
+  background: transparent;
+  margin: 40px 100px;
+}
+
+.brand-marquee-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.brand-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-brand 40s linear infinite;
+}
+
+.brand-logo {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 110px;
+  margin: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 0.5;
+  transition: all 0.5s ease;
+  object-fit: contain;
+}
+
+.brand-logo:hover img {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+@keyframes scroll-brand {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     padding: 100px 20px 60px;

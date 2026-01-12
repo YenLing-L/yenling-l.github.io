@@ -293,6 +293,28 @@
         </div>
       </section>
 
+      <!-- 品牌標誌滾動區塊 -->
+      <section class="brand-marquee-section">
+        <div class="brand-marquee-container">
+          <div class="brand-marquee-track">
+            <div
+              class="brand-logo"
+              v-for="(logo, index) in brandLogos"
+              :key="'l1-' + index"
+            >
+              <img :src="logo.url" :alt="logo.name" />
+            </div>
+            <div
+              class="brand-logo"
+              v-for="(logo, index) in brandLogos"
+              :key="'l2-' + index"
+            >
+              <img :src="logo.url" :alt="logo.name" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 網頁設計案例 -->
       <section class="portfolio-section">
         <div class="section-header">

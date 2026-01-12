@@ -190,6 +190,23 @@ const app = createApp({
       certificateSortKey: "id",
       certificateSortOrder: "asc",
       isFilterMenuOpen: false,
+      brandLogos: [
+        { name: "Giant", url: "https://www.giant-bicycles.com/favicon.ico" },
+        { name: "KKStream", url: "https://www.kkstream.com/favicon.ico" },
+        { name: "Wistron", url: "https://www.wistron.com/favicon.ico" },
+        {
+          name: "Taipei Music Center",
+          url: "https://tmc.taipei/wp-content/themes/tmc/assets/images/logo.png",
+        },
+        { name: "Qisda", url: "https://www.qisda.com/favicon.ico" },
+        { name: "KKBOX", url: "https://www.kkbox.com/favicon.ico" },
+        { name: "Gamania", url: "https://www.gamania.com/favicon.ico" },
+        {
+          name: "Taiwan Mobile",
+          url: "https://www.taiwanmobile.com/favicon.ico",
+        },
+        { name: "Cathay", url: "https://www.cathayholdings.com/favicon.ico" },
+      ],
       totalVisitors: 0,
       onlineVisitors: 0,
       sessionId: null,
