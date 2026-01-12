@@ -4,7 +4,9 @@ body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='38'%3E%3Crect x='0' y='22' width='16' height='16' fill='black'/%3E%3Cg stroke='black' stroke-width='2'%3E%3Cline x1='22' y1='0' x2='22' y2='14'/%3E%3Cline x1='15' y1='7' x2='29' y2='7'/%3E%3C/g%3E%3C/svg%3E") 0 22, auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='38'%3E%3Crect x='0' y='22' width='16' height='16' fill='black'/%3E%3Cg stroke='black' stroke-width='2'%3E%3Cline x1='22' y1='0' x2='22' y2='14'/%3E%3Cline x1='15' y1='7' x2='29' y2='7'/%3E%3C/g%3E%3C/svg%3E")
+      0 22,
+    auto;
 }
 
 h4 {
@@ -226,16 +228,27 @@ a {
 }
 
 .word p {
-  font-size: clamp(1rem, 0.8vw, 1.1rem);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.8;
   pointer-events: auto;
   margin-bottom: 15px;
+  text-align: justify;
+  font-weight: 500;
+  color: #333;
+}
+
+.en-text {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  color: #666;
+  display: block;
 }
 
 /* 查看詳細履歷連結樣式 */
 .resume-link {
+  margin-top: 10px;
   display: inline-flex;
   align-items: center;
-  font-size: clamp(1rem, 0.8vw, 1.1rem);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
   color: black;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -1355,13 +1368,15 @@ p {
 }
 
 .cert-name-cn {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.8;
   font-weight: 500;
   color: #333;
 }
 
 .cert-name-en {
-  font-size: clamp(0.75rem, 0.8vw, 0.85rem);
-  color: #888;
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  color: #666;
 }
 
 /* 桌機版顯示完整英文名稱，隱藏簡稱 */

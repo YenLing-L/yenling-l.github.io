@@ -82,8 +82,8 @@ const app = createApp({
           image: "img/self-pic.jpg",
           header: true,
           content: [
-            "專注於將品牌的核心價值與視覺美學完美結合，致力於創造兼具創新性與功能性的數位體驗。我的設計風格以精準、現代化且符合趨勢為特色，並透過數位化的思維，為客戶打造獨一無二的品牌形象。作品不僅是視覺的呈現，更是與用戶互動的橋樑。因此，我從不設限於單一風格或形式，而是根據不同產業、企業及團隊的需求，量身定制專屬的設計方案，讓每個品牌都能展現其獨特的個性與魅力。",
-            "I blend brand values with visual aesthetics to create innovative, functional digital experiences. My design is precise, modern, and trend-driven, crafting unique brand identities. I tailor solutions to each industry and team, ensuring every brand shines with its unique personality.",
+            "專注於前端開發與客製化網站設計的工程師，擅長透過流暢的介面轉場與細膩的互動設計，將創意構思轉化為功能完備且高效的網頁體驗。精通 RWD 響應式佈局與 Vue.js 框架開發，在視覺美學與技術實現之間取得平衡，為使用者帶來順滑且驚艷的瀏覽體驗。從產業需求出發，為企業量身定制兼具擴充性與功能性的數位解決方案，並賦予每個專案獨有的品牌價值與生命力。",
+            '<span class="en-text">A frontend engineer specializing in custom web design, I excel at transforming creative concepts into functional and efficient web experiences through fluid interface transitions and delicate interaction design. Proficient in RWD and Vue.js, I strike a balance between visual aesthetics and technical implementation to deliver a seamless and stunning browsing experience. Starting from industry needs, I create tailored, scalable, and functional digital solutions for enterprises, imbuing every project with unique brand value and vitality.</span>',
           ],
         },
         {
@@ -91,11 +91,11 @@ const app = createApp({
           subtitle: "經歷",
           image: "img/flight.jpg",
           content: [
-            "朝陽科技大學　行銷與流通管理系　碩士　2023<br>Chaoyang University of Technology, Marketing & Logistics, Master",
-            "朝陽科技大學　行銷與流通管理系　學士　2022<br>Chaoyang University of Technology, Marketing & Logistics, Bachelor",
-            "德國雷根斯堡大學　交換生　2022<br>University of Regensburg, Exchange Student",
-            "創價心工程顧問公司　專案管理師　2023-2024<br>Chuang Jia Xin Engineering Consultants, Project Manager",
-            "天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br>Tyan Liu Technology Co., Ltd., Frontend Engineer",
+            '朝陽科技大學　行銷與流通管理系　碩士　2023<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Master</span>',
+            '朝陽科技大學　行銷與流通管理系　學士　2022<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Bachelor</span>',
+            '德國雷根斯堡大學　交換生　2022<br><span class="en-text">University of Regensburg, Exchange Student</span>',
+            '創價心工程顧問公司　專案管理師　2023-2024<br><span class="en-text">Chuang Jia Xin Engineering Consultants, Project Manager</span>',
+            '天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br><span class="en-text">Tyan Liu Technology Co., Ltd., Frontend Engineer</span>',
           ],
           resumeLink: "https://yen061.notion.site/",
         },

@@ -361,10 +361,11 @@ a {
 
 .service-description {
   font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 2;
-  color: #555;
+  line-height: 1.8;
+  color: #333;
   margin-bottom: 40px;
   text-align: justify;
+  font-weight: 500;
 }
 
 .service-description-en {
