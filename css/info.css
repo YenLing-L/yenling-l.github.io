@@ -241,6 +241,7 @@ a {
   font-size: clamp(0.9rem, 1.1vw, 1.1rem);
   color: #666;
   display: block;
+  text-align: left;
 }
 
 /* 查看詳細履歷連結樣式 */
@@ -278,6 +279,185 @@ a {
   opacity: 1;
   margin-left: 8px;
   transform: translateX(0);
+}
+
+/* 經驗區塊：懸停展開細項 */
+.experience-word {
+  pointer-events: auto;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.experience-item {
+  position: relative;
+  padding: 15px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.experience-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+
+.experience-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 6px;
+  transition: transform 0.3s ease, color 0.3s ease;
+  color: #333;
+}
+
+.experience-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.experience-item:hover .experience-arrow {
+  color: #888;
+  transform: rotate(90deg);
+}
+
+/* 展開狀態：三角形旋轉90度 */
+.experience-item.is-expanded .experience-arrow {
+  transform: rotate(90deg);
+  color: #888;
+}
+
+.experience-main p {
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.8;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 細項區域 - 預設隱藏 */
+.experience-details {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-left: 20px;
+  margin-top: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+/* 懸停時展開細項（僅限有滑鼠的設備）*/
+@media (hover: hover) {
+  .experience-item:hover .experience-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 15px;
+  }
+}
+
+/* 點擊展開細項（適用於所有設備，特別是觸控設備）*/
+.experience-item.is-expanded .experience-details {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+.experience-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.experience-detail-item:hover {
+  background: rgba(17, 153, 142, 0.05);
+  padding-left: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+  border-radius: 4px;
+}
+
+.detail-line {
+  width: 20px;
+  height: 1px;
+  background: #999;
+  transition: all 0.3s ease;
+}
+
+.experience-detail-item:hover .detail-line {
+  width: 30px;
+  background: #11998e;
+}
+
+.detail-text {
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.experience-detail-item:hover .detail-text {
+  color: #333;
+}
+
+/* 經驗區塊動態圖片（原飛機圖片位置）*/
+.experience-dynamic-img {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  animation: expImgFadeIn 0.3s ease;
+  opacity: 1 !important;
+}
+
+@keyframes expImgFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.resume-link-wrapper {
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* 手機版經驗區塊 */
+@media (max-width: 768px) {
+  .experience-dynamic-img {
+    width: clamp(80px, 20vw, 120px);
+    height: clamp(80px, 20vw, 120px);
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  /* 觸控設備：細項預設隱藏，只有點擊展開 */
+  .experience-details {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+  }
+
+  /* 點擊後展開 */
+  .experience-item.is-expanded .experience-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 15px;
+  }
 }
 
 @media (max-width: 768px) {

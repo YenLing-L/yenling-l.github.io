@@ -89,13 +89,58 @@ const app = createApp({
         {
           title: "Experience",
           subtitle: "經歷",
-          image: "img/flight.jpg",
+          hasDetails: true,
           content: [
-            '朝陽科技大學　行銷與流通管理系　碩士　2023<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Master</span>',
-            '朝陽科技大學　行銷與流通管理系　學士　2022<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Bachelor</span>',
-            '德國雷根斯堡大學　交換生　2022<br><span class="en-text">University of Regensburg, Exchange Student</span>',
-            '創價心工程顧問公司　專案管理師　2023-2024<br><span class="en-text">Chuang Jia Xin Engineering Consultants, Project Manager</span>',
-            '天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br><span class="en-text">Tyan Liu Technology Co., Ltd., Frontend Engineer</span>',
+            {
+              text: '朝陽科技大學　行銷與流通管理系　碩士　2023<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Master</span>',
+              image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
+              details: [
+                { text: '論文研究：消費者行為分析', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop' },
+                { text: '數據分析專題', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop' },
+                { text: '行銷策略規劃', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop' },
+                { text: '學術發表與研討', image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=300&fit=crop' }
+              ]
+            },
+            {
+              text: '朝陽科技大學　行銷與流通管理系　學士　2022<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Bachelor</span>',
+              image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
+              details: [
+                { text: '專題製作：電商平台設計', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop' },
+                { text: '實習經驗累積', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop' },
+                { text: '社團幹部經歷', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop' },
+                { text: '學業成績優異', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop' }
+              ]
+            },
+            {
+              text: '德國雷根斯堡大學　交換生　2022<br><span class="en-text">University of Regensburg, Exchange Student</span>',
+              image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
+              details: [
+                { text: '跨文化溝通體驗', image: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?w=400&h=300&fit=crop' },
+                { text: '國際學術交流', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop' },
+                { text: '歐洲城市探索', image: 'https://images.unsplash.com/photo-1473615695634-d284ec918736?w=400&h=300&fit=crop' },
+                { text: '語言能力提升', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop' }
+              ]
+            },
+            {
+              text: '創價心工程顧問公司　專案管理師　2023-2024<br><span class="en-text">Chuang Jia Xin Engineering Consultants, Project Manager</span>',
+              image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop',
+              details: [
+                { text: '專案進度管理', image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop' },
+                { text: '客戶需求分析', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop' },
+                { text: '團隊協作協調', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop' },
+                { text: '文件撰寫與報告', image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop' }
+              ]
+            },
+            {
+              text: '天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br><span class="en-text">Tyan Liu Technology Co., Ltd., Frontend Engineer</span>',
+              image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
+              details: [
+                { text: 'Vue.js 應用開發', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop' },
+                { text: 'RWD 響應式設計', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop' },
+                { text: 'UI/UX 介面優化', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop' },
+                { text: '動態效果實作', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop' }
+              ]
+            }
           ],
           resumeLink: "https://yen061.notion.site/",
         },
@@ -210,6 +255,9 @@ const app = createApp({
       totalVisitors: 0,
       onlineVisitors: 0,
       sessionId: null,
+      hoveredExperience: null,
+      expandedExperience: null,
+      isTouchDevice: window.matchMedia('(hover: none)').matches || 'ontouchstart' in window,
     };
   },
   computed: {
@@ -253,6 +301,27 @@ const app = createApp({
     },
     toggleFilterMenu() {
       this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    },
+    // 經驗區塊事件處理
+    handleExpMouseEnter(sectionIndex, expIndex, image) {
+      if (!this.isTouchDevice) {
+        this.hoveredExperience = { section: sectionIndex, exp: expIndex, detail: null, image: image };
+      }
+    },
+    handleExpMouseLeave() {
+      if (!this.isTouchDevice) {
+        this.hoveredExperience = null;
+      }
+    },
+    toggleExperience(sectionIndex, expIndex, image) {
+      const key = `${sectionIndex}-${expIndex}`;
+      if (this.expandedExperience === key) {
+        this.expandedExperience = null;
+        this.hoveredExperience = null;
+      } else {
+        this.expandedExperience = key;
+        this.hoveredExperience = { section: sectionIndex, exp: expIndex, detail: null, image: image };
+      }
     },
     openProjectDetails(project, event) {
       if (event) {

@@ -196,13 +196,66 @@
                 <span class="part1">{{ section.title }}</span>
                 <span class="part2">|{{ section.subtitle }}</span>
               </h2>
+              <!-- 一般區塊的靜態圖片 -->
               <img
-                v-if="section.image"
+                v-if="section.image && !section.hasDetails"
                 :src="section.image"
                 alt="Section Image"
               />
+              <!-- 經驗區塊的動態圖片（原飛機圖片位置）-->
+              <img
+                v-if="section.hasDetails && hoveredExperience && hoveredExperience.section === index"
+                :src="hoveredExperience.image"
+                alt="Experience Preview"
+                class="experience-dynamic-img"
+              />
             </div>
-            <div class="word">
+            <!-- 經驗區塊：帶細項展開 -->
+            <div class="word experience-word" v-if="section.hasDetails">
+              <div class="experience-list">
+                <div 
+                  class="experience-item"
+                  :class="{ 'is-expanded': expandedExperience === `${index}-${eIndex}` }"
+                  v-for="(exp, eIndex) in section.content"
+                  :key="eIndex"
+                  @mouseenter="handleExpMouseEnter(index, eIndex, exp.image)"
+                  @mouseleave="handleExpMouseLeave"
+                  @click="toggleExperience(index, eIndex, exp.image)"
+                >
+                  <div class="experience-main">
+                    <span class="experience-arrow">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </span>
+                    <p v-html="exp.text"></p>
+                  </div>
+                  <div class="experience-details">
+                    <div 
+                      class="experience-detail-item"
+                      v-for="(detail, dIndex) in exp.details"
+                      :key="dIndex"
+                      @mouseenter.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
+                      @mouseleave.stop="hoveredExperience = { section: index, exp: eIndex, detail: null, image: exp.image }"
+                      @click.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
+                    >
+                      <span class="detail-line"></span>
+                      <span class="detail-text">{{ detail.text }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="section.resumeLink" class="resume-link-wrapper">
+                <a
+                  :href="section.resumeLink"
+                  target="_blank"
+                  class="resume-link"
+                  >查看詳細履歷</a
+                >
+              </div>
+            </div>
+            <!-- 一般區塊 -->
+            <div class="word" v-else>
               <div v-if="section.header">
                 <div class="typewriter">
                   <div>

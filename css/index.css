@@ -372,6 +372,7 @@ a {
   font-size: clamp(0.9rem, 1.1vw, 1.1rem);
   color: #666;
   margin-top: -20px;
+  text-align: left;
 }
 
 .service-buttons {
