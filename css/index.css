@@ -273,15 +273,28 @@ a {
 }
 
 .hero-scroll-indicator span {
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 2px;
-  color: #999;
+  color: #666;
+  animation: scrollTextPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollTextPulse {
+  0%, 100% {
+    color: #999;
+    opacity: 0.5;
+  }
+  50% {
+    color: #333;
+    font-weight: bold;
+    opacity: 2;
+  }
 }
 
 .scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, #999, transparent);
+  background: linear-gradient(to bottom, #000, transparent);
   animation: scrollPulse 2s infinite;
 }
 
