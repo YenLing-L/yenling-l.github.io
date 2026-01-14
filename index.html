@@ -24,6 +24,11 @@
   </head>
   <body>
     <div id="app">
+      <!-- Loading Screen - Umi-Studio Style -->
+      <div class="loading-screen" :class="{ 'fade-out': !isLoading }">
+        <span class="loading-logo">{ YEN-LING }</span>
+      </div>
+
       <div
         class="menu-overlay"
         :class="{ 'is-active': isMenuActive }"

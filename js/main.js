@@ -1123,16 +1123,16 @@ const app = createApp({
           const { data, timestamp } = JSON.parse(cached);
           if (Date.now() - timestamp < CACHE_DURATION) {
             this.applySheetData(data);
-            this.isLoading = false;
+            await this.runMinimumLoadingTime(1000);
+            this.completeLoading();
             return;
           }
         }
 
-        const dataPromise = this.fetchAllSheetData();
-
-        await this.runLoadingAnimation();
-
-        const data = await dataPromise;
+        const [data] = await Promise.all([
+          this.fetchAllSheetData(),
+          this.runMinimumLoadingTime(1500)
+        ]);
 
         localStorage.setItem(
           CACHE_KEY,
@@ -1143,7 +1143,6 @@ const app = createApp({
         );
 
         this.applySheetData(data);
-
         this.completeLoading();
       } catch (error) {
         console.error("Failed to load portfolio data:", error);
@@ -1161,18 +1160,13 @@ const app = createApp({
       return { certificates, websiteProjects, graphicProjects };
     },
 
+    /* 最小載入時間（確保 logo 動畫完整顯示）*/
+    async runMinimumLoadingTime(minDuration = 1500) {
+      return new Promise((resolve) => setTimeout(resolve, minDuration));
+    },
+
     async runLoadingAnimation() {
-      const steps = [0, 20, 40, 60, 80, 100];
-      const stepDuration = 600;
-
-      for (const step of steps) {
-        await this.animateLoadingProgress(step, stepDuration);
-        if (step < 100) {
-          await new Promise((resolve) => setTimeout(resolve, 200));
-        }
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await this.runMinimumLoadingTime(1500);
     },
 
     async fetchSheetData(sheetName) {
