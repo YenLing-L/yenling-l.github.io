@@ -1,4 +1,14 @@
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  margin: 0;
+  padding: 0;
   background-color: #fafafa;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -7,6 +17,7 @@ body {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='38'%3E%3Crect x='0' y='22' width='16' height='16' fill='black'/%3E%3Cg stroke='black' stroke-width='2'%3E%3Cline x1='22' y1='0' x2='22' y2='14'/%3E%3Cline x1='15' y1='7' x2='29' y2='7'/%3E%3C/g%3E%3C/svg%3E")
       0 22,
     auto;
+  overflow-x: hidden;
 }
 
 h4 {
@@ -1788,14 +1799,14 @@ p {
 
 /* Loading 動畫 */
 .loading-screen {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100vh;
-  height: -webkit-fill-available;
-  max-height: 100vh;
-  max-height: -webkit-fill-available;
+  height: 100dvh;
   background-color: #000;
   z-index: 10000;
   display: flex;
@@ -1810,7 +1821,7 @@ p {
 .loading-screen.fade-out {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 2.6s ease, visibility 0s linear 2.6s, display 0s linear 2.6s;
+  transition: opacity 2.6s ease, visibility 0s linear 2.6s;
   visibility: hidden;
 }
 
@@ -1820,6 +1831,8 @@ p {
 }
 
 .loading-logo {
+  position: relative;
+  z-index: 1;
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-weight: 600;
   color: #fff;

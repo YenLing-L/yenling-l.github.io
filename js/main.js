@@ -1314,10 +1314,18 @@ const app = createApp({
           loadingScreen.style.display = 'none';
           void loadingScreen.offsetHeight; // 觸發 reflow
         }
+        
+        // 恢復 body 滾動
+        document.body.style.overflow = '';
+        document.body.style.position = '';
       }, 2600);
     },
   },
   mounted() {
+    // 鎖定 body 防止滾動（loading 期間）
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'relative';
+    
     this.loadPortfolioData();
 
     const observeFadeIn = (selector) => {
