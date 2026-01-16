@@ -1802,6 +1802,8 @@ p {
 
 .loading-screen.fade-out {
   opacity: 0;
+  visibility: hidden;
+  display: none;
   pointer-events: none;
 }
 
