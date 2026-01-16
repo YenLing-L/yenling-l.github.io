@@ -1305,6 +1305,13 @@ const app = createApp({
     completeLoading() {
       setTimeout(() => {
         this.isLoading = false;
+        
+        setTimeout(() => {
+          const loadingScreen = document.querySelector('.loading-screen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+          }
+        }, 2800);
       }, 500);
     },
   },
