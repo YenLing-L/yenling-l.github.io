@@ -1311,7 +1311,7 @@ const app = createApp({
           if (loadingScreen) {
             loadingScreen.classList.add('hidden');
           }
-        }, 2800);
+        }, 2100);
       }, 500);
     },
   },
