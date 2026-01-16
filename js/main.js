@@ -1305,10 +1305,14 @@ const app = createApp({
     completeLoading() {
       this.isLoading = false;
       
+      // 立即添加 hidden class 並強制重繪（針對 iOS Safari）
       setTimeout(() => {
         const loadingScreen = document.querySelector('.loading-screen');
         if (loadingScreen) {
           loadingScreen.classList.add('hidden');
+          // 強制瀏覽器重新計算樣式（iOS Safari fix）
+          loadingScreen.style.display = 'none';
+          void loadingScreen.offsetHeight; // 觸發 reflow
         }
       }, 2600);
     },
