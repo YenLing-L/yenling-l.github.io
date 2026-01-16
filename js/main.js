@@ -1303,16 +1303,14 @@ const app = createApp({
     },
 
     completeLoading() {
+      this.isLoading = false;
+      
       setTimeout(() => {
-        this.isLoading = false;
-        
-        setTimeout(() => {
-          const loadingScreen = document.querySelector('.loading-screen');
-          if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-          }
-        }, 2100);
-      }, 500);
+        const loadingScreen = document.querySelector('.loading-screen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+        }
+      }, 2600);
     },
   },
   mounted() {
