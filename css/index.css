@@ -978,7 +978,10 @@ a {
   margin-top: 50px;
   margin-bottom: 10px;
   padding: 100px;
-  position: absolute;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .footer_info-item {
