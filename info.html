@@ -1,91 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>YEN-LING</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&family=Sigmar&family=Sixtyfour+Convergence&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="/favicon.png" type="image/svg+xml" />
-    <link rel="alternate icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/css/info.css" />
-  </head>
-  <body>
-    <div id="app">
-      <div class="loading-screen" :class="{ 'fade-out': !isLoading }">
-        <span class="loading-logo">{ YEN-LING }</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>YEN-LING</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&family=Sigmar&family=Sixtyfour+Convergence&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="/favicon.png" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/css/info.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="loading-screen" :class="{ 'fade-out': !isLoading }">
+      <span class="loading-logo">{ YEN-LING }</span>
+    </div>
+
+    <div class="menu-overlay" :class="{ 'is-active': isMenuActive }" @mousemove="updateSpotlight"
+      @mouseleave="resetSpotlight">
+      <div class="liquid-wrapper">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
       </div>
 
-      <div
-        class="menu-overlay"
-        :class="{ 'is-active': isMenuActive }"
-        @mousemove="updateSpotlight"
-        @mouseleave="resetSpotlight"
-      >
-        <div class="liquid-wrapper">
-          <div class="blob"></div>
-          <div class="blob"></div>
-          <div class="blob"></div>
-          <div class="blob"></div>
-          <div class="blob"></div>
-          <div class="blob"></div>
-        </div>
-
-        <div class="menu-content-spotlight" :style="spotlightStyle">
-          <div class="menu-content">
-            <button class="menu-close-button" @click="closeMenu">
-              <span class="close-bar-1"></span>
-              <span class="close-bar-2"></span>
-            </button>
-            <!-- <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a> -->
-            <div class="menu-nav">
-              <div
-                class="menu-column"
-                v-for="(item, index) in navItems"
-                :key="index"
-              >
-                <div v-if="item.image" class="menu-info-header">
-                  <div class="menu-title">
-                    <a :href="item.link">{{ item.title }}</a>
-                  </div>
-                  <img :src="item.image" alt="Avatar" class="menu-avatar" />
-                </div>
-                <div v-else class="menu-title">
-                  <a :href="item.link">{{ item.title }}</a>
-                </div>
-
-                <div class="menu-sub-items">
-                  <a
-                    v-for="(subItem, sIndex) in item.subItems"
-                    :key="sIndex"
-                    :href="subItem.link"
-                    @click="handleMenuLink(subItem.link, $event)"
-                  >
-                    {{ subItem.text }}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div class="menu-content-spotlight" :style="spotlightStyle">
         <div class="menu-content">
           <button class="menu-close-button" @click="closeMenu">
             <span class="close-bar-1"></span>
             <span class="close-bar-2"></span>
           </button>
-          <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
+          <!-- <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a> -->
           <div class="menu-nav">
-            <div
-              class="menu-column"
-              v-for="(item, index) in navItems"
-              :key="index"
-            >
+            <div class="menu-column" v-for="(item, index) in navItems" :key="index">
               <div v-if="item.image" class="menu-info-header">
                 <div class="menu-title">
                   <a :href="item.link">{{ item.title }}</a>
@@ -97,12 +54,8 @@
               </div>
 
               <div class="menu-sub-items">
-                <a
-                  v-for="(subItem, sIndex) in item.subItems"
-                  :key="sIndex"
-                  :href="subItem.link"
-                  @click="handleMenuLink(subItem.link, $event)"
-                >
+                <a v-for="(subItem, sIndex) in item.subItems" :key="sIndex" :href="subItem.link"
+                  @click="handleMenuLink(subItem.link, $event)">
                   {{ subItem.text }}
                 </a>
               </div>
@@ -110,385 +63,296 @@
           </div>
         </div>
       </div>
-      <svg class="svg-filters">
-        <filter id="wave-filter">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
-          <feColorMatrix
-            in="blur"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"
-            result="wave"
-          />
-          <feBlend in="SourceGraphic" in2="wave" />
-        </filter>
-      </svg>
-      <nav>
-        <div
-          class="hamburger-toggle"
-          :class="{ active: isMenuOpen }"
-          @click="toggleMenu"
-        >
-          <span class="bar-1"></span>
-          <span class="bar-3"></span>
-        </div>
-        <a class="logo" v-if="!isMenuActive" href="index.html"
-          >{{ siteTitle }}</a
-        >
-      </nav>
 
-      <div class="content">
-        <div class="timeline">
-          <div
-            class="event"
-            v-for="(section, index) in sections"
-            :key="index"
-            :id="section.title"
-            data-aos="fade-up"
-          >
-            <div class="year">
-              <h2>
-                <span class="part1">{{ section.title }}</span>
-                <span class="part2">|{{ section.subtitle }}</span>
-              </h2>
-              <!-- 一般區塊的靜態圖片 -->
-              <img
-                v-if="section.image && !section.hasDetails"
-                :src="section.image"
-                alt="Section Image"
-              />
-              <!-- 經驗區塊的動態圖片（原飛機圖片位置）-->
-              <img
-                v-if="section.hasDetails && hoveredExperience && hoveredExperience.section === index"
-                :src="hoveredExperience.image"
-                alt="Experience Preview"
-                class="experience-dynamic-img"
-              />
+      <div class="menu-content">
+        <button class="menu-close-button" @click="closeMenu">
+          <span class="close-bar-1"></span>
+          <span class="close-bar-2"></span>
+        </button>
+        <a href="/" class="menu-logo" @click="closeMenu">{{ siteTitle }}</a>
+        <div class="menu-nav">
+          <div class="menu-column" v-for="(item, index) in navItems" :key="index">
+            <div v-if="item.image" class="menu-info-header">
+              <div class="menu-title">
+                <a :href="item.link">{{ item.title }}</a>
+              </div>
+              <img :src="item.image" alt="Avatar" class="menu-avatar" />
             </div>
-            <!-- 經驗區塊：帶細項展開 -->
-            <div class="word experience-word" v-if="section.hasDetails">
-              <div class="experience-list">
-                <div 
-                  class="experience-item"
-                  :class="{ 'is-expanded': expandedExperience === `${index}-${eIndex}` }"
-                  v-for="(exp, eIndex) in section.content"
-                  :key="eIndex"
-                  @mouseenter="handleExpMouseEnter(index, eIndex, exp.image)"
-                  @mouseleave="handleExpMouseLeave"
-                  @click="toggleExperience(index, eIndex, exp.image)"
-                >
-                  <div class="experience-main">
-                    <span class="experience-arrow">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                    </span>
-                    <p v-html="exp.text"></p>
-                  </div>
-                  <div class="experience-details">
-                    <div 
-                      class="experience-detail-item"
-                      v-for="(detail, dIndex) in exp.details"
-                      :key="dIndex"
-                      @mouseenter.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
-                      @mouseleave.stop="hoveredExperience = { section: index, exp: eIndex, detail: null, image: exp.image }"
-                      @click.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
-                    >
-                      <span class="detail-text">{{ detail.text }}</span>
-                    </div>
+            <div v-else class="menu-title">
+              <a :href="item.link">{{ item.title }}</a>
+            </div>
+
+            <div class="menu-sub-items">
+              <a v-for="(subItem, sIndex) in item.subItems" :key="sIndex" :href="subItem.link"
+                @click="handleMenuLink(subItem.link, $event)">
+                {{ subItem.text }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg class="svg-filters">
+      <filter id="wave-filter">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="wave" />
+        <feBlend in="SourceGraphic" in2="wave" />
+      </filter>
+    </svg>
+    <nav>
+      <div class="hamburger-toggle" :class="{ active: isMenuOpen }" @click="toggleMenu">
+        <span class="bar-1"></span>
+        <span class="bar-3"></span>
+      </div>
+      <a class="logo" v-if="!isMenuActive" href="index.html">{{ siteTitle }}</a>
+    </nav>
+
+    <div class="content">
+      <div class="timeline">
+        <div class="event" v-for="(section, index) in sections" :key="index" :id="section.title" data-aos="fade-up">
+          <div class="year">
+            <h2>
+              <span class="part1">{{ section.title }}</span>
+              <span class="part2">|{{ section.subtitle }}</span>
+            </h2>
+            <!-- 一般區塊的靜態圖片 -->
+            <img v-if="section.image && !section.hasDetails" :src="section.image" alt="Section Image" />
+            <!-- 經驗區塊的動態圖片（原飛機圖片位置）-->
+            <img v-if="section.hasDetails && hoveredExperience && hoveredExperience.section === index"
+              :src="hoveredExperience.image" alt="Experience Preview" class="experience-dynamic-img" />
+          </div>
+          <!-- 經驗區塊：帶細項展開 -->
+          <div class="word experience-word" v-if="section.hasDetails">
+            <div class="experience-list">
+              <div class="experience-item" :class="{ 'is-expanded': expandedExperience === `${index}-${eIndex}` }"
+                v-for="(exp, eIndex) in section.content" :key="eIndex"
+                @mouseenter="handleExpMouseEnter(index, eIndex, exp.image)" @mouseleave="handleExpMouseLeave"
+                @click="toggleExperience(index, eIndex, exp.image)">
+                <div class="experience-main">
+                  <span class="experience-arrow">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                  <p v-html="exp.text"></p>
+                </div>
+                <div class="experience-details">
+                  <div class="experience-detail-item" v-for="(detail, dIndex) in exp.details" :key="dIndex"
+                    @mouseenter.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
+                    @mouseleave.stop="hoveredExperience = { section: index, exp: eIndex, detail: null, image: exp.image }"
+                    @click.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }">
+                    <span class="detail-text">{{ detail.text }}</span>
                   </div>
                 </div>
-              </div>
-              <div v-if="section.resumeLink" class="resume-link-wrapper">
-                <a
-                  :href="section.resumeLink"
-                  target="_blank"
-                  class="resume-link"
-                  >查看詳細履歷</a
-                >
               </div>
             </div>
-            <!-- 一般區塊 -->
-            <div class="word" v-else>
-              <div v-if="section.header">
-                <div class="typewriter">
-                  <div>
-                    <h2><a href="info.html">{{ siteTitle }}</a></h2>
-                  </div>
+            <div v-if="section.resumeLink" class="resume-link-wrapper">
+              <a :href="section.resumeLink" target="_blank" class="resume-link">查看詳細履歷</a>
+            </div>
+          </div>
+          <!-- 一般區塊 -->
+          <div class="word" v-else>
+            <div v-if="section.header">
+              <div class="typewriter">
+                <div>
+                  <h2><a href="info.html">{{ siteTitle }}</a></h2>
                 </div>
               </div>
-              <p
-                v-for="(para, pIndex) in section.content"
-                :key="pIndex"
-                v-html="para"
-              ></p>
-              <div v-if="section.resumeLink">
-                <a
-                  :href="section.resumeLink"
-                  target="_blank"
-                  class="resume-link"
-                  >查看詳細履歷</a
-                >
-              </div>
-              <div v-if="section.skills" class="grid">
-                <div
-                  class="grid-item"
-                  v-for="(skill, sIndex) in section.skills"
-                  :key="sIndex"
-                >
-                  <h3>{{ skill.category }}</h3>
-                  <p v-for="(tool, tIndex) in skill.items" :key="tIndex">
-                    {{ tool }}
-                  </p>
-                </div>
+            </div>
+            <p v-for="(para, pIndex) in section.content" :key="pIndex" v-html="para"></p>
+            <div v-if="section.resumeLink">
+              <a :href="section.resumeLink" target="_blank" class="resume-link">查看詳細履歷</a>
+            </div>
+            <div v-if="section.skills" class="grid">
+              <div class="grid-item" v-for="(skill, sIndex) in section.skills" :key="sIndex">
+                <h3>{{ skill.category }}</h3>
+                <p v-for="(tool, tIndex) in skill.items" :key="tIndex">
+                  {{ tool }}
+                </p>
               </div>
             </div>
           </div>
-          <!-- 證照區塊 -->
-          <div class="event" id="Certificates" data-aos="fade-up">
-            <div class="year cert-title-row">
-              <h2>
-                <span class="part1">Certificates</span>
-                <span class="part2">|證照</span>
-              </h2>
-              <!-- 手機版排序按鈕 -->
-              <button class="filter-btn-mobile" @click="toggleFilterMenu">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <line x1="4" y1="6" x2="20" y2="6"></line>
-                  <line x1="8" y1="12" x2="16" y2="12"></line>
-                  <line x1="10" y1="18" x2="14" y2="18"></line>
-                </svg>
-                排序 Sort
-              </button>
+        </div>
+        <!-- 證照區塊 -->
+        <div class="event" id="Certificates" data-aos="fade-up">
+          <div class="year cert-title-row">
+            <h2>
+              <span class="part1">Certificates</span>
+              <span class="part2">|證照</span>
+            </h2>
+            <!-- 手機版排序按鈕 -->
+            <button class="filter-btn-mobile" @click="toggleFilterMenu">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+                <line x1="10" y1="18" x2="14" y2="18"></line>
+              </svg>
+              排序 Sort
+            </button>
+          </div>
+          <div class="word">
+            <!-- 手機版排序下拉選單 -->
+            <div class="cert-filter-dropdown-wrapper">
+              <div class="filter-dropdown" :class="{ open: isFilterMenuOpen }">
+                <div class="filter-group">
+                  <div class="filter-group-title">名稱</div>
+                  <button @click="sortCertificates('nameCN', 'asc')"
+                    :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'asc' }">
+                    升序 ↑
+                  </button>
+                  <button @click="sortCertificates('nameCN', 'desc')"
+                    :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'desc' }">
+                    降序 ↓
+                  </button>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-group-title">分類</div>
+                  <button @click="sortCertificates('category', 'asc')"
+                    :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'asc' }">
+                    升序 ↑
+                  </button>
+                  <button @click="sortCertificates('category', 'desc')"
+                    :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'desc' }">
+                    降序 ↓
+                  </button>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-group-title">日期</div>
+                  <button @click="sortCertificates('date', 'asc')"
+                    :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'asc' }">
+                    升序 ↑
+                  </button>
+                  <button @click="sortCertificates('date', 'desc')"
+                    :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'desc' }">
+                    降序 ↓
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="word">
-              <!-- 手機版排序下拉選單 -->
-              <div class="cert-filter-dropdown-wrapper">
-                <div
-                  class="filter-dropdown"
-                  :class="{ open: isFilterMenuOpen }"
-                >
-                  <div class="filter-group">
-                    <div class="filter-group-title">名稱</div>
-                    <button
-                      @click="sortCertificates('nameCN', 'asc')"
+            <div class="certificates-table">
+              <div class="certificates-header">
+                <div class="certificates-header-cell">
+                  <h3>名稱</h3>
+                  <div class="sort-buttons">
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'asc' }"
-                    >
-                      升序 ↑
+                      @click="sortCertificates('nameCN', 'asc')">
+                      ↑
                     </button>
-                    <button
-                      @click="sortCertificates('nameCN', 'desc')"
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'desc' }"
-                    >
-                      降序 ↓
+                      @click="sortCertificates('nameCN', 'desc')">
+                      ↓
                     </button>
                   </div>
-                  <div class="filter-group">
-                    <div class="filter-group-title">分類</div>
-                    <button
-                      @click="sortCertificates('category', 'asc')"
+                </div>
+                <div class="certificates-header-cell">
+                  <h3>分類</h3>
+                  <div class="sort-buttons">
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'asc' }"
-                    >
-                      升序 ↑
+                      @click="sortCertificates('category', 'asc')">
+                      ↑
                     </button>
-                    <button
-                      @click="sortCertificates('category', 'desc')"
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'desc' }"
-                    >
-                      降序 ↓
+                      @click="sortCertificates('category', 'desc')">
+                      ↓
                     </button>
                   </div>
-                  <div class="filter-group">
-                    <div class="filter-group-title">日期</div>
-                    <button
-                      @click="sortCertificates('date', 'asc')"
+                </div>
+                <div class="certificates-header-cell">
+                  <h3>日期</h3>
+                  <div class="sort-buttons">
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'asc' }"
-                    >
-                      升序 ↑
+                      @click="sortCertificates('date', 'asc')">
+                      ↑
                     </button>
-                    <button
-                      @click="sortCertificates('date', 'desc')"
+                    <button class="sort-btn"
                       :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'desc' }"
-                    >
-                      降序 ↓
+                      @click="sortCertificates('date', 'desc')">
+                      ↓
                     </button>
                   </div>
                 </div>
               </div>
-              <div class="certificates-table">
-                <div class="certificates-header">
-                  <div class="certificates-header-cell">
-                    <h3>名稱</h3>
-                    <div class="sort-buttons">
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'asc' }"
-                        @click="sortCertificates('nameCN', 'asc')"
-                      >
-                        ↑
-                      </button>
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'nameCN' && certificateSortOrder === 'desc' }"
-                        @click="sortCertificates('nameCN', 'desc')"
-                      >
-                        ↓
-                      </button>
-                    </div>
-                  </div>
-                  <div class="certificates-header-cell">
-                    <h3>分類</h3>
-                    <div class="sort-buttons">
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'asc' }"
-                        @click="sortCertificates('category', 'asc')"
-                      >
-                        ↑
-                      </button>
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'category' && certificateSortOrder === 'desc' }"
-                        @click="sortCertificates('category', 'desc')"
-                      >
-                        ↓
-                      </button>
-                    </div>
-                  </div>
-                  <div class="certificates-header-cell">
-                    <h3>日期</h3>
-                    <div class="sort-buttons">
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'asc' }"
-                        @click="sortCertificates('date', 'asc')"
-                      >
-                        ↑
-                      </button>
-                      <button
-                        class="sort-btn"
-                        :class="{ active: certificateSortKey === 'date' && certificateSortOrder === 'desc' }"
-                        @click="sortCertificates('date', 'desc')"
-                      >
-                        ↓
-                      </button>
-                    </div>
-                  </div>
+              <div class="certificates-row" v-for="(cert, cIndex) in sortedCertificates" :key="cIndex">
+                <!-- 電腦版欄位 -->
+                <div class="certificates-cell cert-name-cell">
+                  <span class="cert-name-cn">{{ cert.nameCN }}</span>
+                  <span class="cert-name-en">{{ cert.nameEN }}</span>
                 </div>
-                <div
-                  class="certificates-row"
-                  v-for="(cert, cIndex) in sortedCertificates"
-                  :key="cIndex"
-                >
-                  <!-- 電腦版欄位 -->
-                  <div class="certificates-cell cert-name-cell">
-                    <span class="cert-name-cn">{{ cert.nameCN }}</span>
-                    <span class="cert-name-en">{{ cert.nameEN }}</span>
-                  </div>
-                  <div class="certificates-cell cert-category-cell">
-                    <span
-                      class="category-tag"
-                      :class="'category-' + cert.category"
-                      >{{ cert.category }}</span
-                    >
-                  </div>
-                  <div class="certificates-cell cert-date-cell">
-                    {{ cert.date }}
-                  </div>
-                  <!-- 手機版標題列 -->
-                  <div class="cert-mobile-header">
-                    <span class="cert-mobile-date">{{ cert.date }}</span>
-                    <span class="cert-mobile-category"
-                      >{{ cert.category }}</span
-                    >
-                  </div>
-                  <!-- 手機版名稱 -->
-                  <div class="cert-mobile-names">
-                    <span class="cert-mobile-name-cn">{{ cert.nameCN }}</span>
-                    <span class="cert-mobile-name-en">{{ cert.nameEN }}</span>
-                  </div>
+                <div class="certificates-cell cert-category-cell">
+                  <span class="category-tag" :class="'category-' + cert.category">{{ cert.category }}</span>
+                </div>
+                <div class="certificates-cell cert-date-cell">
+                  {{ cert.date }}
+                </div>
+                <!-- 手機版標題列 -->
+                <div class="cert-mobile-header">
+                  <span class="cert-mobile-date">{{ cert.date }}</span>
+                  <span class="cert-mobile-category">{{ cert.category }}</span>
+                </div>
+                <!-- 手機版名稱 -->
+                <div class="cert-mobile-names">
+                  <span class="cert-mobile-name-cn">{{ cert.nameCN }}</span>
+                  <span class="cert-mobile-name-en">{{ cert.nameEN }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="footer_info">
-        <div
-          class="footer_info-item"
-          v-for="(footer, fIndex) in footerInfo"
-          :key="fIndex"
-        >
-          <h3>{{ footer.title }}</h3>
-          <p
-            v-for="(line, lIndex) in footer.items"
-            :key="lIndex"
-            v-html="line"
-          ></p>
-        </div>
-        <!-- 訪客統計 -->
-        <div class="footer_info-item visitor-item">
-          <h3>已瀏覽次數</h3>
-          <p>{{ totalVisitors }}</p>
-        </div>
-        <div class="footer_info-item visitor-item">
-          <h3>同時在線人數</h3>
-          <p class="online-count">{{ onlineVisitors }}</p>
-        </div>
-      </div>
-
-      <div class="marquee-container">
-        <div class="scrolling">{{ copyright }}</div>
-      </div>
-
-      <div
-        class="back-to-top"
-        :class="{ visible: showBackToTop }"
-        @click="scrollToTop"
-      >
-        <svg class="progress-ring" viewBox="0 0 50 50">
-          <circle
-            cx="25"
-            cy="25"
-            r="22"
-            :style="{ strokeDashoffset: 138 - (scrollProgress * 138) }"
-          />
-        </svg>
-        <svg
-          class="arrow-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
       </div>
     </div>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="/js/main.js"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/js/sw.js")
-            .then((registration) => {
-              console.log("ServiceWorker registered:", registration.scope);
-            })
-            .catch((error) => {
-              console.log("ServiceWorker registration failed:", error);
-            });
-        });
-      }
-    </script>
-  </body>
+    <div class="footer_info">
+      <div class="footer_info-item" v-for="(footer, fIndex) in footerInfo" :key="fIndex">
+        <h3>{{ footer.title }}</h3>
+        <p v-for="(line, lIndex) in footer.items" :key="lIndex" v-html="line"></p>
+      </div>
+      <!-- 訪客統計 -->
+      <div class="footer_info-item visitor-item">
+        <h3>已瀏覽次數</h3>
+        <p>{{ totalVisitors }}</p>
+      </div>
+      <div class="footer_info-item visitor-item">
+        <h3>同時在線人數</h3>
+        <p class="online-count">{{ onlineVisitors }}</p>
+      </div>
+    </div>
+
+    <div class="marquee-container">
+      <div class="scrolling">{{ copyright }}</div>
+    </div>
+
+    <div class="back-to-top" :class="{ visible: showBackToTop }" @click="scrollToTop">
+      <svg class="progress-ring" viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="22" :style="{ strokeDashoffset: 138 - (scrollProgress * 138) }" />
+      </svg>
+      <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/js/sw.js")
+          .then((registration) => {
+            console.log("ServiceWorker registered:", registration.scope);
+          })
+          .catch((error) => {
+            console.log("ServiceWorker registration failed:", error);
+          });
+      });
+    }
+  </script>
+</body>
+
 </html>
