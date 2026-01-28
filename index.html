@@ -139,7 +139,7 @@
     <div class="content">
       <div class="timeline">
         <!-- 網頁設計服務 -->
-        <div class="space">
+        <div class="space" id="service-intro">
           <div class="service-layout"
             style="max-width: 80vw; margin: 0 auto; display: flex; gap: 200px; align-items: flex-start;">
             <div style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 30px;">
@@ -183,7 +183,7 @@
         </div>
 
         <!-- 建置服務內容 -->
-        <div class="space">
+        <div class="space" id="services">
 
           <div class="section-header">
             <h2>
@@ -248,7 +248,7 @@
         </div>
 
         <!-- 品牌標誌滾動區塊 -->
-        <div class="space">
+        <div class="space" id="brands">
           <div class="brand-marquee-container">
             <div class="brand-marquee-track">
               <div class="brand-logo" v-for="(logo, index) in brandLogos" :key="'l1-' + index">
@@ -262,7 +262,7 @@
         </div>
 
         <!-- 網頁設計案例 -->
-        <div class="space">
+        <div class="space" id="portfolio">
           <div class="section-header">
             <h2>
               <span class="part1">Portfolio</span>
@@ -354,7 +354,7 @@
         </div>
 
         <!-- 網站設計報價洽詢 -->
-        <div class="space">
+        <div class="space" id="quote">
           <div class="quote-container">
             <div class="quote-header">
               <h2>
@@ -476,7 +476,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer_info">
+    <div class="footer_info" id="contact">
       <div class="footer_info-item" v-for="(footer, fIndex) in footerInfo" :key="fIndex">
         <h3>{{ footer.title }}</h3>
         <p v-for="(line, lIndex) in footer.items" :key="lIndex" v-html="line"></p>

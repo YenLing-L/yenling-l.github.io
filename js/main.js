@@ -1418,6 +1418,9 @@ if (
     });
 
     gsap.utils.toArray(".section-header").forEach((header) => {
+      // 如果是在 #service-intro 內的 header，跳過一般的動畫，改用後面的 timeline 處理
+      if (header.closest("#service-intro")) return;
+
       gsap.from(header, {
         scrollTrigger: {
           trigger: header,
@@ -1430,6 +1433,45 @@ if (
         ease: "power3.out",
       });
     });
+
+    // #service-intro 專屬的序列動畫
+    const serviceIntro = document.getElementById("service-intro");
+    if (serviceIntro) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: serviceIntro,
+          start: "top 75%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      tl.to("#service-intro .section-header", {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power3.out",
+      })
+        .to(
+          "#service-intro .service-description",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          "#service-intro .service-buttons",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+    }
 
     // 段落內容區塊 fade in 動畫
     gsap.utils.toArray(".service-intro-right").forEach((el) => {
