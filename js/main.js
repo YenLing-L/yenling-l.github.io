@@ -92,55 +92,167 @@ const app = createApp({
           hasDetails: true,
           content: [
             {
-              text: '朝陽科技大學　行銷與流通管理系　碩士　2023<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Master</span>',
-              image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
+              text: '朝陽科技大學　行銷與流通管理　碩士　2023<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Master</span>',
+              image:
+                "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
               details: [
-                { text: '論文研究：消費者行為分析', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop' },
-                { text: '數據分析專題', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop' },
-                { text: '行銷策略規劃', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop' },
-                { text: '學術發表與研討', image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=300&fit=crop' }
-              ]
+                {
+                  text: "論文研究：消費者行為分析",
+                  image:
+                    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "數據分析專題",
+                  image:
+                    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "行銷策略規劃",
+                  image:
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "學術發表與研討",
+                  image:
+                    "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=300&fit=crop",
+                },
+              ],
             },
             {
-              text: '朝陽科技大學　行銷與流通管理系　學士　2022<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Bachelor</span>',
-              image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
+              text: '朝陽科技大學　行銷與流通管理　學士　2022<br><span class="en-text">Chaoyang University of Technology, Marketing & Logistics, Bachelor</span>',
+              image:
+                "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop",
               details: [
-                { text: '專題製作：電商平台設計', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop' },
-                { text: '實習經驗累積', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop' },
-                { text: '社團幹部經歷', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop' },
-                { text: '學業成績優異', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop' }
-              ]
+                {
+                  text: "專題製作：電商平台設計",
+                  image:
+                    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "實習經驗累積",
+                  image:
+                    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "社團幹部經歷",
+                  image:
+                    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "學業成績優異",
+                  image:
+                    "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=300&fit=crop",
+                },
+              ],
             },
             {
               text: '德國雷根斯堡大學　交換生　2022<br><span class="en-text">University of Regensburg, Exchange Student</span>',
-              image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
+              image:
+                "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop",
               details: [
-                { text: '跨文化溝通體驗', image: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?w=400&h=300&fit=crop' },
-                { text: '國際學術交流', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop' },
-                { text: '歐洲城市探索', image: 'https://images.unsplash.com/photo-1473615695634-d284ec918736?w=400&h=300&fit=crop' },
-                { text: '語言能力提升', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop' }
-              ]
+                {
+                  text: "跨文化溝通體驗",
+                  image:
+                    "https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "國際學術交流",
+                  image:
+                    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "歐洲城市探索",
+                  image:
+                    "https://images.unsplash.com/photo-1473615695634-d284ec918736?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "語言能力提升",
+                  image:
+                    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
+                },
+              ],
             },
             {
               text: '創價心工程顧問公司　專案管理師　2023-2024<br><span class="en-text">Chuang Jia Xin Engineering Consultants, Project Manager</span>',
-              image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop',
+              image:
+                "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
               details: [
-                { text: '專案進度管理', image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop' },
-                { text: '客戶需求分析', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop' },
-                { text: '團隊協作協調', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop' },
-                { text: '文件撰寫與報告', image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop' }
-              ]
+                {
+                  text: "專案進度管理",
+                  image:
+                    "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "客戶需求分析",
+                  image:
+                    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "團隊協作協調",
+                  image:
+                    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "文件撰寫與報告",
+                  image:
+                    "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop",
+                },
+              ],
+            },
+            {
+              text: '臺中教育大學進修推廣部　網頁前端設計師養成班　2024-2025<br><span class="en-text">Tyan Liu Technology Co., Ltd., Frontend Engineer</span>',
+              image:
+                "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
+              details: [
+                {
+                  text: "網頁基礎建置",
+                  image:
+                    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "UI/UX 設計",
+                  image:
+                    "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "程式語言",
+                  image:
+                    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "網路行銷技巧",
+                  image:
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop",
+                },
+              ],
             },
             {
               text: '天鎏科技企業有限公司　網頁前端工程師　2025-迄今<br><span class="en-text">Tyan Liu Technology Co., Ltd., Frontend Engineer</span>',
-              image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
+              image:
+                "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
               details: [
-                { text: 'Vue.js 應用開發', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop' },
-                { text: 'RWD 響應式設計', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop' },
-                { text: 'UI/UX 介面優化', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop' },
-                { text: '動態效果實作', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop' }
-              ]
-            }
+                {
+                  text: "Vue.js 應用開發",
+                  image:
+                    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "RWD 響應式設計",
+                  image:
+                    "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "UI/UX 介面優化",
+                  image:
+                    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop",
+                },
+                {
+                  text: "動態效果實作",
+                  image:
+                    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop",
+                },
+              ],
+            },
           ],
           resumeLink: "https://yen061.notion.site/",
         },
@@ -257,7 +369,8 @@ const app = createApp({
       sessionId: null,
       hoveredExperience: null,
       expandedExperience: null,
-      isTouchDevice: window.matchMedia('(hover: none)').matches || 'ontouchstart' in window,
+      isTouchDevice:
+        window.matchMedia("(hover: none)").matches || "ontouchstart" in window,
     };
   },
   computed: {
@@ -305,7 +418,12 @@ const app = createApp({
     // 經驗區塊事件處理
     handleExpMouseEnter(sectionIndex, expIndex, image) {
       if (!this.isTouchDevice) {
-        this.hoveredExperience = { section: sectionIndex, exp: expIndex, detail: null, image: image };
+        this.hoveredExperience = {
+          section: sectionIndex,
+          exp: expIndex,
+          detail: null,
+          image: image,
+        };
       }
     },
     handleExpMouseLeave() {
@@ -320,7 +438,12 @@ const app = createApp({
         this.hoveredExperience = null;
       } else {
         this.expandedExperience = key;
-        this.hoveredExperience = { section: sectionIndex, exp: expIndex, detail: null, image: image };
+        this.hoveredExperience = {
+          section: sectionIndex,
+          exp: expIndex,
+          detail: null,
+          image: image,
+        };
       }
     },
     openProjectDetails(project, event) {
@@ -407,10 +530,10 @@ const app = createApp({
         document.body.appendChild(expandOverlay);
 
         const overlayTitle = expandOverlay.querySelector(
-          ".expand-overlay-title"
+          ".expand-overlay-title",
         );
         const overlayImage = expandOverlay.querySelector(
-          ".expand-overlay-image"
+          ".expand-overlay-image",
         );
 
         if (nameRect && overlayTitle) {
@@ -464,7 +587,7 @@ const app = createApp({
             duration: 0.5,
             ease: "power3.inOut",
           },
-          "-=0.5"
+          "-=0.5",
         );
 
         const targetWidth = Math.min(window.innerWidth * 0.9, 1100);
@@ -482,7 +605,7 @@ const app = createApp({
             duration: 0.5,
             ease: "power3.inOut",
           },
-          "-=0.5"
+          "-=0.5",
         );
 
         tl.add(() => {
@@ -490,7 +613,7 @@ const app = createApp({
 
           this.$nextTick(() => {
             const detailOverlay = document.querySelector(
-              ".project-detail-overlay"
+              ".project-detail-overlay",
             );
             if (detailOverlay) {
               detailOverlay.classList.add("active");
@@ -518,7 +641,7 @@ const app = createApp({
               }
 
               const infoItems = document.querySelectorAll(
-                ".project-info-grid .info-item"
+                ".project-info-grid .info-item",
               );
               infoItems.forEach((item, index) => {
                 gsap.fromTo(
@@ -535,12 +658,12 @@ const app = createApp({
                     duration: 0.5,
                     delay: index * 0.15,
                     ease: "power2.out",
-                  }
+                  },
                 );
               });
 
               const galleryItems = document.querySelectorAll(
-                ".project-gallery .gallery-item"
+                ".project-gallery .gallery-item",
               );
               galleryItems.forEach((item, index) => {
                 gsap.fromTo(
@@ -557,7 +680,7 @@ const app = createApp({
                     duration: 0.4,
                     delay: 0.3 + index * 0.08,
                     ease: "power2.out",
-                  }
+                  },
                 );
               });
             }, 100);
@@ -667,11 +790,11 @@ const app = createApp({
         document.body.appendChild(shrinkOverlay);
 
         const overlayTitle = shrinkOverlay.querySelector(
-          ".expand-overlay-title"
+          ".expand-overlay-title",
         );
         const overlayLang = shrinkOverlay.querySelector(".expand-overlay-lang");
         const overlayImage = shrinkOverlay.querySelector(
-          ".expand-overlay-image"
+          ".expand-overlay-image",
         );
 
         gsap.set(overlayTitle, {
@@ -711,7 +834,7 @@ const app = createApp({
             ".project-gallery .gallery-item",
             ".detail-header",
           ],
-          { clearProps: "all" }
+          { clearProps: "all" },
         );
 
         const tl = gsap.timeline({
@@ -760,7 +883,7 @@ const app = createApp({
               duration: 0.5,
               ease: "power3.inOut",
             },
-            "-=0.5"
+            "-=0.5",
           );
         }
 
@@ -774,7 +897,7 @@ const app = createApp({
               duration: 0.5,
               ease: "power3.inOut",
             },
-            "-=0.5"
+            "-=0.5",
           );
         }
 
@@ -791,7 +914,7 @@ const app = createApp({
               duration: 0.5,
               ease: "power3.inOut",
             },
-            "-=0.5"
+            "-=0.5",
           );
         }
 
@@ -1131,7 +1254,7 @@ const app = createApp({
 
         const [data] = await Promise.all([
           this.fetchAllSheetData(),
-          this.runMinimumLoadingTime(1500)
+          this.runMinimumLoadingTime(1500),
         ]);
 
         localStorage.setItem(
@@ -1139,7 +1262,7 @@ const app = createApp({
           JSON.stringify({
             data,
             timestamp: Date.now(),
-          })
+          }),
         );
 
         this.applySheetData(data);
@@ -1197,7 +1320,7 @@ const app = createApp({
 
       if (data.graphicProjects && data.graphicProjects.length > 0) {
         const graphicProjects = this.transformGraphicProjects(
-          data.graphicProjects
+          data.graphicProjects,
         );
 
         this.portfolioSections = [
@@ -1216,7 +1339,7 @@ const app = createApp({
 
     observeNewProjectRows() {
       const elements = document.querySelectorAll(
-        ".project-row:not(.fade-in-up)"
+        ".project-row:not(.fade-in-up)",
       );
 
       const observer = new IntersectionObserver(
@@ -1227,7 +1350,7 @@ const app = createApp({
             }
           });
         },
-        { threshold: 0.1 }
+        { threshold: 0.1 },
       );
 
       elements.forEach((el) => observer.observe(el));
@@ -1287,7 +1410,7 @@ const app = createApp({
 
           const eased = 1 - Math.pow(1 - progress, 3);
           this.loadingProgress = Math.round(
-            startPercent + (targetPercent - startPercent) * eased
+            startPercent + (targetPercent - startPercent) * eased,
           );
 
           if (progress < 1) {
@@ -1304,28 +1427,28 @@ const app = createApp({
 
     completeLoading() {
       this.isLoading = false;
-      
+
       // 立即添加 hidden class 並強制重繪（針對 iOS Safari）
       setTimeout(() => {
-        const loadingScreen = document.querySelector('.loading-screen');
+        const loadingScreen = document.querySelector(".loading-screen");
         if (loadingScreen) {
-          loadingScreen.classList.add('hidden');
+          loadingScreen.classList.add("hidden");
           // 強制瀏覽器重新計算樣式（iOS Safari fix）
-          loadingScreen.style.display = 'none';
+          loadingScreen.style.display = "none";
           void loadingScreen.offsetHeight; // 觸發 reflow
         }
-        
+
         // 恢復 body 滾動
-        document.body.style.overflow = '';
-        document.body.style.position = '';
+        document.body.style.overflow = "";
+        document.body.style.position = "";
       }, 2600);
     },
   },
   mounted() {
     // 鎖定 body 防止滾動（loading 期間）
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'relative';
-    
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "relative";
+
     this.loadPortfolioData();
 
     const observeFadeIn = (selector) => {
@@ -1338,7 +1461,7 @@ const app = createApp({
             }
           });
         },
-        { threshold: 0.2 }
+        { threshold: 0.2 },
       );
       elements.forEach((el) => observer.observe(el));
       window.addEventListener("scroll", this.handleScroll);
@@ -1394,7 +1517,7 @@ if (
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.5"
+          "-=0.5",
         )
         .from(
           ".hero-cta",
@@ -1404,7 +1527,7 @@ if (
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.4"
+          "-=0.4",
         )
         .from(
           ".hero-scroll-indicator",
@@ -1413,7 +1536,7 @@ if (
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.3"
+          "-=0.3",
         );
     });
 
@@ -1459,7 +1582,7 @@ if (
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.4"
+          "-=0.4",
         )
         .to(
           "#service-intro .service-buttons",
@@ -1469,7 +1592,7 @@ if (
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.4"
+          "-=0.4",
         );
     }
 
@@ -1575,7 +1698,7 @@ if (
       // 檢查性別是否已選擇
       const genderSelected = form.querySelector('input[name="gender"]:checked');
       const genderGroup = form.querySelector(
-        ".form-group.required .radio-group"
+        ".form-group.required .radio-group",
       );
       if (!genderSelected) {
         isValid = false;
