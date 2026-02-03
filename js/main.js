@@ -959,28 +959,18 @@ const app = createApp({
       const targetPath = url.pathname;
       const hash = url.hash;
 
-      const currentFile = currentPath.split("/").pop() || "info.html";
-      const targetFile = targetPath.split("/").pop() || "info.html";
+      const currentFile = currentPath.split("/").pop() || "index.html";
+      const targetFile = targetPath.split("/").pop() || "index.html";
 
       const isSamePage =
         currentFile === targetFile ||
-        (currentFile === "" && targetFile === "info.html") ||
-        (currentFile === "info.html" && targetFile === "");
+        (currentFile === "" && targetFile === "index.html") ||
+        (currentFile === "index.html" && targetFile === "");
 
       if (isSamePage && hash) {
         event.preventDefault();
         this.closeMenu();
-
-        setTimeout(() => {
-          const targetElement = document.querySelector(hash);
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-            history.pushState(null, null, hash);
-          }
-        }, 300);
+        window.location.href = link;
       } else {
         this.closeMenu();
       }
