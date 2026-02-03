@@ -347,6 +347,7 @@ const app = createApp({
       certificateSortKey: "id",
       certificateSortOrder: "asc",
       isFilterMenuOpen: false,
+      portfolioCards: [],
       brandLogos: [
         { name: "Giant", url: "https://www.giant-bicycles.com/favicon.ico" },
         { name: "KKStream", url: "https://www.kkstream.com/favicon.ico" },
@@ -1274,13 +1275,14 @@ const app = createApp({
     },
 
     async fetchAllSheetData() {
-      const [certificates, websiteProjects, graphicProjects] =
+      const [certificates, websiteProjects, graphicProjects, portfolioCards] =
         await Promise.all([
           this.fetchSheetData("certificates"),
           this.fetchSheetData("websiteProjects"),
           this.fetchSheetData("graphicProjects"),
+          this.fetchSheetData("portfolioCards"),
         ]);
-      return { certificates, websiteProjects, graphicProjects };
+      return { certificates, websiteProjects, graphicProjects, portfolioCards };
     },
 
     /* 最小載入時間（確保 logo 動畫完整顯示）*/
@@ -1330,6 +1332,16 @@ const app = createApp({
             projects: graphicProjects,
           },
         ];
+      }
+
+      /* 首頁 Portfolio 卡片資料 */
+      if (data.portfolioCards && data.portfolioCards.length > 0) {
+        this.portfolioCards = data.portfolioCards.map((card) => ({
+          titleCn: card.titleCn || card.中文標題 || "",
+          titleEn: card.titleEn || card.英文標題 || "",
+          url: card.url || card.案例網址 || "#",
+          image: card.image || card.案例圖片 || "",
+        }));
       }
 
       this.$nextTick(() => {
@@ -1670,10 +1682,17 @@ if (
 
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const href = this.getAttribute("href");
+      if (href && href.startsWith("#") && href.length > 1) {
+        e.preventDefault();
+        try {
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        } catch (error) {
+          console.warn("Invalid selector:", href);
+        }
       }
     });
   });

@@ -270,78 +270,23 @@
             </h2>
           </div>
           <div class="portfolio-grid">
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 180">
-                <div class="placeholder-text">01</div>
+            <a v-for="(card, index) in portfolioCards" :key="index" 
+               :href="card.url || '#'" 
+               class="portfolio-card" 
+               target="_blank"
+               rel="noopener noreferrer">
+              <div class="card-image" :style="card.image ? {} : {'--bg-hue': 180 + index * 20}">
+                <img v-if="card.image" :src="card.image" :alt="card.titleCn" />
+                <div v-else class="placeholder-text">{{ String(index + 1).padStart(2, '0') }}</div>
                 <div class="card-overlay">
                   <span>查看詳情</span>
                 </div>
               </div>
               <div class="card-info">
-                <h4>企業形象網站</h4>
-                <p>Corporate Website</p>
+                <h4>{{ card.titleCn }}</h4>
+                <p>{{ card.titleEn }}</p>
               </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 200">
-                <div class="placeholder-text">02</div>
-                <div class="card-overlay">
-                  <span>查看詳情</span>
-                </div>
-              </div>
-              <div class="card-info">
-                <h4>電商平台</h4>
-                <p>E-commerce Platform</p>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 220">
-                <div class="placeholder-text">03</div>
-                <div class="card-overlay">
-                  <span>查看詳情</span>
-                </div>
-              </div>
-              <div class="card-info">
-                <h4>品牌官網</h4>
-                <p>Brand Website</p>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 240">
-                <div class="placeholder-text">04</div>
-                <div class="card-overlay">
-                  <span>查看詳情</span>
-                </div>
-              </div>
-              <div class="card-info">
-                <h4>個人作品集</h4>
-                <p>Personal Portfolio</p>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 160">
-                <div class="placeholder-text">05</div>
-                <div class="card-overlay">
-                  <span>查看詳情</span>
-                </div>
-              </div>
-              <div class="card-info">
-                <h4>活動網站</h4>
-                <p>Event Website</p>
-              </div>
-            </div>
-            <div class="portfolio-card">
-              <div class="card-image placeholder-bg" style="--bg-hue: 280">
-                <div class="placeholder-text">06</div>
-                <div class="card-overlay">
-                  <span>查看詳情</span>
-                </div>
-              </div>
-              <div class="card-info">
-                <h4>產品展示頁</h4>
-                <p>Product Landing</p>
-              </div>
-            </div>
+            </a>
           </div>
           <div class="view-more-wrapper">
             <a href="project.html#WebsiteDesign" class="view-more-btn">
