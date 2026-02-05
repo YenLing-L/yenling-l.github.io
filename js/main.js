@@ -1265,14 +1265,26 @@ const app = createApp({
     },
 
     async fetchAllSheetData() {
-      const [certificates, websiteProjects, graphicProjects, portfolioCards] =
-        await Promise.all([
-          this.fetchSheetData("certificates"),
-          this.fetchSheetData("websiteProjects"),
-          this.fetchSheetData("graphicProjects"),
-          this.fetchSheetData("portfolioCards"),
-        ]);
-      return { certificates, websiteProjects, graphicProjects, portfolioCards };
+      const [
+        certificates,
+        websiteProjects,
+        graphicProjects,
+        portfolioCards,
+        experiences,
+      ] = await Promise.all([
+        this.fetchSheetData("certificates"),
+        this.fetchSheetData("websiteProjects"),
+        this.fetchSheetData("graphicProjects"),
+        this.fetchSheetData("portfolioCards"),
+        this.fetchSheetData("經歷"),
+      ]);
+      return {
+        certificates,
+        websiteProjects,
+        graphicProjects,
+        portfolioCards,
+        experiences,
+      };
     },
 
     /* 最小載入時間（確保 logo 動畫完整顯示）*/
@@ -1296,6 +1308,49 @@ const app = createApp({
           ...cert,
           date: this.formatDate(cert.date),
         }));
+      }
+
+      /* 經歷資料 */
+      if (data.experiences && data.experiences.length > 0) {
+        const experienceSection = this.sections.find(
+          (s) => s.title === "Experience",
+        );
+        if (experienceSection) {
+          experienceSection.content = data.experiences.map((exp) => {
+            /* 解析細項：中文細項、英文細項、細項圖片都用「|」分隔 */
+            const detailsCn = exp.中文細項
+              ? exp.中文細項.split("|").map((s) => s.trim())
+              : [];
+            const detailsEn = exp.英文細項
+              ? exp.英文細項.split("|").map((s) => s.trim())
+              : [];
+            const detailImages = exp.細項圖片
+              ? exp.細項圖片.split("|").map((s) => s.trim())
+              : [];
+
+            /* 組合 details 陣列 */
+            const details = detailsCn.map((cn, idx) => ({
+              text:
+                cn +
+                (detailsEn[idx]
+                  ? `<br><span class="en-text">${detailsEn[idx]}</span>`
+                  : ""),
+              image:
+                detailImages[idx] ||
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
+            }));
+
+            return {
+              text:
+                exp.中文標題 +
+                `<br><span class="en-text">${exp.英文標題 || ""}</span>`,
+              image:
+                detailImages[0] ||
+                "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+              details: details.length > 0 ? details : undefined,
+            };
+          });
+        }
       }
 
       if (data.websiteProjects && data.websiteProjects.length > 0) {

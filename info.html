@@ -126,7 +126,6 @@
             <div class="experience-list">
               <div class="experience-item" :class="{ 'is-expanded': expandedExperience === `${index}-${eIndex}` }"
                 v-for="(exp, eIndex) in section.content" :key="eIndex"
-                @mouseenter="handleExpMouseEnter(index, eIndex, exp.image)" @mouseleave="handleExpMouseLeave"
                 @click="toggleExperience(index, eIndex, exp.image)">
                 <div class="experience-main">
                   <span class="experience-arrow">
@@ -141,7 +140,7 @@
                     @mouseenter.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
                     @mouseleave.stop="hoveredExperience = { section: index, exp: eIndex, detail: null, image: exp.image }"
                     @click.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }">
-                    <span class="detail-text">{{ detail.text }}</span>
+                    <span class="detail-text" v-html="detail.text"></span>
                   </div>
                 </div>
               </div>
