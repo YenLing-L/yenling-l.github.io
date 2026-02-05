@@ -445,7 +445,32 @@ const app = createApp({
           detail: null,
           image: image,
         };
+        /* 動態計算垂直線高度 */
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.updateVerticalLineHeight();
+          }, 400); /* 等待展開動畫完成 */
+        });
       }
+    },
+    updateVerticalLineHeight() {
+      const expandedItems = document.querySelectorAll(
+        ".experience-item.is-expanded",
+      );
+      expandedItems.forEach((item) => {
+        const details = item.querySelectorAll(".experience-detail-item");
+        if (details.length >= 4) {
+          const fourthDetail = details[3];
+          const itemRect = item.getBoundingClientRect();
+          const detailRect = fourthDetail.getBoundingClientRect();
+          /* 計算從三角形底端到第四個細項水平線的距離 */
+          const arrowBottom = 45; /* CSS 中 top: 45px */
+          const targetTop =
+            detailRect.top - itemRect.top + detailRect.height * 0.3;
+          const lineHeight = targetTop - arrowBottom;
+          item.style.setProperty("--vertical-line-height", `${lineHeight}px`);
+        }
+      });
     },
     openProjectDetails(project, event) {
       if (event) {

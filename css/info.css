@@ -331,7 +331,7 @@ a {
 }
 
 .experience-item.is-expanded::after {
-  height: calc(100% - 120px);
+  height: var(--vertical-line-height, calc(100% - 120px));
 }
 
 .experience-main {
@@ -562,7 +562,7 @@ a {
 
   /* 點擊後展開 */
   .experience-item.is-expanded .experience-details {
-    max-height: 300px;
+    max-height: 600px;
     opacity: 1;
     margin-top: 15px;
   }
@@ -2038,5 +2038,55 @@ body:has(.loading-screen:not(.hidden)) {
 
   .marker {
     font-size: 12px;
+  }
+}
+
+/* 針對不同螢幕尺寸調整垂直線高度 */
+
+@media (max-width: 375px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 70px));
+  }
+}
+
+@media (min-width: 376px) and (max-width: 430px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 75px));
+  }
+}
+
+@media (min-width: 431px) and (max-width: 600px) and (max-height: 800px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 120px));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 768px) and (min-height: 1000px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 155px));
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) and (min-height: 1000px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 85px));
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) and (min-height: 1200px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 80px));
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1100px) and (max-height: 700px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 90px));
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 900px) {
+  .experience-item.is-expanded::after {
+    height: var(--vertical-line-height, calc(100% - 120px));
   }
 }
