@@ -1254,15 +1254,21 @@ const app = createApp({
       navigator.sendBeacon(`${VISITOR_API_URL}/api/visitor/offline`, data);
     },
 
-    /* Google Sheets 資料載入 */
     async loadPortfolioData() {
       try {
+        const hasHash = !!window.location.hash;
+        const minLoadingTime = hasHash ? 200 : 1500; // 有 hash 時縮短載入時間
+        
         const cached = localStorage.getItem(CACHE_KEY);
         if (cached) {
           const { data, timestamp } = JSON.parse(cached);
           if (Date.now() - timestamp < CACHE_DURATION) {
             this.applySheetData(data);
-            await this.runMinimumLoadingTime(1000);
+            if (!hasHash) {
+              await this.runMinimumLoadingTime(1000);
+            } else {
+              await this.runMinimumLoadingTime(200);
+            }
             this.completeLoading();
             return;
           }
@@ -1270,7 +1276,7 @@ const app = createApp({
 
         const [data] = await Promise.all([
           this.fetchAllSheetData(),
-          this.runMinimumLoadingTime(1500),
+          this.runMinimumLoadingTime(minLoadingTime),
         ]);
 
         localStorage.setItem(
@@ -1416,6 +1422,14 @@ const app = createApp({
 
       this.$nextTick(() => {
         this.observeNewProjectRows();
+        /* 如果資料更新後 URL 有 hash，立即跳轉到正確位置 */
+        if (window.location.hash) {
+          const hash = decodeURIComponent(window.location.hash);
+          const target = document.querySelector(hash);
+          if (target) {
+            target.scrollIntoView({ behavior: "instant", block: "start" });
+          }
+        }
       });
     },
 
@@ -1437,7 +1451,6 @@ const app = createApp({
 
       elements.forEach((el) => observer.observe(el));
     },
-
     transformWebProjects(rows) {
       return rows.map((row) => ({
         link: row.link || "#",
@@ -1508,28 +1521,59 @@ const app = createApp({
     },
 
     completeLoading() {
+      const hasHash = !!window.location.hash;
+      
+      // 如果有 hash，立即關閉 loading
+      if (hasHash) {
+        this.isLoading = false;
+        const loadingScreen = document.querySelector(".loading-screen");
+        if (loadingScreen) {
+          loadingScreen.classList.add("hidden");
+          loadingScreen.style.display = "none";
+        }
+        document.body.style.overflow = "";
+        
+        // 執行跳轉
+        this.$nextTick(() => {
+          const hash = decodeURIComponent(window.location.hash);
+          const target = document.querySelector(hash);
+          if (target) {
+            target.scrollIntoView({ behavior: "instant", block: "start" });
+          }
+        });
+        return;
+      }
+
       this.isLoading = false;
 
-      // 立即添加 hidden class 並強制重繪（針對 iOS Safari）
+      // 正常流程：2.6s 動畫
       setTimeout(() => {
         const loadingScreen = document.querySelector(".loading-screen");
         if (loadingScreen) {
           loadingScreen.classList.add("hidden");
-          // 強制瀏覽器重新計算樣式（iOS Safari fix）
           loadingScreen.style.display = "none";
-          void loadingScreen.offsetHeight; // 觸發 reflow
+          void loadingScreen.offsetHeight;
         }
 
-        // 恢復 body 滾動
         document.body.style.overflow = "";
-        document.body.style.position = "";
       }, 2600);
     },
   },
   mounted() {
-    // 鎖定 body 防止滾動（loading 期間）
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "relative";
+    // 禁用瀏覽器自動恢復滾動位置
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    // 只有在沒有指定區塊 (hash) 的情況下才鎖定 body 並執行載入動畫
+    if (!window.location.hash) {
+      document.body.style.overflow = "hidden";
+      this.isLoading = true;
+    } else {
+      // 如果有 hash，直接顯示內容
+      this.isLoading = false;
+      document.body.style.overflow = "";
+    }
 
     this.loadPortfolioData();
 

@@ -109,24 +109,43 @@
 
     <div class="content">
       <div class="timeline">
-        <div class="event" v-for="(section, index) in sections" :key="index" :id="section.title" data-aos="fade-up">
+      <div class="timeline">
+        <!-- Introduction 區塊 (固定 ID) -->
+        <div class="event" id="Introduction" v-if="sections[0]" data-aos="fade-up">
           <div class="year">
             <h2>
-              <span class="part1">{{ section.title }}</span>
-              <span class="part2">|{{ section.subtitle }}</span>
+              <span class="part1">{{ sections[0].title }}</span>
+              <span class="part2">|{{ sections[0].subtitle }}</span>
             </h2>
-            <!-- 一般區塊的靜態圖片 -->
-            <img v-if="section.image && !section.hasDetails" :src="section.image" alt="Section Image" />
-            <!-- 經驗區塊的動態圖片（原飛機圖片位置）-->
-            <img v-if="section.hasDetails && hoveredExperience && hoveredExperience.section === index"
+            <img v-if="sections[0].image" :src="sections[0].image" alt="Section Image" />
+          </div>
+          <div class="word">
+            <div v-if="sections[0].header">
+              <div class="typewriter">
+                <div>
+                  <h2><a href="info.html">{{ siteTitle }}</a></h2>
+                </div>
+              </div>
+            </div>
+            <p v-for="(para, pIndex) in sections[0].content" :key="pIndex" v-html="para"></p>
+          </div>
+        </div>
+
+        <!-- Experience 區塊 (固定 ID) -->
+        <div class="event" id="Experience" v-if="sections[1]" data-aos="fade-up">
+          <div class="year">
+            <h2>
+              <span class="part1">{{ sections[1].title }}</span>
+              <span class="part2">|{{ sections[1].subtitle }}</span>
+            </h2>
+            <img v-if="hoveredExperience && hoveredExperience.section === 1"
               :src="hoveredExperience.image" alt="Experience Preview" class="experience-dynamic-img" />
           </div>
-          <!-- 經驗區塊：帶細項展開 -->
-          <div class="word experience-word" v-if="section.hasDetails">
+          <div class="word experience-word">
             <div class="experience-list">
-              <div class="experience-item" :class="{ 'is-expanded': expandedExperience === `${index}-${eIndex}` }"
-                v-for="(exp, eIndex) in section.content" :key="eIndex"
-                @click="toggleExperience(index, eIndex, exp.image)">
+              <div class="experience-item" :class="{ 'is-expanded': expandedExperience === `1-${eIndex}` }"
+                v-for="(exp, eIndex) in sections[1].content" :key="eIndex"
+                @click="toggleExperience(1, eIndex, exp.image)">
                 <div class="experience-main">
                   <span class="experience-arrow">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -137,33 +156,32 @@
                 </div>
                 <div class="experience-details">
                   <div class="experience-detail-item" v-for="(detail, dIndex) in exp.details" :key="dIndex"
-                    @mouseenter.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }"
-                    @mouseleave.stop="hoveredExperience = { section: index, exp: eIndex, detail: null, image: exp.image }"
-                    @click.stop="hoveredExperience = { section: index, exp: eIndex, detail: dIndex, image: detail.image }">
+                    @mouseenter.stop="hoveredExperience = { section: 1, exp: eIndex, detail: dIndex, image: detail.image }"
+                    @mouseleave.stop="hoveredExperience = { section: 1, exp: eIndex, detail: null, image: exp.image }"
+                    @click.stop="hoveredExperience = { section: 1, exp: eIndex, detail: dIndex, image: detail.image }">
                     <span class="detail-text" v-html="detail.text"></span>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="section.resumeLink" class="resume-link-wrapper">
-              <a :href="section.resumeLink" target="_blank" class="resume-link">查看詳細履歷</a>
+            <div v-if="sections[1].resumeLink" class="resume-link-wrapper">
+              <a :href="sections[1].resumeLink" target="_blank" class="resume-link">查看詳細履歷</a>
             </div>
           </div>
-          <!-- 一般區塊 -->
-          <div class="word" v-else>
-            <div v-if="section.header">
-              <div class="typewriter">
-                <div>
-                  <h2><a href="info.html">{{ siteTitle }}</a></h2>
-                </div>
-              </div>
-            </div>
-            <p v-for="(para, pIndex) in section.content" :key="pIndex" v-html="para"></p>
-            <div v-if="section.resumeLink">
-              <a :href="section.resumeLink" target="_blank" class="resume-link">查看詳細履歷</a>
-            </div>
-            <div v-if="section.skills" class="grid">
-              <div class="grid-item" v-for="(skill, sIndex) in section.skills" :key="sIndex">
+        </div>
+
+        <!-- Expertise 區塊 (固定 ID) -->
+        <div class="event" id="Expertise" v-if="sections[2]" data-aos="fade-up">
+          <div class="year">
+            <h2>
+              <span class="part1">{{ sections[2].title }}</span>
+              <span class="part2">|{{ sections[2].subtitle }}</span>
+            </h2>
+            <img v-if="sections[2].image" :src="sections[2].image" alt="Section Image" />
+          </div>
+          <div class="word">
+            <div class="grid">
+              <div class="grid-item" v-for="(skill, sIndex) in sections[2].skills" :key="sIndex">
                 <h3>{{ skill.category }}</h3>
                 <p v-for="(tool, tIndex) in skill.items" :key="tIndex">
                   {{ tool }}

@@ -1846,9 +1846,8 @@ p {
 /* 防止在載入畫面時滾動頁面 */
 body:has(.loading-screen:not(.hidden)) {
   overflow: hidden !important;
-  position: fixed;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
 }
 
 .loading-screen.fade-out {
