@@ -47,6 +47,7 @@ const app = createApp({
           link: "project.html",
           subItems: [
             { text: "網站　WEBSITE", link: "project.html#WebsiteDesign" },
+            { text: "遊戲　GAME", link: "project.html#GameDesign" },
             { text: "平面　GRAPHIC", link: "project.html#GraphicDesign" },
           ],
         },
@@ -312,6 +313,13 @@ const app = createApp({
           title: {
             part1: "Website  Design",
             part2: "| 網站設計",
+          },
+          projects: [],
+        },
+        {
+          title: {
+            part1: "Game Design",
+            part2: "| 遊戲設計",
           },
           projects: [],
         },
@@ -1299,12 +1307,14 @@ const app = createApp({
       const [
         certificates,
         websiteProjects,
+        gameProjects,
         graphicProjects,
         portfolioCards,
         experiences,
       ] = await Promise.all([
         this.fetchSheetData("certificates"),
         this.fetchSheetData("websiteProjects"),
+        this.fetchSheetData("gameProjects"),
         this.fetchSheetData("graphicProjects"),
         this.fetchSheetData("portfolioCards"),
         this.fetchSheetData("經歷"),
@@ -1312,6 +1322,7 @@ const app = createApp({
       return {
         certificates,
         websiteProjects,
+        gameProjects,
         graphicProjects,
         portfolioCards,
         experiences,
@@ -1393,6 +1404,20 @@ const app = createApp({
             projects: webProjects,
           },
           this.portfolioSections[1],
+          this.portfolioSections[2],
+        ];
+      }
+
+      if (data.gameProjects && data.gameProjects.length > 0) {
+        const gameProjects = this.transformGameProjects(data.gameProjects);
+
+        this.portfolioSections = [
+          this.portfolioSections[0],
+          {
+            title: this.portfolioSections[1].title,
+            projects: gameProjects,
+          },
+          this.portfolioSections[2],
         ];
       }
 
@@ -1403,8 +1428,9 @@ const app = createApp({
 
         this.portfolioSections = [
           this.portfolioSections[0],
+          this.portfolioSections[1],
           {
-            title: this.portfolioSections[1].title,
+            title: this.portfolioSections[2].title,
             projects: graphicProjects,
           },
         ];
@@ -1452,6 +1478,17 @@ const app = createApp({
       elements.forEach((el) => observer.observe(el));
     },
     transformWebProjects(rows) {
+      return rows.map((row) => ({
+        link: row.link || "#",
+        items: [
+          { dataText: row.name, imgSrc: row.img1 },
+          { dataText: row.lang, imgSrc: row.img2 },
+          { dataText: row.category, imgSrc: row.img3 },
+          { dataText: row.description, imgSrc: row.img4 },
+        ],
+      }));
+    },
+    transformGameProjects(rows) {
       return rows.map((row) => ({
         link: row.link || "#",
         items: [
