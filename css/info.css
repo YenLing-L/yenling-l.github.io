@@ -1084,6 +1084,8 @@ p {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: flex-start;
+  justify-self: center;
 }
 
 .menu-title,
@@ -1126,6 +1128,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: flex-start;
 }
 
 .menu-sub-items a {
@@ -1133,6 +1136,7 @@ p {
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
+  text-align: left;
 }
 .menu-sub-items a:hover {
   color: #ccc;
@@ -1188,7 +1192,7 @@ p {
 
   .menu-sub-items a {
     font-size: clamp(1.2rem, 2.2vw, 1.5rem);
-    line-height: 1.4;
+    line-height: 2;
     text-align: left;
   }
 }

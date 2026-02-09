@@ -46,7 +46,7 @@ const app = createApp({
           title: "PROJECTS",
           link: "project.html",
           subItems: [
-            { text: "網站　WEBSITE", link: "project.html#WebsiteDesign" },
+            { text: "網頁　WEBSITE", link: "project.html#WebsiteDesign" },
             { text: "遊戲　GAME", link: "project.html#GameDesign" },
             { text: "平面　GRAPHIC", link: "project.html#GraphicDesign" },
           ],
