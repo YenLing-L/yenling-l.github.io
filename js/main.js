@@ -356,23 +356,7 @@ const app = createApp({
       certificateSortOrder: "asc",
       isFilterMenuOpen: false,
       portfolioCards: [],
-      brandLogos: [
-        { name: "Giant", url: "https://www.giant-bicycles.com/favicon.ico" },
-        { name: "KKStream", url: "https://www.kkstream.com/favicon.ico" },
-        { name: "Wistron", url: "https://www.wistron.com/favicon.ico" },
-        {
-          name: "Taipei Music Center",
-          url: "https://tmc.taipei/wp-content/themes/tmc/assets/images/logo.png",
-        },
-        { name: "Qisda", url: "https://www.qisda.com/favicon.ico" },
-        { name: "KKBOX", url: "https://www.kkbox.com/favicon.ico" },
-        { name: "Gamania", url: "https://www.gamania.com/favicon.ico" },
-        {
-          name: "Taiwan Mobile",
-          url: "https://www.taiwanmobile.com/favicon.ico",
-        },
-        { name: "Cathay", url: "https://www.cathayholdings.com/favicon.ico" },
-      ],
+      brandLogos: [],
       totalVisitors: 0,
       onlineVisitors: 0,
       sessionId: null,
@@ -1266,7 +1250,7 @@ const app = createApp({
       try {
         const hasHash = !!window.location.hash;
         const minLoadingTime = hasHash ? 200 : 1500; // 有 hash 時縮短載入時間
-        
+
         const cached = localStorage.getItem(CACHE_KEY);
         if (cached) {
           const { data, timestamp } = JSON.parse(cached);
@@ -1311,6 +1295,7 @@ const app = createApp({
         graphicProjects,
         portfolioCards,
         experiences,
+        brandLogos,
       ] = await Promise.all([
         this.fetchSheetData("certificates"),
         this.fetchSheetData("websiteProjects"),
@@ -1318,6 +1303,7 @@ const app = createApp({
         this.fetchSheetData("graphicProjects"),
         this.fetchSheetData("portfolioCards"),
         this.fetchSheetData("經歷"),
+        this.fetchSheetData("brandLogos"),
       ]);
       return {
         certificates,
@@ -1326,6 +1312,7 @@ const app = createApp({
         graphicProjects,
         portfolioCards,
         experiences,
+        brandLogos,
       };
     },
 
@@ -1446,6 +1433,14 @@ const app = createApp({
         }));
       }
 
+      /* Brand Logos 資料 */
+      if (data.brandLogos && data.brandLogos.length > 0) {
+        this.brandLogos = data.brandLogos.map((logo) => ({
+          name: logo.name || logo.名稱 || "",
+          url: logo.url || logo.圖片網址 || "",
+        }));
+      }
+
       this.$nextTick(() => {
         this.observeNewProjectRows();
         /* 如果資料更新後 URL 有 hash，立即跳轉到正確位置 */
@@ -1559,7 +1554,7 @@ const app = createApp({
 
     completeLoading() {
       const hasHash = !!window.location.hash;
-      
+
       // 如果有 hash，立即關閉 loading
       if (hasHash) {
         this.isLoading = false;
@@ -1569,7 +1564,7 @@ const app = createApp({
           loadingScreen.style.display = "none";
         }
         document.body.style.overflow = "";
-        
+
         // 執行跳轉
         this.$nextTick(() => {
           const hash = decodeURIComponent(window.location.hash);
