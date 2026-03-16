@@ -4,7 +4,7 @@ const VISITOR_API_URL = "https://visitor-proxy.elenaaitest.workers.dev";
 const SHEETS_API_URL =
   "https://script.google.com/macros/s/AKfycbwVrmIrJJnh56Gf6peYMKWeq64VkIY_77YU9gL_yevnfQ-UoRi2-Y6owwZ71b5j1z4/exec";
 const CACHE_KEY = "portfolio_data_cache";
-const CACHE_DURATION = 1000 * 60 * 60; /* 快取資料放1小時 */
+const CACHE_DURATION = 1000 * 10;
 
 const app = createApp({
   data() {
@@ -1262,6 +1262,7 @@ const app = createApp({
               await this.runMinimumLoadingTime(200);
             }
             this.completeLoading();
+            this.startSheetsAutoRefresh();
             return;
           }
         }
@@ -1281,9 +1282,30 @@ const app = createApp({
 
         this.applySheetData(data);
         this.completeLoading();
+        this.startSheetsAutoRefresh();
       } catch (error) {
         console.error("Failed to load portfolio data:", error);
         this.completeLoading();
+      }
+    },
+
+    startSheetsAutoRefresh() {
+      if (this._sheetsRefreshTimer) return;
+      this._sheetsRefreshTimer = setInterval(() => {
+        this.refreshSheetDataSilently();
+      }, 10000);
+    },
+
+    async refreshSheetDataSilently() {
+      try {
+        const data = await this.fetchAllSheetData();
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ data, timestamp: Date.now() }),
+        );
+        this.applySheetData(data);
+      } catch (error) {
+        console.warn("Auto-refresh failed, will retry next interval:", error);
       }
     },
 
