@@ -1318,6 +1318,7 @@ const app = createApp({
         portfolioCards,
         experiences,
         brandLogos,
+        personal,
       ] = await Promise.all([
         this.fetchSheetData("certificates"),
         this.fetchSheetData("websiteProjects"),
@@ -1326,6 +1327,7 @@ const app = createApp({
         this.fetchSheetData("portfolioCards"),
         this.fetchSheetData("經歷"),
         this.fetchSheetData("brandLogos"),
+        this.fetchSheetData("個人"),
       ]);
       return {
         certificates,
@@ -1335,6 +1337,7 @@ const app = createApp({
         portfolioCards,
         experiences,
         brandLogos,
+        personal,
       };
     },
 
@@ -1354,6 +1357,18 @@ const app = createApp({
     },
 
     applySheetData(data) {
+      /* 個人資料（自介圖片） */
+      if (data.personal && data.personal.length > 0) {
+        const info = data.personal[0];
+        const introSection = this.sections.find(
+          (s) => s.title === "Introduction",
+        );
+        if (introSection) {
+          if (info["圖片網址"]) introSection.image = info["圖片網址"];
+          if (info["alt"])       introSection.imageAlt = info["alt"];
+        }
+      }
+
       if (data.certificates && data.certificates.length > 0) {
         this.certificates = data.certificates.map((cert) => ({
           ...cert,

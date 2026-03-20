@@ -116,7 +116,7 @@
               <span class="part1">{{ sections[0].title }}</span>
               <span class="part2">|{{ sections[0].subtitle }}</span>
             </h2>
-            <img v-if="sections[0].image" :src="sections[0].image" alt="Section Image" />
+            <img v-if="sections[0].image" :src="sections[0].image" :alt="sections[0].imageAlt || 'Section Image'" />
           </div>
           <div class="word">
             <div v-if="sections[0].header">
