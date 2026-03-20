@@ -1480,14 +1480,6 @@ const app = createApp({
 
       this.$nextTick(() => {
         this.observeNewProjectRows();
-        /* 如果資料更新後 URL 有 hash，立即跳轉到正確位置 */
-        if (window.location.hash) {
-          const hash = decodeURIComponent(window.location.hash);
-          const target = document.querySelector(hash);
-          if (target) {
-            target.scrollIntoView({ behavior: "instant", block: "start" });
-          }
-        }
       });
     },
 
